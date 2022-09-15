@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:soldout/modules/vendor/screens/settings/vendor_setting_cubit/vendor_setting_cubit.dart';
 
 import '../../../../../../shared/components/components.dart';
 import '../../../../../../shared/components/constants.dart';
@@ -57,6 +58,7 @@ class VChangeLangBottomSheet extends StatelessWidget {
                       VendorCubit.get(context).changeIndex(4);
                       CacheHelper.saveData(key: 'locale', value: context.locale.languageCode);
                       myLocale = context.locale.languageCode;
+                      VSettingCubit.get(context).changeLang(myLocale!);
                     }
                     else
                     {
@@ -64,6 +66,7 @@ class VChangeLangBottomSheet extends StatelessWidget {
                       VendorCubit.get(context).changeIndex(4);
                       CacheHelper.saveData(key: 'locale', value: context.locale.languageCode);
                       myLocale = context.locale.languageCode;
+                      VSettingCubit.get(context).changeLang(myLocale!);
                     }
                   },
                   text:tr('apply') ),

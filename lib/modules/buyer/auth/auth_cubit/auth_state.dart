@@ -2,6 +2,18 @@ abstract class AuthStates {}
 
 class InitState extends AuthStates {}
 
+class JustEmitState extends AuthStates {}
+class LoginLoadingState extends AuthStates {}
+
+
+class LoginSuccessState extends AuthStates {}
+
+class LoginWrongState extends AuthStates {}
+
+class LoginErrorState extends AuthStates {
+  String msg;
+  LoginErrorState(this.msg);
+}
 class SignLoadingState extends AuthStates {}
 
 class SignSuccessState extends AuthStates {}

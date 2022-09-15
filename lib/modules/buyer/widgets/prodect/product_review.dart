@@ -13,6 +13,8 @@ class ProductReview extends StatelessWidget {
 
   List<Reviews> reviews;
 
+
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -64,7 +66,7 @@ class ProductReview extends StatelessWidget {
             physics:const NeverScrollableScrollPhysics(),
           ),
           if(reviews.isEmpty)
-            Text('No Reviews Yet'),
+            Text(tr('no_review')),
             const SizedBox(height: 20,),
         ],
       ),
@@ -72,6 +74,9 @@ class ProductReview extends StatelessWidget {
   }
 
   Widget reviewProductItem(Reviews reviews) {
+    String time =DateFormat('',myLocale == 'ar'?'ar':'en')
+        .add_yMMMMEEEEd()
+        .format(DateTime.fromMillisecondsSinceEpoch(reviews.createdAt!));
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -116,7 +121,7 @@ class ProductReview extends StatelessWidget {
         Align(
           alignment: AlignmentDirectional.centerEnd,
           child: Text(
-            '${reviews.createdAt!}',
+            time,
             style: TextStyle(fontSize: 12, color: Colors.grey.shade400),
           ),
         ),

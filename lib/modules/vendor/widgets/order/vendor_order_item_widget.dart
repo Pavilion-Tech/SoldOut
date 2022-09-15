@@ -1,16 +1,26 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:soldout/models/vendor_model/vendor_order_model.dart';
 import '../../../../shared/components/components.dart';
 import '../../../../shared/components/constants.dart';
 import '../../screens/order/vendor_purchases_details.dart';
 
 class OrderItem extends StatelessWidget {
-  const OrderItem({Key? key}) : super(key: key);
+
+  OrderItem({required this.model});
+
+  VendorOrderData model;
+
+  late String time;
 
   @override
   Widget build(BuildContext context) {
+    time =  DateFormat('',myLocale == 'ar'?'ar':'en')
+        .add_yMMMMEEEEd()
+        .format(DateTime.fromMillisecondsSinceEpoch(model.createdAt!));
     return InkWell(
       onTap: (){
-        navigateTo(context, VPurchasesDetails());
+        navigateTo(context, VPurchasesDetails(model: model,));
       },
       child: Container(
         height: size!.height * .09,
@@ -24,15 +34,13 @@ class OrderItem extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Order #2015356',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
-            Spacer(),
-            Row(
-              children: [
-                Text('Date: 20 Jun 2019',style: TextStyle(color: Colors.grey,fontSize: 12),),
-                Spacer(),
-                Text('New Order',style: TextStyle(color: Colors.blue,fontSize: 12,fontWeight: FontWeight.bold),),
-              ],
-            )
+            Text(
+              '${tr('orderHistory')}${model.id!}',
+              style:const TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+            const Spacer(),
+            Text(
+              time,
+              style:const TextStyle(color: Colors.grey,fontSize: 12),),
           ],
         ),
       ),

@@ -31,8 +31,6 @@ class Favorites extends StatelessWidget {
                   navigateAndFinish(context, BuyerLayout());
                 }
             ),
-               MyContainer(
-                 noSize: true,
                   BlocConsumer<BuyerCubit, BuyerStates>(
                   listener: (context, state) {},
                   builder: (context, state) {
@@ -40,21 +38,21 @@ class Favorites extends StatelessWidget {
                     return ConditionalBuilder(
                         condition:cubit.getFavModel != null,
                         fallback:(context)=>GridViewLoading() ,
-                        builder:(context)=>
-                        cubit.getFavModel!.data!.products!.isNotEmpty
-                            ?GridViewWidget(
-                          products:cubit.getFavModel!.data!.products,)
-                            :Column(
-                          children: [
-                            SizedBox(height: size!.height*.4),
-                            Text('No Items Yet')
-                          ],
-                        )
+                        builder:(context)=> MyContainer(
+                          cubit.getFavModel!.data!.products!.isNotEmpty
+                              ? GridViewWidget(
+                            products:cubit.getFavModel!.data!.products,)
+                              : Column(
+                            children: [
+                              SizedBox(height: size!.height*.4),
+                              const Text('No Items Yet')
+                            ],
+                          ),
+                          noSize: true,)
+
                     );
                   },
-              ),
                ),
-
           ],
         ),
       ),

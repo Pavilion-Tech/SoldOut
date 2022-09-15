@@ -1,13 +1,12 @@
 import 'package:soldout/models/buyer_model/product_model/review_model.dart';
 import 'package:soldout/models/buyer_model/product_model/store_model.dart';
-import '../../../shared/components/constants.dart';
 import 'images_model.dart';
 
 class ProductModel {
   int? id;
   String? name;
   String? desc;
-  double? weight;
+  dynamic weight;
   int? regularPrice;
   int? salePrice;
   bool? onSale;

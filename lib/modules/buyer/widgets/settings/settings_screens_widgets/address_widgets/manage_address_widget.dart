@@ -20,12 +20,14 @@ class ManageAddressWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AddressCubit, AddressStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if(isConnect!=null)checkNet(context);
+      },
       builder: (context, state) {
         var cubit = AddressCubit.get(context);
         return ConditionalBuilder(
           condition: cubit.getAddressModel != null,
-          fallback: (context) => AddressAndOrderLoading(),
+          fallback: (context) =>const AddressAndOrderLoading(),
           builder: (context) {
             if (cubit.getAddressModel!.data!.isEmpty) {
               return Column(

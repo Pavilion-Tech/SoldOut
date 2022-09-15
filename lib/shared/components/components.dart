@@ -1,7 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:soldout/layout/buyer_layout/buy_layout_screen.dart';
+import 'package:soldout/modules/widgets/wrong_screens/no_connect.dart';
 import 'package:soldout/shared/images/images.dart';
 import 'package:soldout/shared/styles/colors.dart';
 
@@ -37,7 +40,7 @@ Widget defaultButton({
   return InkWell(
     onTap: onTap,
     child: Container(
-      height: size!.height * .06,
+      height: 55,
       width: width ?? size!.width * .44,
       alignment: AlignmentDirectional.center,
       decoration: BoxDecoration(
@@ -69,21 +72,24 @@ Widget defaultTextField({
   VoidCallback? onTap,
   List<TextInputFormatter>? inputFormatters,
   Function(String)? onChanged,
+  bool isPassword = false,
 }){
   return Stack(
     children: [
       Container(
-        height: size!.height*.06,
+        height: 55,
         width: double.infinity,
         decoration: BoxDecoration(
           color: color,
        borderRadius: BorderRadiusDirectional.circular(15),
          border: Border.all(color: Colors.grey.shade200),
         ),
+
       ),
       Padding(
       padding: const EdgeInsets.symmetric(vertical: 3,horizontal: 15),
         child: TextFormField(
+          obscureText: isPassword,
           onChanged: onChanged,
           onTap: onTap,
           readOnly: readOnly,
@@ -93,7 +99,7 @@ Widget defaultTextField({
           decoration: InputDecoration(
             isDense: true,
             border: InputBorder.none,
-            hintText: hint,
+            labelText: hint,
             suffixIcon: suffix,
             hintStyle: TextStyle(color: HexColor('#A0AEC0')),
           ),
@@ -113,6 +119,7 @@ Widget myAppBar({
   IconData? lastIcon,
   VoidCallback? lastButtonTap,
   VoidCallback? arrowTap,
+  bool isLastWidget = false,
 }) {
   return Container(
     width: double.infinity,
@@ -164,6 +171,13 @@ Widget myAppBar({
             IconButton(
                 onPressed: lastButtonTap,
                 icon: Icon(lastIcon,color: defaultColorTwo,)),
+          if(isLastWidget)
+            TextButton(
+                onPressed: (){
+                  navigateAndFinish(context, BuyerLayout());
+                },
+                child: Text(tr('skip'),style: TextStyle(color: defaultColorTwo),),
+            )
         ],
       ),
     ),
@@ -183,4 +197,11 @@ Future showToast ({required String msg , bool? toastState})
        ? toastState ?Colors.yellow[900]
        : Colors.red : Colors.green,
  );
+}
+
+
+checkNet(context) {
+  if (!isConnect!) {
+    navigateAndFinish(context, NoConnect(),);
+  }
 }

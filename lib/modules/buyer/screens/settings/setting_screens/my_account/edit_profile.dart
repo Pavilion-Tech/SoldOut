@@ -40,8 +40,8 @@ class EditProfile extends StatelessWidget {
                     fallback: (context) =>
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                           const CircularProgressIndicator()
+                          children: const[
+                            CircularProgressIndicator()
                           ],
                         ),
                     condition: cubit.getProfileModel != null && state is! GetProfileLoadingState,

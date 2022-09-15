@@ -1,11 +1,17 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../models/vendor_model/vendor_order_model.dart';
 import '../../../../../shared/components/constants.dart';
 import '../../../../../shared/images/images.dart';
 
 
 class VPurchasesProductItem extends StatelessWidget {
-  const VPurchasesProductItem({Key? key}) : super(key: key);
+
+  VPurchasesProductItem({required this.product});
+
+  Products product;
+
 
   @override
   Widget build(BuildContext context) {
@@ -13,18 +19,39 @@ class VPurchasesProductItem extends StatelessWidget {
       height: size!.height*.1 ,
       child: Row(
         children: [
-          Container(
-                height: size!.height*.07, width: size!.width*.25,
-                child: Image.asset(BuyerImages.logo,fit: BoxFit.cover,)
+          SizedBox(
+                height: 70, width: size!.width*.25,
+                child: Image.network(
+                  product.firstImage!,
+                  fit: BoxFit.cover,
+                  errorBuilder: (c,o,s)=>const Icon(Icons.info),
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) {
+                      return child;
+                    }
+                    return Center(
+                      child: CircularProgressIndicator(
+                        value: loadingProgress.expectedTotalBytes != null
+                            ? loadingProgress.cumulativeBytesLoaded /
+                            loadingProgress.expectedTotalBytes!
+                            : null,
+                      ),
+                    );
+                  },
+                )
             ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children:const  [
-                Text('Product Name - Product Name',style: TextStyle(fontWeight: FontWeight.bold),),
-                Spacer(),
-                Text('2 x 10 Sar',style: TextStyle(fontWeight: FontWeight.bold),),
+              children:  [
+                Text(
+                  product.name!,
+                  style:const TextStyle(fontWeight: FontWeight.bold),),
+                const Spacer(),
+                Text(
+                  '(${product.qty} x ${product.piecePrice}) ${tr('sar')}',
+                  style:const TextStyle(fontWeight: FontWeight.bold),),
               ],
             ),
           ),

@@ -7,14 +7,10 @@ class MCustomPaint extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Positioned(
-      top: size!.height * .09,
-      left:myLocale == 'ar'?0: size!.width * .82,
-      child: Container(
-        child: CustomPaint(
-          size: Size(40,(40*0.5833333333333334).toDouble()),
-          painter: RPSCustomPainter(),
-        ),
+    return  Container(
+      child: CustomPaint(
+        size: Size(40,(40*0.5833333333333334).toDouble()),
+        painter: RPSCustomPainter(),
       ),
     );
   }
@@ -36,9 +32,12 @@ class RPSCustomPainter extends CustomPainter{
 
 
     Path path0 = Path();
-    path0.moveTo(size.width,0);
-    path0.lineTo(size.width,size.height);
-    path0.lineTo(size.width*0.4175000,size.height);
+    path0.moveTo(size.width*0.5000000,0);
+    path0.lineTo(size.width*0.499167,size.height*0.9942857);
+    path0.lineTo(0,0);
+    path0.lineTo(size.width,0);
+    path0.moveTo(size.width*0.5000000,0);
+    path0.close();
 
     canvas.drawPath(path0, paint0);
 

@@ -19,7 +19,7 @@ class NavBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: items.map((e) {
           return GestureDetector(
-            onTap: () => cubit.changeIndex(items.indexOf(e)),
+            onTap: () => cubit.changeIndex(items.indexOf(e),context: context),
             child: Container(
                 child: cubit.currentIndex == (items.indexOf(e))
                     ? ClipPolygon(

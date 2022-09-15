@@ -7,6 +7,7 @@ import 'package:soldout/shared/network/local/cache_helper.dart';
 import '../../../../../../shared/components/components.dart';
 import '../../../../../../shared/components/constants.dart';
 import '../../../../../../shared/styles/colors.dart';
+import '../../../screens/settings/settings_cubit/settings_cubit.dart';
 
 class ChangeLangBottomSheet extends StatelessWidget {
   const ChangeLangBottomSheet({Key? key}) : super(key: key);
@@ -52,7 +53,7 @@ class ChangeLangBottomSheet extends StatelessWidget {
                   BuyerCubit.get(context).changeIndex(3);
                   CacheHelper.saveData(key: 'locale', value: context.locale.languageCode);
                   myLocale = context.locale.languageCode;
-                  BuyerCubit.get(context).updateLang(myLocale!);
+                  SettingsCubit.get(context).updateLang(myLocale!);
                 }
                 else
                 {
@@ -60,7 +61,7 @@ class ChangeLangBottomSheet extends StatelessWidget {
                   BuyerCubit.get(context).changeIndex(3);
                   CacheHelper.saveData(key: 'locale', value: context.locale.languageCode);
                   myLocale = context.locale.languageCode;
-                  BuyerCubit.get(context).updateLang(myLocale!);
+                  SettingsCubit.get(context).updateLang(myLocale!);
                 }
               }, text: tr('apply')),
             ],

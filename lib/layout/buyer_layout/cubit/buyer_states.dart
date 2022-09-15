@@ -10,10 +10,6 @@ class ChangeAuctionHintState extends BuyerStates {}
 
 class AddressPickedState extends BuyerStates {}
 
-class GetSettingsSuccess extends BuyerStates {}
-
-class GetSettingsError extends BuyerStates {}
-
 class GetHomeDataLoadingState extends BuyerStates {}
 
 class GetHomeDataSuccessState extends BuyerStates {}
@@ -45,3 +41,11 @@ class SearchSuccessState extends BuyerStates {}
 class SearchWrongState extends BuyerStates {}
 
 class SearchErrorState extends BuyerStates {}
+
+class GetProductLoadingState extends BuyerStates {}
+
+class GetProductSuccessState extends BuyerStates {}
+
+class GetProductWrongState extends BuyerStates {}
+
+class GetProductErrorState extends BuyerStates {}

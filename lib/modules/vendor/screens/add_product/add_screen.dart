@@ -25,7 +25,7 @@ class VendorAddProductScreen extends StatelessWidget {
               ),
               MyContainer(
                 noSize: true,
-                AddProductWidget(),
+                AddOrEditProductWidget(isEdit: false),
               ),
             ],
           ),

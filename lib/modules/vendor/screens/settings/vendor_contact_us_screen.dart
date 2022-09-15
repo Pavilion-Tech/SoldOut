@@ -8,9 +8,7 @@ import '../../../widgets/my_container.dart';
 
 
 class VContactUsScreen extends StatelessWidget {
-  VContactUsScreen({this.haveCart = true});
 
-  bool haveCart;
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +20,6 @@ class VContactUsScreen extends StatelessWidget {
                 context: context,
                 title: 'CONTACT US',
                 isArrowBack: true,
-                isLastIcon: haveCart,
-                lastIcon: Icons.shopping_cart,
-                lastButtonTap: () {
-                  BuyerCubit.get(context).changeIndex(2);
-                  navigateAndFinish(context, BuyerLayout());
-                }
             ),
             MyContainer(
               ContactUsWidget(),

@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:soldout/layout/buyer_layout/cubit/buyer_cubit.dart';
 import 'package:soldout/modules/buyer/screens/cart/cart_cubit/cart_cubit.dart';
 import 'package:soldout/modules/buyer/screens/store_name/store_name_screen.dart';
 import 'package:soldout/modules/buyer/widgets/prodect/product_review.dart';
@@ -17,8 +18,10 @@ class ProductDetails extends StatelessWidget {
   ProductModel? product;
 
 
+
   @override
   Widget build(BuildContext context) {
+
     return Padding(
       padding: EdgeInsetsDirectional.only(
         top: size!.height * .35,
@@ -57,10 +60,17 @@ class ProductDetails extends StatelessWidget {
                 alignment: AlignmentDirectional.center,
                 child: defaultButton(
                     onTap: (){
-                      CartCubit.get(context).addToCart(
-                          qty: 1,
-                          productId: product!.id!
-                      );
+                      if(product!.stock! != 0)
+                      {
+                        CartCubit.get(context).addToCart(
+                          productId: product!.id!,
+                          qty:1,
+                        );
+                      }
+                      else
+                      {
+                        showToast(msg: tr('out_of_stock'));
+                      }
                     },
                     text: tr('add_to_cart')
                 ),
@@ -106,6 +116,15 @@ class ProductDetails extends StatelessWidget {
               '${product!.regularPrice} ${tr('sar')}',
               style:const TextStyle(fontWeight: FontWeight.bold),
             ),
+            if(product!.salePrice !=null)
+              Text(
+                 '${product!.salePrice} ${tr('sar')}',
+                style:const TextStyle(
+                    color: Colors.grey,
+                    fontSize: 10,
+                    decoration: TextDecoration.lineThrough
+                ),
+              ),
             const Spacer(),
               Row(
                 children: [
@@ -147,7 +166,16 @@ class ProductDetails extends StatelessWidget {
         ),
         InkWell(
           onTap: (){
-            navigateTo(context,StoreNameScreen());
+            BuyerCubit.get(context).currentStorePage = 1;
+            BuyerCubit.get(context).getListProductsForStore(
+                id:  product!.store!.id!,
+                text: ''
+            );
+            navigateTo(context,StoreNameScreen(
+              id: product!.store!.id!,
+              title: product!.store!.name,
+            )
+            );
             },
           child:  Text(
             product!.store!.name!,

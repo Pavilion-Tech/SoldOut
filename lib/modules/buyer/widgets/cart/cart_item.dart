@@ -31,6 +31,10 @@ class _CartItemState extends State<CartItem> {
       builder: (context, state) {
         var cubit = CartCubit.get(context);
         currentQnt = widget.model.qty!;
+        if(widget.model.priceChanged!)
+        {
+          showToast(msg: '${tr('price_changed')} (${widget.model.name})');
+        }
         return Stack(
           children: [
             Slidable(
@@ -39,7 +43,7 @@ class _CartItemState extends State<CartItem> {
                 extentRatio: 0.35,
                 motion: InkWell(
                   onTap: () {
-                    cubit.removeToCart(widget.model.productId!);
+                    cubit.removeFromCart(widget.model.productId!);
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -97,7 +101,7 @@ class _CartItemState extends State<CartItem> {
                       ),
                     ),
                     const Spacer(),
-                    if (widget.model.stock == 0)
+                    if (widget.model.stockChanged!)
                       Text(
                         tr('out_of_stock'),
                         style: const TextStyle(
@@ -111,7 +115,7 @@ class _CartItemState extends State<CartItem> {
                             onTap: () {
                               if(currentQnt == 1)
                               {
-                                cubit.removeToCart(widget.model.productId!);
+                                cubit.removeFromCart(widget.model.productId!);
                               }
                               else
                                 {
@@ -156,7 +160,7 @@ class _CartItemState extends State<CartItem> {
                               }
                               else
                                 {
-                                  showToast(msg: 'Stock not Enough');
+                                  showToast(msg: tr('out_of_stock'));
                                 }
 
                             },
@@ -175,7 +179,7 @@ class _CartItemState extends State<CartItem> {
                 ),
               ),
             ),
-            if (widget.model.stock == 0)
+            if (widget.model.stockChanged!)
               Slidable(
                 direction: Axis.horizontal,
                 endActionPane: ActionPane(

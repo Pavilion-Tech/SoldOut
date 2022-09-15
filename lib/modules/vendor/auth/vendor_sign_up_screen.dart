@@ -22,8 +22,11 @@ class VSignUpScreen extends StatelessWidget {
               isArrowBack: true,
             ),
           ),
-          SignWidget(
-            column: VSignUpWidget(),
+          SingleChildScrollView(
+            child: SignWidget(
+              isVSignUp: true,
+              column: VSignUpWidget(),
+            ),
           ),
         ],
       ),

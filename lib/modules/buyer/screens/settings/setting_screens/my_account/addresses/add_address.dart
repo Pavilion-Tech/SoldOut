@@ -3,6 +3,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:soldout/layout/buyer_layout/cubit/buyer_states.dart';
+import 'package:soldout/modules/buyer/screens/settings/settings_cubit/settings_cubit.dart';
+import 'package:soldout/modules/buyer/screens/settings/settings_cubit/settings_states.dart';
 import 'package:soldout/modules/buyer/widgets/settings/settings_screens_widgets/address_widgets/add_address_widget.dart';
 
 import '../../../../../../../layout/buyer_layout/buy_layout_screen.dart';
@@ -31,13 +33,13 @@ class AddAddress extends StatelessWidget {
               navigateAndFinish(context, BuyerLayout());
             }),
         MyContainer(
-            BlocConsumer<BuyerCubit, BuyerStates>(
+            BlocConsumer<SettingsCubit, SettingsStates>(
               listener: (context, state) {},
               builder: (context, state) {
                 return ConditionalBuilder(
                   builder: (context) => AddAddressWidget(isEdit: isEdit,addressId: addressId),
                   fallback: (context) => const CircularProgressIndicator(),
-                  condition: BuyerCubit.get(context).settingsModel != null,
+                  condition: SettingsCubit.get(context).settingsModel != null,
                 );
               },
             ),

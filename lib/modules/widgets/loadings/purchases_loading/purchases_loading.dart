@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:soldout/modules/buyer/widgets/check_out/invoice.dart';
-import 'package:soldout/modules/buyer/widgets/check_out/list_store_item.dart';
+import 'package:soldout/modules/buyer/widgets/check_out/store_checkout_item.dart';
 import 'package:soldout/shared/styles/colors.dart';
 
 import '../../../../../../shared/components/constants.dart';

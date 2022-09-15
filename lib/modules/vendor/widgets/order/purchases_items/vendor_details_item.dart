@@ -1,13 +1,21 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../models/vendor_model/vendor_order_model.dart';
 import '../../../../../shared/components/constants.dart';
 import '../../../../../shared/styles/colors.dart';
 
 class VPurchasesDetailsItem extends StatelessWidget {
-  const VPurchasesDetailsItem({Key? key}) : super(key: key);
+  VPurchasesDetailsItem({required this.model});
+
+  VendorOrderData model;
+  late String time;
 
   @override
   Widget build(BuildContext context) {
+    time =  DateFormat('',myLocale == 'ar'?'ar':'en')
+        .add_yMMMMEEEEd()
+        .format(DateTime.fromMillisecondsSinceEpoch(model.createdAt!));
     return Container(
       height: size!.height * .21,
       decoration: BoxDecoration(
@@ -21,78 +29,59 @@ class VPurchasesDetailsItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '2015356',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900
+            '${model.id!}',
+            style:const TextStyle(fontSize: 18, fontWeight: FontWeight.w900
             ),
           ),
-          SizedBox(height: 5,),
+          const SizedBox(height: 5,),
           Row(
             children: [
-              Icon(
-                Icons.person_outline_outlined,
-                color: Colors.blue,
-              ),
-              SizedBox(
-                width: 10,
-              ),
+              const Icon(Icons.person_outline_outlined, color: Colors.blue,),
+              const SizedBox(width: 10,),
               SizedBox(
                   width: size!.width*.7,
                   child: Text(
-                    'User Name',
-                    style: TextStyle(fontSize: 12),
+                    model.user!.name!,
+                    style:const TextStyle(fontSize: 12),
                     maxLines: 1,
                   ))
             ],
           ),
-          SizedBox(height: 5,),
+          const SizedBox(height: 5,),
           Row(
             children: [
-              Icon(
-                Icons.phone_android,
-                color: Colors.blue,
-              ),
-              SizedBox(
-                width: 10,
-              ),
+              const Icon(Icons.phone_android, color: Colors.blue,),
+              const SizedBox(width: 10,),
               SizedBox(
                   width: size!.width*.7,
                   child: Text(
-                    '01223364710',
-                    style: TextStyle(fontSize: 12),
+                    model.user!.phone!,
+                    style:const TextStyle(fontSize: 12),
                     maxLines: 1,
                   ))
             ],
           ),
-          SizedBox(height: 5,),
+          const SizedBox(height: 5,),
           Row(
             children: [
-              Icon(
-                Icons.location_on_outlined,
-                color: Colors.blue,
-              ),
-              SizedBox(
-                width: 10,
-              ),
+              const Icon(Icons.location_on_outlined, color: Colors.blue,),
+              const SizedBox(width: 10,),
               SizedBox(
                   width: size!.width*.7,
                   child: Text(
-                    '18658 Tillman Plain, North Glennatown, Nevada, Peru',
-                    style: TextStyle(fontSize: 12),
+                    model.shippingAddress!,
+                    style:const  TextStyle(fontSize: 12),
                     maxLines: 1,
                   ))
             ],
           ),
-          Spacer(),
+          const Spacer(),
           Row(
             children: [
+              const Spacer(),
               Text(
-                'New Order',
-                style: TextStyle(color: defaultColor,fontWeight: FontWeight.w900),
-              ),
-              Spacer(),
-              Text(
-                'Date: 20 Jun 2019',
-                style: TextStyle(color: Colors.grey, fontSize: 12),
+                time,
+                style:const TextStyle(color: Colors.grey, fontSize: 12),
               ),
             ],
           ),

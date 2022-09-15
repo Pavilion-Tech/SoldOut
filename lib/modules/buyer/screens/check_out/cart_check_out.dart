@@ -4,22 +4,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:soldout/modules/buyer/screens/cart/cart_cubit/cart_cubit.dart';
 import 'package:soldout/modules/buyer/screens/cart/cart_cubit/cart_states.dart';
-import 'package:soldout/modules/buyer/screens/cart/cart_screen.dart';
+import 'package:soldout/modules/buyer/screens/settings/setting_screens/my_account/addresses/address_cubit/cubit.dart';
 import 'package:soldout/modules/buyer/widgets/check_out/delivery_address.dart';
 import 'package:soldout/modules/buyer/widgets/check_out/discount.dart';
 import 'package:soldout/modules/buyer/widgets/check_out/invoice.dart';
 import 'package:soldout/modules/widgets/loadings/purchases_loading/purchases_loading.dart';
 import 'package:soldout/shared/components/components.dart';
-import '../../widgets/check_out/dialog.dart';
-import '../../widgets/check_out/list_stoe.dart';
+import '../../widgets/check_out/list_store.dart';
 import '../../widgets/check_out/radio.dart';
 import '../../../widgets/my_container.dart';
+import '../settings/setting_screens/my_account/addresses/address_cubit/state.dart';
 
 class CheckOutScreen extends StatelessWidget {
-
-
-  CustomRadio customRadio = CustomRadio(radioValue: 1,);
-
+  CustomRadio customRadio = CustomRadio(
+    radioValue: 0,
+  );
+  late DeliveryAddress deliveryAddress;
+  DiscountWidget discountWidget = DiscountWidget();
 
   @override
   Widget build(BuildContext context) {
@@ -33,43 +34,88 @@ class CheckOutScreen extends StatelessWidget {
                 isLastIcon: true,
                 lastIcon: Icons.shopping_cart,
                 isArrowBack: true,
-                lastButtonTap: () {}
-            ),
+                lastButtonTap: () {}),
             MyContainer(
               end: 0,
               start: 0,
               noSize: true,
               BlocConsumer<CartCubit, CartStates>(
-                listener: (context, state) {},
-                builder: (context, state) {
+                listener: (context, state2) {},
+                builder: (context, state2) {
                   var cubit = CartCubit.get(context);
-                  return ConditionalBuilder(
-                    condition: cubit.getCheckOutModel != null,
-                    fallback: (context)=> PurchasesDetailsLoading(),
-                    builder:(context)=>  Column(
-                      children: [
-                        ListStore(),
-                        select(tr('select_payment_method')),
-                        customRadio,
-                        select(tr('select_delivery_address')),
-                        const DeliveryAddress(),
-                        select(tr('have_discount')),
-                        const DiscountWidget(),
-                        InvoiceWidget(
-                          isBuyPoints: false,
-                          subTotal: cubit.getCheckOutModel!.data!.subTotal!,
-                          shippingCharges: cubit.getCheckOutModel!.data!.totalShippingCharges!,
-                          orderTotal: cubit.getCheckOutModel!.data!.totalCartPrice!,
-                        ),
-                        defaultButton(onTap: () {
-                          print(customRadio.radioValue);
-                          // showDialog(
-                          //     context: context,
-                          //     builder: (context)=>CheckOutDialog()
-                          // );
-                        }, text: tr('pay_now')),
-                      ],
-                    ),
+                  return BlocConsumer<AddressCubit, AddressStates>(
+                    listener: (context, state) {},
+                    builder: (context, state) {
+                      var addressCubit = AddressCubit.get(context);
+                      return ConditionalBuilder(
+                          condition: cubit.getCheckOutModel != null &&
+                              addressCubit.getAddressModel != null,
+                          fallback: (context) => PurchasesDetailsLoading(),
+                          builder: (context) {
+                            deliveryAddress = DeliveryAddress(
+                              getAddressModel: addressCubit.getAddressModel,
+                              addressId: addressCubit.getAddressModel!.data![0].id,
+                            );
+                            return Column(
+                              children: [
+                                ListStore(),
+                                select(tr('select_payment_method')),
+                                customRadio,
+                                select(tr('select_delivery_address')),
+                                deliveryAddress,
+                                select(tr('have_discount')),
+                                discountWidget,
+                                if (cubit.discountModel == null)
+                                  InvoiceWidget(
+                                    isBuyPoints: false,
+                                    subTotal:
+                                        cubit.getCheckOutModel!.data!.subTotal!,
+                                    shippingCharges: cubit.getCheckOutModel!
+                                        .data!.totalShippingCharges!,
+                                    orderTotal: cubit.getCheckOutModel!.data!
+                                        .totalCartPrice!,
+                                  ),
+                                if (cubit.discountModel != null)
+                                  InvoiceWidget(
+                                    isBuyPoints: false,
+                                    subTotal:
+                                        cubit.discountModel!.data!.subTotal!,
+                                    shippingCharges: cubit.discountModel!.data!
+                                        .totalShippingCharges!,
+                                    orderTotal: cubit
+                                        .discountModel!.data!.totalCartPrice!,
+                                  ),
+                                state2 is! CheckOutLoadingState
+                                ?defaultButton(
+                                    onTap: () {
+                                      print(deliveryAddress.addressId);
+                                      print(customRadio.radioValue);
+                                      if(deliveryAddress.addressId !=null
+                                          ||deliveryAddress.addressController.text.isNotEmpty
+                                          &&deliveryAddress.cityDropDownIndex !=null
+                                          &&deliveryAddress.neighborhoodsDropDownIndex !=null
+                                      )
+                                      {
+                                        cubit.checkOut(
+                                            context: context,
+                                            payMethod: customRadio.radioValue,
+                                            neighborhoodId: deliveryAddress.neighborhoodsDropDownIndex,
+                                            cityId: deliveryAddress.cityDropDownIndex,
+                                            address: deliveryAddress.addressController.text.trim(),
+                                            couponCode: discountWidget.couponController.text.trim(),
+                                            userAddressId: deliveryAddress.addressId
+                                        );
+                                      }else
+                                        {
+                                          showToast(msg: 'Select Address First');
+                                        }
+                                    },
+                                    text: tr('pay_now'))
+                                :const CircularProgressIndicator(),
+                              ],
+                            );
+                          });
+                    },
                   );
                 },
               ),
@@ -89,11 +135,8 @@ class CheckOutScreen extends StatelessWidget {
       color: Colors.blue.shade100.withOpacity(.4),
       child: Text(
         text,
-        style: const TextStyle(fontWeight: FontWeight.bold),),
+        style: const TextStyle(fontWeight: FontWeight.bold),
+      ),
     );
   }
-
 }
-
-
-

@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_polygon/flutter_polygon.dart';
 import 'package:soldout/layout/buyer_layout/cubit/buyer_cubit.dart';
 import 'package:soldout/layout/buyer_layout/cubit/buyer_states.dart';
 import 'package:soldout/modules/buyer/widgets/auction/dialog.dart';
@@ -8,11 +9,9 @@ import '../../../../shared/components/constants.dart';
 import '../../../../shared/images/images.dart';
 import '../../../../shared/styles/colors.dart';
 import '../../widgets/auction/auction_details.dart';
-import '../../widgets/auction/custom_paint.dart';
 import '../../widgets/auction/hint.dart';
 import '../../widgets/items_shared/indicator.dart';
 import '../../widgets/items_shared/page_veiw.dart';
-import '../../widgets/prodect/product_details.dart';
 import '../../widgets/prodect/row_in_top.dart';
 
 class AuctionScreen extends StatelessWidget {
@@ -30,15 +29,15 @@ class AuctionScreen extends StatelessWidget {
           var cubit = BuyerCubit.get(context);
           return Stack(
             children: [
-              MPageView(pageController: pageController,images: []),
+              MPageView(pageController: pageController,images:cubit.homeModel!.data!.newProducts![0].images!),
               RowInTop(isProduct: false),
-              if(cubit.showAuctionHint)
-                HintWidget(),
-              if(cubit.showAuctionHint)
-                MCustomPaint(),
-              MIndicator(pageController: pageController,lengthPageView: 0),
+              MIndicator(pageController: pageController,lengthPageView: cubit.homeModel!.data!.newProducts![0].images!.length),
               AuctionDetails(),
-              addCoins(context),
+              if(showAuctionHint==null)
+               const HintWidget(),
+              if(showAuctionHint==null)
+                joinAuction(context),
+              addCoins(),
             ],
           );
         },
@@ -46,7 +45,7 @@ class AuctionScreen extends StatelessWidget {
     );
   }
 
-  Widget addCoins(context) {
+  Widget joinAuction(context) {
     return Align(
       alignment: AlignmentDirectional.bottomCenter,
       child: InkWell(
@@ -83,4 +82,41 @@ class AuctionScreen extends StatelessWidget {
       ),
     );
   }
+
+  Widget addCoins()
+  {
+    return Align(
+      alignment: AlignmentDirectional.bottomEnd,
+      child: Padding(
+        padding: const EdgeInsetsDirectional.only(end: 10,bottom: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(
+              tr('bid'),
+              style:const TextStyle(
+                color: defaultColor,
+                fontWeight: FontWeight.w900,
+                fontSize: 22
+              ),
+            ),
+            SizedBox(
+              height: 70,
+              width: 70,
+              child: ClipPolygon(
+                sides: 4,
+                borderRadius: 15,
+                child: Container(
+                    padding: const EdgeInsets.all(5),
+                    color: defaultColor,
+                    child: const Icon(
+                      Icons.add, color: defaultColorTwo, size: 35,)),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
 }

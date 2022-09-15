@@ -7,7 +7,9 @@ import 'package:soldout/shared/components/components.dart';
 import '../../../../shared/components/constants.dart';
 
 class CheckOutDialog extends StatefulWidget {
-  const CheckOutDialog({Key? key}) : super(key: key);
+  CheckOutDialog({this.orderNum});
+
+  int? orderNum;
 
   @override
   State<CheckOutDialog> createState() => _CheckOutDialogState();
@@ -70,7 +72,7 @@ class _CheckOutDialogState extends State<CheckOutDialog> with SingleTickerProvid
                    text: tr('order_successful'),
                    style:const  TextStyle(fontWeight: FontWeight.bold,),),
                  TextSpan(
-                     text: '2015356',
+                     text: '${widget.orderNum}',
                      style:const  TextStyle(color: Colors.blue,fontWeight: FontWeight.w900)),
                 ]
               )

@@ -13,7 +13,9 @@ class ListProducts extends StatelessWidget {
     return ListView.separated(
       scrollDirection: Axis.horizontal,
       separatorBuilder: (context,index)=>SizedBox(width: size!.width * .020,),
-      itemCount: cubit.homeModel!.data!.newProducts!.length,
+      itemCount: cubit.homeModel!.data!.newProducts!.length > 6
+          ?6
+          :cubit.homeModel!.data!.newProducts!.length,
       itemBuilder: (context,index)=>ProductItem(
           isGrid: false,
           product: cubit.homeModel!.data!.newProducts![index]),

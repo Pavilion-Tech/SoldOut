@@ -4,10 +4,15 @@ import 'package:soldout/shared/components/components.dart';
 
 import '../../../../../../../layout/buyer_layout/buy_layout_screen.dart';
 import '../../../../../../../layout/buyer_layout/cubit/buyer_cubit.dart';
+import '../../../../../../../models/buyer_model/order_model.dart';
 import '../../../../../../widgets/my_container.dart';
 import '../../../../../widgets/settings/settings_screens_widgets/order_widgets/purchases_details_widget.dart';
 
 class PurchasesDetails extends StatelessWidget {
+
+  PurchasesDetails({required this.model});
+
+  OrderData model;
 
 
   @override
@@ -18,7 +23,7 @@ class PurchasesDetails extends StatelessWidget {
           children: [
             myAppBar(
                 context: context,
-                title: '${tr('purchases_details')}5925437',
+                title: '${tr('purchases_details')}${model.id}',
                 isArrowBack: true,
                 isLastIcon: true,
                 lastIcon: Icons.shopping_cart,
@@ -28,7 +33,7 @@ class PurchasesDetails extends StatelessWidget {
                 }
             ),
             MyContainer(
-                PurchasesDetailsWidget(),
+                PurchasesDetailsWidget(model: model),
                 noSize: true
             ),
           ],

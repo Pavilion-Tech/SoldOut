@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:soldout/layout/vendor_layout/cubit/vendor_cubit.dart';
 import 'package:soldout/shared/components/components.dart';
 import '../../../../../../shared/components/constants.dart';
 import '../../../../../../shared/styles/colors.dart';
@@ -33,6 +34,8 @@ class VMyAccountWidget extends StatelessWidget {
               navigateTo(context, VChangePassword());
             }),
             accountItem(tr('manage_products'),(){
+              VendorCubit.get(context).pageProduct = 1;
+              VendorCubit.get(context).getProducts();
               navigateTo(context, VendorManageProductList());
             }),
             InkWell(

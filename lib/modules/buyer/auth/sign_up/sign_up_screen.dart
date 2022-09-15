@@ -13,7 +13,6 @@ class SignUpScreen extends StatelessWidget {
 
   var formKey =GlobalKey<FormState>();
   TextEditingController nameController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +22,7 @@ class SignUpScreen extends StatelessWidget {
         if(state is SignErrorState)showToast(msg:state.msg,toastState: false);
       },
       builder: (context, state) {
+        var cubit = AuthCubit.get(context);
         return Scaffold(
           body: Stack(
             alignment: AlignmentDirectional.center,
@@ -54,7 +54,7 @@ class SignUpScreen extends StatelessWidget {
                       SizedBox(height: size!.height * .01,),
                       defaultTextField(
                           hint: tr('phone'),
-                          controller: phoneController,
+                          controller: cubit.phoneController,
                           type: TextInputType.phone,
                           inputFormatters: [
                             LengthLimitingTextInputFormatter(10),
@@ -78,7 +78,7 @@ class SignUpScreen extends StatelessWidget {
                           {
                             AuthCubit.get(context).sign(
                                 name: nameController.text,
-                                phone: phoneController.text
+                                phone: cubit.phoneController.text.trim()
                             );
                           }
                         },

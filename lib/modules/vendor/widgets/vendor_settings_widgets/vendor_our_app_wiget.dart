@@ -25,7 +25,7 @@ class VOurAppWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             accountItem(tr('contact_us'),(){
-              navigateTo(context, VContactUsScreen(haveCart:false));
+              navigateTo(context, VContactUsScreen());
             }),
             SizedBox(height: 10,),
             accountItem(tr('about_us'),(){

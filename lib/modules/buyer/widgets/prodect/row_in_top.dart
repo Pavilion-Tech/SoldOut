@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_polygon/flutter_polygon.dart';
 import 'package:soldout/layout/buyer_layout/cubit/buyer_cubit.dart';
 import 'package:soldout/layout/buyer_layout/cubit/buyer_states.dart';
+import 'package:soldout/modules/buyer/auth/sign_in/sign_in_screen.dart';
+import 'package:soldout/shared/components/components.dart';
 
 import '../../../../shared/components/constants.dart';
 import '../../../../shared/styles/colors.dart';
@@ -69,7 +71,12 @@ class RowInTop extends StatelessWidget {
                       var cubit = BuyerCubit.get(context);
                       return InkWell(
                         onTap: () {
-                          cubit.updateFav(id!);
+                          if(token != null)
+                          {
+                            cubit.updateFav(id!);
+                          }else{
+                            navigateTo(context, SignInScreen());
+                          }
                         },
                         child: CircleAvatar(
                           backgroundColor: defaultColorTwo,
@@ -90,20 +97,6 @@ class RowInTop extends StatelessWidget {
                 ],
               ),
             ),
-          if(!isProduct)
-            SizedBox(
-              height: 45,
-              width: 45,
-              child: ClipPolygon(
-                sides: 4,
-                borderRadius: 15,
-                child: Container(
-                    padding: const EdgeInsets.all(5),
-                    color: defaultColor,
-                    child: const Icon(
-                      Icons.add, color: defaultColorTwo, size: 16,)),
-              ),
-            )
         ],
       ),
     );

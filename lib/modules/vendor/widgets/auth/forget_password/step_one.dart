@@ -1,12 +1,18 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:soldout/modules/vendor/widgets/auth/forget_password/step_two.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:soldout/modules/vendor/auth/auth_cubit/auth_cubit.dart';
+import 'package:soldout/modules/vendor/auth/auth_cubit/auth_states.dart';
 import 'package:soldout/modules/vendor/widgets/auth/forget_password/step_widget.dart';
 import 'package:soldout/modules/widgets/my_container.dart';
 import 'package:soldout/shared/components/components.dart';
 
+import '../../../auth/vendor_verfication.dart';
+
+
 class ForgetPassword extends StatelessWidget {
-  const ForgetPassword({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -17,35 +23,56 @@ class ForgetPassword extends StatelessWidget {
           Align(
             alignment: AlignmentDirectional.topStart,
             child: myAppBar(
-              context:context,
-              title:tr('forget_password'),
+              context: context,
+              title: tr('forget_password'),
               isArrowBack: true,
             ),
           ),
-          MyContainer(
-            SingleChildScrollView(
-              physics: NeverScrollableScrollPhysics(),
-              child: Column(
-                children: [
-                  StepWidget(
-                    title: tr('step_one_of_three'),
-                    description:tr('enter_email'),
+          BlocConsumer<VAuthCubit, VAuthStates>(
+            listener: (context, state) {
+              if(state is RequestResetSuccessState)
+              {
+                navigateTo(context, VVerificationScreen(isStepTwo: true,));
+              }
+            },
+            builder: (context, state) {
+              return MyContainer(
+                SingleChildScrollView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  child: Column(
+                    children: [
+                      StepWidget(
+                        title: tr('step_one_of_three'),
+                        description: tr('enter_phone'),
+                      ),
+                      const SizedBox(height: 30,),
+                      defaultTextField(
+                          type: TextInputType.phone,
+                          controller: VAuthCubit.get(context).phoneC,
+                          inputFormatters: [
+                            LengthLimitingTextInputFormatter(10),
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
+                          hint: tr('phone_sign_in'),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Phone Must Be Empty';
+                            }
+                          }
+                      ),
+                      const SizedBox(height: 30,),
+                      state is! RequestResetLoadingState
+                      ?defaultButton(
+                          onTap: () {
+                            VAuthCubit.get(context).requestReset();
+                          },
+                          text: tr('next')
+                      ):const CircularProgressIndicator(),
+                    ],
                   ),
-                  const SizedBox(height: 30,),
-                  defaultTextField(
-                      controller: TextEditingController(),
-                      hint: tr('email_address_one'),
-                  ),
-                  const SizedBox(height: 30,),
-                  defaultButton(
-                      onTap: (){
-                        navigateTo(context, VerficationCode());
-                      },
-                      text: tr('next')
-                  ),
-                ],
-              ),
-            ),
+                ),
+              );
+            },
           ),
         ],
       ),

@@ -2,15 +2,26 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:soldout/models/buyer_model/cart_model/get_checkout_model.dart';
 import 'package:soldout/modules/buyer/widgets/check_out/invoice.dart';
-import 'package:soldout/modules/buyer/widgets/check_out/list_store_item.dart';
+import 'package:soldout/modules/buyer/widgets/check_out/store_checkout_item.dart';
+import 'package:soldout/modules/buyer/widgets/settings/settings_screens_widgets/order_widgets/store_order.dart';
 import 'package:soldout/shared/styles/colors.dart';
 
+import '../../../../../../models/buyer_model/order_model.dart';
 import '../../../../../../shared/components/constants.dart';
 
 class PurchasesDetailsWidget extends StatelessWidget {
 
+  PurchasesDetailsWidget({required this.model});
+
+  OrderData model;
+
+  late String time ;
+
   @override
   Widget build(BuildContext context) {
+    time = DateFormat('',myLocale == 'ar'?'ar':'en')
+        .add_yMMMMEEEEd()
+        .format(DateTime.fromMillisecondsSinceEpoch(model.createdAt!));
     return Column(
       children: [
         Container(
@@ -26,38 +37,29 @@ class PurchasesDetailsWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '2015356',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                '${model.id}',
+                style:const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              Spacer(),
+              const Spacer(),
               Row(
                 children: [
-                  Icon(
-                    Icons.location_on_outlined,
-                    color: Colors.blue,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
+                  const Icon(Icons.location_on_outlined, color: Colors.blue,),
+                  const SizedBox(width: 10,),
                   SizedBox(
                     width: size!.width*.7,
                       child: Text(
-                    '18658 Tillman Plain, North Glennatown, Nevada, Peru',
-                    style: TextStyle(fontSize: 12),
-                    maxLines: 1,
+                        model.shippingAddress!,
+                        style:const TextStyle(fontSize: 12),
+                        maxLines: 1,
                   ))
                 ],
               ),
               const Spacer(),
               Row(
                 children: [
-                  Text(
-                    tr('new_order'),
-                    style:const TextStyle(color: defaultColor,fontWeight: FontWeight.bold),
-                  ),
                   const Spacer(),
                   Text(
-                    'Date: 20 Jun 2019',
+                    time,
                     style:const TextStyle(color: Colors.grey, fontSize: 12),
                   ),
                 ],
@@ -69,14 +71,19 @@ class PurchasesDetailsWidget extends StatelessWidget {
         Padding(
           padding:const EdgeInsets.symmetric(vertical: 15),
           child: ListView.separated(
-            itemBuilder: (context, index) => ListStoreItem(isCheckOut: false,),
+            itemBuilder: (context, index) => StoreOrderItem(stores: model.stores![index]),
             separatorBuilder: (context, index) =>const SizedBox(height: 10,),
-            itemCount: 2,
+            itemCount: model.stores!.length,
             shrinkWrap: true,
             physics:const NeverScrollableScrollPhysics(),
           ),
         ),
-        InvoiceWidget(padding: 0),
+        InvoiceWidget(
+        subTotal: model.subTotal,
+        shippingCharges: model.totalShippingCharges,
+        orderTotal: model.totalOrderPrice,
+        padding: 0
+        ),
       ],
     );
   }

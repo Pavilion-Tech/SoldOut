@@ -16,6 +16,8 @@ import '../../../widgets/sign_widget.dart';
 
 
 class VerificationScreen extends StatefulWidget {
+  VerificationScreen({this.isNoty = false});
+  bool isNoty;
 
   @override
   _State createState() => _State();
@@ -23,19 +25,18 @@ class VerificationScreen extends StatefulWidget {
 
 class _State extends State<VerificationScreen> {
 
-  Timer? _timer;
   int _start = 60;
-  bool _timerFinished = false;
 
   void startTimer() {
+    var cubit = AuthCubit.get(context);
     const oneSec = Duration(seconds: 1);
-    _timer = Timer.periodic(
+    cubit.timer = Timer.periodic(
       oneSec,
           (Timer timer) {
         if (_start == 0) {
           setState(() {
             timer.cancel();
-            _timerFinished = true;
+            cubit.timerFinished = true;
           });
         } else {
           setState(() {
@@ -67,16 +68,11 @@ class _State extends State<VerificationScreen> {
     }
   }
 
-  void submit(){
+  void submit(BuildContext context){
     if(checkOTP()){
       if(checkCode()){
         setState(() {
-          CacheHelper.saveData(key: 'token', value: token);
-          _timer!.cancel();
-          _timerFinished = true;
-          CacheHelper.saveData(key: 'code', value: code);
-          showToast(msg: 'Verification Successfully');
-          navigateAndFinish(context, BuyerLayout());
+          AuthCubit.get(context).logIn(context,widget.isNoty);
         });
       }else{
         showToast(msg: 'OTP Code Invalid',toastState: true);
@@ -111,6 +107,7 @@ class _State extends State<VerificationScreen> {
           if(state is GetCodeErrorState)showToast(msg:state.msg,toastState: false);
         },
         builder: (context, state) {
+          var cubit = AuthCubit.get(context);
           return Stack(
             alignment: AlignmentDirectional.center,
             children: [
@@ -122,8 +119,8 @@ class _State extends State<VerificationScreen> {
                     isArrowBack: true,
                     arrowTap: () {
                       setState(() {
-                        _timer!.cancel();
-                        _timerFinished = true;
+                        cubit.timer!.cancel();
+                        cubit.timerFinished = true;
                         Navigator.pop(context);
                       });
                     }
@@ -136,21 +133,21 @@ class _State extends State<VerificationScreen> {
                     SizedBox(height: size!.height * .05,),
                     otpForm(),
                     SizedBox(height: size!.height * .01,),
-                    defaultButton(
-                        onTap: submit,
+                    state is! LoginLoadingState ? defaultButton(
+                        onTap: ()=>submit(context),
                         text: tr('verify')
-                    ),
+                    ):const CircularProgressIndicator(),
                     SizedBox(height: size!.height * .02,),
-                    if(!_timerFinished)
+                    if(!cubit.timerFinished)
                       Text(
                         '00:$_start',
                         style: const TextStyle(color: defaultColor),),
-                    if(_timerFinished)
+                    if(cubit.timerFinished)
                       TextButton(
                         onPressed: () {
-                          _timer;
+                          cubit.timer;
                           _start = 60;
-                          _timerFinished = false;
+                          cubit.timerFinished = false;
                           startTimer();
                           AuthCubit.get(context).getCode();
                         },

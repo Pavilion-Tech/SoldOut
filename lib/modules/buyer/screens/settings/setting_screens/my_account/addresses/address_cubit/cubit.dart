@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:soldout/modules/buyer/screens/settings/setting_screens/my_account/addresses/address_cubit/state.dart';
 import 'package:soldout/shared/components/components.dart';
 import 'package:soldout/shared/components/constants.dart';
@@ -14,6 +15,15 @@ class AddressCubit extends Cubit<AddressStates> {
   static AddressCubit get(context) => BlocProvider.of(context);
 
   GetAddressModel? getAddressModel;
+
+  checkInterNet()async{
+    InternetConnectionChecker().onStatusChange.listen((event) {
+      final state = event == InternetConnectionStatus.connected;
+      isConnect = state;
+      print(isConnect);
+      emit(JustEmitState());
+    });
+  }
 
   void addAddress({
     required String title,

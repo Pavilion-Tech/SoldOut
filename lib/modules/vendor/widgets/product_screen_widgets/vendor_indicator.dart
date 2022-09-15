@@ -5,10 +5,10 @@ import '../../../../shared/components/constants.dart';
 import '../../../../shared/styles/colors.dart';
 
 class VIndicator extends StatelessWidget {
-  VIndicator({required this.pageController});
+  VIndicator({required this.pageController,required this.lengthPageView});
 
   PageController pageController;
-  int lengthPageView = 4;
+  int lengthPageView ;
 
   @override
   Widget build(BuildContext context) {

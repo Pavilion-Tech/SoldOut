@@ -4,12 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:soldout/layout/buyer_layout/cubit/buyer_cubit.dart';
 import 'package:soldout/modules/buyer/screens/settings/setting_screens/my_account/addresses/address_cubit/cubit.dart';
 import 'package:soldout/modules/buyer/screens/settings/setting_screens/my_account/addresses/address_cubit/state.dart';
+import 'package:soldout/modules/buyer/screens/settings/settings_cubit/settings_states.dart';
 import 'package:soldout/shared/components/components.dart';
 import 'package:soldout/shared/styles/colors.dart';
 
 import '../../../../../../layout/buyer_layout/cubit/buyer_states.dart';
 import '../../../../../../models/buyer_model/settings_model.dart';
 import '../../../../../../shared/components/constants.dart';
+import '../../../../screens/settings/settings_cubit/settings_cubit.dart';
 
 class AddAddressWidget extends StatefulWidget {
   AddAddressWidget({Key? key,this.isEdit = false,this.addressId}) : super(key: key);
@@ -36,6 +38,7 @@ class _AddAddressWidgetState extends State<AddAddressWidget> {
 
   TextEditingController addressTitleController = TextEditingController();
   TextEditingController addressController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -69,28 +72,26 @@ class _AddAddressWidgetState extends State<AddAddressWidget> {
             const SizedBox(
               height: 20,
             ),
-            BlocConsumer<BuyerCubit, BuyerStates>(
+            BlocConsumer<SettingsCubit, SettingsStates>(
               listener: (context, state) {},
               builder: (context, state) {
-                var cubit = BuyerCubit.get(context);
+                var cubit = SettingsCubit.get(context);
                 return Column(
                   children: [
                     dropDown(
-                      title: 'city',
-                      focusNode: focusNode,
-                      value: cityDropDownValue,
-                      list: cubit.settingsModel!.data!.cities!,
-                      isCity: true
+                        isCity: true,
+                        list: cubit.settingsModel!.data!.cities!,
+                        value: cityDropDownValue,
+                        title: 'city'
                     ),
                     const SizedBox(height: 20,),
                     if(neighborhoods != null)
                       dropDown(
-                        title: 'city',
-                        focusNode: focusNode2,
-                        value: neighborhoodsDropDownValue,
-                        list: neighborhoods!,
-                        isCity: false
-                    ),
+                          isCity: false,
+                          list: neighborhoods!,
+                          value: neighborhoodsDropDownValue,
+                          title: 'neighborhood'
+                      ),
                   ],
                 );
               },
@@ -117,12 +118,11 @@ class _AddAddressWidgetState extends State<AddAddressWidget> {
   }
 
   Widget dropDown({
-  required FocusNode focusNode,
-  required List<dynamic> list,
-  required String title,
-  required bool isCity,
-  String? value,
-}){
+    required List<dynamic> list,
+    required String title,
+    required bool isCity,
+    String? value,
+  }) {
     return Stack(
       children: [
         Container(
@@ -135,51 +135,52 @@ class _AddAddressWidgetState extends State<AddAddressWidget> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(
-              vertical: 3, horizontal: 15),
+          padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 15),
           child: DropdownButtonFormField(
             isExpanded: true,
-            focusNode: focusNode,
             validator: (value) => value == null ? 'field required' : null,
-            decoration:const InputDecoration(
-                border: InputBorder.none
-            ),
+            decoration: const InputDecoration(border: InputBorder.none),
             borderRadius: BorderRadius.circular(10),
             value: value,
             icon: const Icon(Icons.keyboard_arrow_down),
             items: list.map((items) {
               return DropdownMenuItem(
                 value: items.name,
-                child: InkWell(
-                  onTap: () {
-                    if(isCity){
-                      setState(() {
-                        neighborhoodsDropDownValue = null;
-                        cityDropDownValue = items.name;
-                        neighborhoods = items.neighborhoods!;
-                        cityDropDownIndex = items.id;
-                        if (!focusNode.hasFocus) Navigator.pop(context);
-                      });
-                    }else{
-                      setState(() {
-                        neighborhoodsDropDownValue = items.name;
-                        neighborhoodsDropDownIndex = items.id;
-                        if (!focusNode2.hasFocus) Navigator.pop(context);
-                      });
-                    }
-                  },
-                  child: SizedBox(
-                      height: 60,
-                      width: double.infinity,
-                      child: Text(items.name!)
-                  ),
-                ),
+                child: Text(items.name!),
               );
             }).toList(),
             onChanged: (newValue) {
-              setState(() {
-                value = newValue as String;
-              });
+              if(isCity)
+              {
+                neighborhoodsDropDownValue = null;
+                neighborhoods = null;
+                for(var city in SettingsCubit.get(context).settingsModel!.data!.cities!)
+                {
+                  if(city.name== newValue){
+                    cityDropDownValue = city.name;
+                    neighborhoods = city.neighborhoods!;
+                    cityDropDownIndex = city.id;
+                    print(cityDropDownIndex.toString());
+                    print(neighborhoodsDropDownIndex);
+                    print(neighborhoodsDropDownValue);
+                    setState(() {});
+                  }
+                }
+              }
+              else
+              {
+                for(var city in SettingsCubit.get(context).settingsModel!.data!.cities![cityDropDownIndex! - 1].neighborhoods!)
+                {
+                  if(city.name== newValue){
+                    neighborhoodsDropDownValue = newValue as String;
+                    neighborhoodsDropDownIndex = city.id;
+                    print(neighborhoodsDropDownValue);
+                    print(neighborhoodsDropDownIndex);
+                    setState(() {});
+                  }
+                }
+              }
+
             },
             hint: Text(
               tr(title),
@@ -192,6 +193,7 @@ class _AddAddressWidgetState extends State<AddAddressWidget> {
   }
 
 
+
   void submit(AddressCubit cubit){
     if(formKey.currentState!.validate()){
       if(widget.isEdit){
@@ -200,10 +202,10 @@ class _AddAddressWidgetState extends State<AddAddressWidget> {
             title: addressTitleController.text.trim(),
             address: addressController.text.trim(),
             cityId: cityDropDownIndex!,
-            neighborhoodId: neighborhoodsDropDownIndex!
+            neighborhoodId: neighborhoodsDropDownIndex!,
+
         );
         cubit.getAddress();
-        Navigator.pop(context);
       }else{
         cubit.addAddress(
             title: addressTitleController.text.trim(),

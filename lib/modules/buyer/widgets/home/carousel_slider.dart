@@ -1,10 +1,6 @@
-import 'dart:async';
-
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:soldout/layout/buyer_layout/cubit/buyer_cubit.dart';
-import 'package:soldout/modules/buyer/screens/product/product_screen.dart';
 import 'package:soldout/modules/buyer/screens/store_name/store_name_screen.dart';
 import 'package:soldout/shared/components/components.dart';
 import '../../../../shared/components/constants.dart';
@@ -41,11 +37,19 @@ class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
                     }
                     if(e.type == 'store')
                     {
-                      navigateTo(context, StoreNameScreen());
+                      cubit.currentStorePage = 1;
+                      cubit.getListProductsForStore(
+                          id:  e.id!,
+                          text: ''
+                      );
+                      navigateTo(context, StoreNameScreen(id: e.id!,));
                     }
                     if(e.type == 'product')
                     {
-                      navigateTo(context, ProductScreen());
+                      cubit.getProduct(
+                        id: e.id!,
+                        context: context
+                      );
                     }
 
                   },
@@ -98,6 +102,20 @@ class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
       url,
       width: size!.width * .9,
       fit: BoxFit.cover,
+      errorBuilder: (c,o,s)=>const Icon(Icons.info),
+      loadingBuilder: (context, child, loadingProgress) {
+        if (loadingProgress == null) {
+          return child;
+        }
+        return Center(
+          child: CircularProgressIndicator(
+            value: loadingProgress.expectedTotalBytes != null
+                ? loadingProgress.cumulativeBytesLoaded /
+                loadingProgress.expectedTotalBytes!
+                : null,
+          ),
+        );
+      },
     );
   }
 

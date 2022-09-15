@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:soldout/shared/styles/colors.dart';
 
 class NotificationItem extends StatelessWidget {
-  const NotificationItem({Key? key}) : super(key: key);
+
+  //late String time ;
 
   @override
   Widget build(BuildContext context) {
+    //  time =DateFormat('',myLocale == 'ar'?'ar':'en')
+    //     .add_yMMMMEEEEd()
+    //     .format(DateTime.fromMillisecondsSinceEpoch(reviews.createdAt!));
     return Container(
       padding: const EdgeInsetsDirectional.only(
         top: 8,

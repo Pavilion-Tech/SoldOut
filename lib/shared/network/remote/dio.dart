@@ -9,8 +9,8 @@ class DioHelper {
     dio = Dio(
       BaseOptions(
         baseUrl: 'https://soldout.pavilion-teck.com/api',
-        receiveTimeout: 120000,
-        connectTimeout: 120000,
+        receiveTimeout: 3000000,
+        connectTimeout: 3000000,
         receiveDataWhenStatusError: true,
         validateStatus: (status) => true,
         followRedirects: true,

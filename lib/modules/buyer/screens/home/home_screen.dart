@@ -2,6 +2,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:soldout/modules/buyer/widgets/home/list_arrivals.dart';
 import 'package:soldout/modules/buyer/widgets/home/list_auctions.dart';
 import 'package:soldout/modules/buyer/widgets/home/list_proucts.dart';
 import 'package:soldout/modules/buyer/widgets/shimmers/home_loading/home_loading.dart';
@@ -11,6 +12,7 @@ import '../../../../layout/buyer_layout/cubit/buyer_states.dart';
 import '../../../../shared/components/constants.dart';
 import '../../widgets/home/carousel_slider.dart';
 import '../../widgets/home/category_list_view.dart';
+import '../../widgets/scroll_hint/scroll_hint.dart';
 import '../auction/auction_list_screen.dart';
 import '../search/search_screen.dart';
 
@@ -27,7 +29,8 @@ class HomeScreen extends StatelessWidget {
               isLastIcon: true,
               lastIcon: Icons.search,
               lastButtonTap: () {
-                BuyerCubit.get(context).search();
+                BuyerCubit.get(context).currentSearchPage = 1;
+                BuyerCubit.get(context).getListProductsForSearch();
                 navigateTo(context, SearchScreen());
               },
               height: size!.height * .20
@@ -38,7 +41,7 @@ class HomeScreen extends StatelessWidget {
             builder: (context, state) {
               var cubit = BuyerCubit.get(context);
               return ConditionalBuilder(
-                condition:state is! GetHomeDataLoadingState&&cubit.homeModel != null,
+                condition:cubit.homeModel != null,
                 fallback: (context)=>HomeLoading(),
                 builder:(context)=> Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -59,13 +62,19 @@ class HomeScreen extends StatelessWidget {
                     ),
                     Column(
                       children: [
-                        seeMore(tr('new_arrivals'), () {}),
+                        seeMore(tr('new_arrivals'), () {
+                          navigateTo(context, ListArrivals());
+                        }),
                         Container(
                             height: size!.height * .197,
                             alignment: AlignmentDirectional.centerStart,
                             padding:
                             EdgeInsetsDirectional.only(start: size!.width * .050),
-                            child: ListProducts()
+                            child: ConditionalBuilder(
+                                condition: cubit.homeModel!.data!.newProducts!.isNotEmpty,
+                                fallback: (context)=>
+                              const Center(child: Text('No Arrivals Items Yet'),),
+                                builder:(context) => ListProducts())
                         ),
                         seeMore(tr('new_auctions'), () {
                           navigateTo(context, AuctionsListScreen());
@@ -84,6 +93,8 @@ class HomeScreen extends StatelessWidget {
               );
             },
           ),
+          if(isFirst== null)
+            const ScrollHintScreen()
         ],
       ),
     );

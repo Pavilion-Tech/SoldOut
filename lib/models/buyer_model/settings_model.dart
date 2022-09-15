@@ -16,7 +16,7 @@ class SettingsData {
   String? aboutUs;
   String? terms;
   List<Cities>? cities;
-
+  List<Categories>? categories;
 
   SettingsData.fromJson(Map<String, dynamic> json) {
     aboutUs = json['about_us'];
@@ -25,6 +25,11 @@ class SettingsData {
       cities = <Cities>[];
       json['cities'].forEach((v) {
         cities!.add( Cities.fromJson(v));
+      });
+    }if (json['categories'] != null) {
+      categories = <Categories>[];
+      json['categories'].forEach((v) {
+        categories!.add( Categories.fromJson(v));
       });
     }
 
@@ -36,6 +41,7 @@ class Cities {
   int? id;
   String? name;
   List<Neighborhoods>? neighborhoods;
+
 
 
   Cities.fromJson(Map<String, dynamic> json) {
@@ -58,6 +64,18 @@ class Neighborhoods {
 
 
   Neighborhoods.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+  }
+
+}
+
+class Categories {
+  int? id;
+  String? name;
+
+
+  Categories.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
   }

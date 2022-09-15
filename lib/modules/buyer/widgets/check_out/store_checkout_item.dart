@@ -7,11 +7,9 @@ import 'package:soldout/shared/styles/colors.dart';
 import '../../../../shared/components/constants.dart';
 import '../../screens/settings/setting_screens/my_account/order/rate_review.dart';
 
-class ListStoreItem extends StatelessWidget {
+class StoreCheckOutItem extends StatelessWidget {
 
-  ListStoreItem({this.isCheckOut = true,this.cart});
-
-  bool isCheckOut;
+  StoreCheckOutItem({this.cart});
   Carts? cart;
 
   @override
@@ -46,41 +44,13 @@ class ListStoreItem extends StatelessWidget {
 
   Widget listItem (context,Products product){
     return SizedBox(
-      height:isCheckOut ? size!.height*.09 :size!.height*.13,
+      height:size!.height*.09,
       child: Row(
         children: [
-          if(isCheckOut)
           SizedBox(
               height: size!.height*.07, width: size!.width*.25,
               child: Image.network(product.firstImage!,)
           ),
-          if(!isCheckOut)
-            Stack(
-              alignment: AlignmentDirectional.bottomCenter,
-              children: [
-                SizedBox(
-                    height: size!.height*.12, width: size!.width*.25,
-                    child: Image.asset(BuyerImages.logo,)
-                ),
-                InkWell(
-                  onTap: (){
-                    navigateTo(context, RateAndReview());
-                  },
-                  child: Container(
-                    alignment: AlignmentDirectional.center,
-                    height: size!.height*.02, width: size!.width*.25,
-                    color: Colors.blue.shade100,
-                    child: const Text(
-                      'Rate And Review',
-                      style: TextStyle(
-                          color: defaultColor,
-                          height:1.5,
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold),),
-                  ),
-                ),
-              ],
-            ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(

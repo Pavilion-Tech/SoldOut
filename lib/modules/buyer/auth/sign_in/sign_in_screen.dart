@@ -13,8 +13,9 @@ import '../verification/verification_scren.dart';
 class SignInScreen extends StatelessWidget {
 
 
+  SignInScreen({this.isNoty = false});
+  bool isNoty;
   var forKey = GlobalKey<FormState>();
-  TextEditingController phoneController = TextEditingController();
 
 
   @override
@@ -22,12 +23,14 @@ class SignInScreen extends StatelessWidget {
     return Scaffold(
       body: BlocConsumer<AuthCubit, AuthStates>(
         listener: (context, state) {
+          if(isConnect!=null)checkNet(context);
           if(state is SignSuccessState){
-            navigateTo(context, VerificationScreen());
+            navigateTo(context, VerificationScreen(isNoty: isNoty));
           }
           if(state is SignErrorState)showToast(msg:state.msg,toastState: false);
         },
         builder: (context, state) {
+          var cubit = AuthCubit.get(context);
           return Stack(
             alignment: AlignmentDirectional.center,
             children: [
@@ -36,7 +39,8 @@ class SignInScreen extends StatelessWidget {
                 child: myAppBar(
                   context: context,
                   title: tr('sign_in'),
-                  isArrowBack: true,
+                  isArrowBack: isNoty ?false :true,
+                  isLastWidget:isNoty ?false :true
                 ),
               ),
               SignWidget(
@@ -48,7 +52,7 @@ class SignInScreen extends StatelessWidget {
                       SizedBox(height: size!.height * .01,),
                       defaultTextField(
                           hint: tr('phone_sign_in'),
-                          controller: phoneController,
+                          controller: cubit.phoneController,
                           type: TextInputType.phone,
                           inputFormatters: [
                             LengthLimitingTextInputFormatter(10),
@@ -68,7 +72,7 @@ class SignInScreen extends StatelessWidget {
                         onTap: (){
                           FocusManager.instance.primaryFocus!.unfocus();
                           if(forKey.currentState!.validate()){
-                            AuthCubit.get(context).sign(phone:phoneController.text.trim());
+                            AuthCubit.get(context).sign(phone:cubit.phoneController.text.trim());
                           }
                         },
                       ),

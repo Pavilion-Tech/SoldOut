@@ -33,6 +33,12 @@ dependencies:
   fluttertoast: ^8.0.8
   url_launcher: ^6.1.5
   device_info_plus: ^4.1.2
+  new_version: ^0.3.1
+  internet_connection_checker: ^0.0.1+4
+  path_provider: ^2.0.11
+  webview_flutter: ^3.0.4
+  video_player: ^2.4.7
+  pusher_channels_flutter: ^2.0.1
 
 
 dev_dependencies:

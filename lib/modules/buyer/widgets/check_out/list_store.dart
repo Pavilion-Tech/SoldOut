@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:soldout/modules/buyer/screens/cart/cart_cubit/cart_cubit.dart';
-import 'package:soldout/modules/buyer/widgets/check_out/list_store_item.dart';
+import 'package:soldout/modules/buyer/widgets/check_out/store_checkout_item.dart';
 
 class ListStore extends StatelessWidget {
 
@@ -16,7 +16,7 @@ class ListStore extends StatelessWidget {
       ),
       child: ListView.separated(
         itemBuilder: (context,index)=>
-            ListStoreItem(
+            StoreCheckOutItem(
                 cart:cubit.getCheckOutModel!.data!.carts![index]
             ),
         separatorBuilder: (context,index)=>const SizedBox(height: 20,),

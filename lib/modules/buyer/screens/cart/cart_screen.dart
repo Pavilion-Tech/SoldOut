@@ -5,8 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:soldout/modules/buyer/screens/cart/cart_cubit/cart_cubit.dart';
 import 'package:soldout/modules/buyer/screens/cart/cart_cubit/cart_states.dart';
+import 'package:soldout/modules/buyer/screens/settings/setting_screens/my_account/addresses/address_cubit/cubit.dart';
 import 'package:soldout/modules/buyer/widgets/shimmers/cart_loading/cart_loading.dart';
 import 'package:soldout/shared/components/components.dart';
+import 'package:soldout/shared/images/images.dart';
+import '../../../../shared/components/constants.dart';
+import '../../auth/sign_in/sign_in_screen.dart';
 import '../../widgets/cart/cart_item.dart';
 import '../../../widgets/my_container.dart';
 import '../check_out/cart_check_out.dart';
@@ -28,6 +32,7 @@ class CartScreen extends StatelessWidget {
                 title: tr('shopping_cart'),
               ),
               MyContainer(
+                noSize: true,
                 ConditionalBuilder(
                   condition: cubit.getCartModel != null,
                   fallback: (context)=>const CartLoading(),
@@ -65,13 +70,30 @@ class CartScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 20,),
                           defaultButton(onTap: () {
-                            CartCubit.get(context).getCheckOut();
-                            navigateTo(context, CheckOutScreen());
+                            if(token != null)
+                            {
+                              CartCubit.get(context).getCheckOut();
+                              AddressCubit.get(context).getAddress();
+                              navigateTo(context, CheckOutScreen());
+                            }else{
+                              navigateTo(context, SignInScreen());
+                            }
+
                           }, text: tr('checkout'))
                         ],
                       );
                     }else {
-                      return Center(child: Text(tr('no_items')));
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const SizedBox(height: 150,),
+                          SizedBox(
+                            height: 150,
+                              width: 150,
+                              child: Image.asset(BuyerImages.logo)),
+                          Text(tr('no_items')),
+                        ],
+                      );
                     }
                   }
                 ),

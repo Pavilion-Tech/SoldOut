@@ -20,6 +20,8 @@ class BuyerImages{
   static const box = 'assets/images/box.png';
   static const arrow = 'assets/images/arrow.png';
   static const cart = 'assets/images/cart.png';
+  static const ops = 'assets/images/ops.png';
+  static const update = 'assets/images/update.png';
 
 
 }

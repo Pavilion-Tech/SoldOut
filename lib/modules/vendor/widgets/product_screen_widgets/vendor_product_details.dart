@@ -1,12 +1,20 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:soldout/modules/vendor/widgets/product_screen_widgets/vendor_product_review.dart';
 import 'package:soldout/shared/images/images.dart';
+import '../../../../models/buyer_model/product_model/product_model.dart';
 import '../../../../shared/components/constants.dart';
 import '../../../../shared/styles/colors.dart';
 
 class VProductDetails extends StatelessWidget {
+
+  VProductDetails({
+    required this.productModel,
+  });
+
+  ProductModel productModel;
 
   @override
   Widget build(BuildContext context) {
@@ -37,16 +45,16 @@ class VProductDetails extends StatelessWidget {
                 height: size!.height * .03,
               ),
               detailsItem(
-                const Text(
-                  'Product Name - Product Name - Product Name - Product Name - Product Name - Product NameProduct Name - Product Name - Product Name - Product Name - Product Name - Product NameProduct Name - Product Name - Product Name - Product Name - Product Name - Product NameProduct Name - Product Name - Product Name - Product Name - Product Name - Product NameProduct Name - Product Name - Product Name - Product Name - Product Name - Product NameProduct Name - Product Name - Product Name - Product Name - Product Name - Product NameProduct Name - Product Name - Product Name - Product Name - Product Name - Product NameProduct Name - Product Name - Product Name - Product Name - Product Name - Product NameProduct Name - Product Name - Product Name - Product Name - Product Name - Product NameProduct Name - Product Name - Product Name - Product Name - Product Name - Product NameProduct Name - Product Name - Product Name - Product Name - Product Name - Product NameProduct Name - Product Name - Product Name - Product Name - Product Name - Product Name',
+                 Text(
+                   productModel.desc!,
                   maxLines: 5,
-                  style: TextStyle(height: 1.9),
+                  style:const TextStyle(height: 1.9),
                 ),
               ),
               SizedBox(
                 height: size!.height * .03,
               ),
-              VProductReview(),
+              VProductReview(reviews: productModel.reviews!),
               SizedBox(
                 height: size!.height*.02,
               ),
@@ -75,48 +83,37 @@ class VProductDetails extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Product Name - Product Name - Product Name - Product Name - Product Name - Product Name',
-          maxLines: 2,
-          style: TextStyle(height: 2,fontWeight: FontWeight.bold),
-          overflow: TextOverflow.ellipsis,
+         Text(
+           productModel.name!,
+           maxLines: 2,
+           overflow: TextOverflow.ellipsis,
+           style:const TextStyle(
+              height: 2,
+              fontWeight: FontWeight.bold
+          ),
         ),
-        SizedBox(
-          height: size!.height*.02,
-        ),
+        SizedBox(height: size!.height*.02,),
         Row(
           children: [
-            const  Text(
-              '10000 SAR',
-              style: TextStyle(fontWeight: FontWeight.bold),
+            Text(
+              '${productModel.regularPrice} ${tr('sar')}',
+              style:const TextStyle(fontWeight: FontWeight.bold),
             ),
-            SizedBox(width: 5,),
-            const Text.rich(
-              TextSpan(
-                children: [
-                  TextSpan(
-                      text: '1000 SAR',
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 10,
-                        decoration: TextDecoration.lineThrough
-                      ),
-                  ),
-                  TextSpan(
-                    text: ' 33%',
-                    style: TextStyle(
-                        color: defaultColor,
-                        fontSize: 10,
-                    ),
-                  ),
-                ]
-            ),
-            ),
+            const SizedBox(width: 5,),
+            if(productModel.salePrice!=null)
+              Text(
+                 '${productModel.salePrice} ${tr('sar')}',
+                style:const TextStyle(
+                    color: Colors.grey,
+                    fontSize: 10,
+                    decoration: TextDecoration.lineThrough
+                ),
+              ),
             const Spacer(),
               Row(
                 children: [
                   RatingBar.builder(
-                  initialRating: 4,
+                  initialRating: productModel.rate!.toDouble(),
                   itemSize: 13,
                   direction: Axis.horizontal,
                   ignoreGestures: true,
@@ -126,7 +123,7 @@ class VProductDetails extends StatelessWidget {
                   itemPadding:
                   const EdgeInsets.symmetric(horizontal: 1.0),
                   itemBuilder: (context, index) {
-                    if (4 > index) {
+                    if (productModel.rate! > index) {
                       return Image.asset(BuyerImages.fullStar);
                     } else {
                       return Image.asset(BuyerImages.noStar);
@@ -135,7 +132,7 @@ class VProductDetails extends StatelessWidget {
                   onRatingUpdate: (rating) {},
             ),
                   Text(
-                    '(52)',
+                    '(${productModel.numUsersRate})',
                     style: TextStyle(
                         fontSize: 12, color: Colors.grey.shade400),
                   ),

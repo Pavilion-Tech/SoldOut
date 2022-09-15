@@ -2,8 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:soldout/shared/styles/colors.dart';
 
-class VInvoiceWidget extends StatelessWidget {
+import '../../../../../models/vendor_model/vendor_order_model.dart';
 
+class VInvoiceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {

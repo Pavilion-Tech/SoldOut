@@ -5,7 +5,7 @@ import 'package:soldout/modules/buyer/widgets/check_out/discount.dart';
 import 'package:soldout/modules/buyer/widgets/check_out/invoice.dart';
 import 'package:soldout/shared/components/components.dart';
 import '../../widgets/check_out/dialog.dart';
-import '../../widgets/check_out/list_stoe.dart';
+import '../../widgets/check_out/list_store.dart';
 import '../../widgets/check_out/radio.dart';
 import '../../../widgets/my_container.dart';
 
@@ -38,7 +38,7 @@ class PointsCheckOutScreen extends StatelessWidget {
                   select(tr('select_payment_method')),
                   customRadio,
                   select(tr('have_discount')),
-                  const DiscountWidget(),
+                  DiscountWidget(),
                   InvoiceWidget(isBuyPoints: true),
                   defaultButton(onTap: (){
                     print(customRadio.radioValue);

@@ -1,20 +1,20 @@
 import 'package:soldout/models/buyer_model/product_model/product_model.dart';
 
-class SearchModel {
+class ListProductModel {
   bool? status;
   String? msg;
-  SearchData? data;
+  ListProductsData? data;
 
 
-  SearchModel.fromJson(Map<String, dynamic> json) {
+  ListProductModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     msg = json['msg'];
-    data = json['data'] != null ? SearchData.fromJson(json['data']) : null;
+    data = json['data'] != null ? ListProductsData.fromJson(json['data']) : null;
   }
 
 }
 
-class SearchData {
+class ListProductsData {
   List<ProductModel>? products;
   int? count;
   int? perPage;
@@ -22,7 +22,7 @@ class SearchData {
   int? lastPage;
 
 
-  SearchData.fromJson(Map<String, dynamic> json) {
+  ListProductsData.fromJson(Map<String, dynamic> json) {
     if (json['products'] != null) {
       products = <ProductModel>[];
       json['products'].forEach((v) {

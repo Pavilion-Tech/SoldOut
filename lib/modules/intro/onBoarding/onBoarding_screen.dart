@@ -28,7 +28,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
   void submit()
   {
-    CacheHelper.saveData(key: 'onBoarding', value: true,).then((value)
+    onBoarding = true;
+    CacheHelper.saveData(key: 'onBoarding', value: onBoarding,).then((value)
     {
      navigateAndFinish(context, const SelectType());
     });

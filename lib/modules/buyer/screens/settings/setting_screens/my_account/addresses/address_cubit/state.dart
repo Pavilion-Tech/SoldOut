@@ -2,6 +2,8 @@ abstract class AddressStates {}
 
 class InitState extends AddressStates{}
 
+class JustEmitState extends AddressStates{}
+
 class AddAddressLoadingState extends AddressStates{}
 
 class AddAddressSuccessState extends AddressStates{}

@@ -23,7 +23,7 @@ class VSignInScreen extends StatelessWidget {
             ),
           ),
           SignWidget(
-            column: VSignInWidget(),
+            column: SingleChildScrollView(child: VSignInWidget()),
           ),
         ],
       ),

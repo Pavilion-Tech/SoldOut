@@ -38,9 +38,9 @@ class AuctionCheckOutScreen extends StatelessWidget {
                   select(tr('select_payment_method')),
                   customRadio,
                   select(tr('select_delivery_address')),
-                  const DeliveryAddress(),
+                  DeliveryAddress(),
                   select(tr('have_discount')),
-                  const DiscountWidget(),
+                  DiscountWidget(),
                   InvoiceWidget(isBuyPoints: false),
                   defaultButton(onTap: (){
                     print(customRadio.radioValue);

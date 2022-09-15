@@ -15,7 +15,9 @@ class EditProfileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if(state is UpdateProfileSuccessState)Navigator.pop(context);
+      },
       builder: (context, state) {
         var cubit = AuthCubit.get(context);
         nameController.text = cubit.getProfileModel!.data!.name!;

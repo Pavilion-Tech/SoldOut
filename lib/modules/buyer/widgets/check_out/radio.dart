@@ -6,7 +6,7 @@ import '../../../../shared/styles/colors.dart';
 class CustomRadio extends StatefulWidget {
   CustomRadio({Key? key,required this.radioValue}) : super(key: key);
 
-  int radioValue = 1;
+  int radioValue;
   @override
   _CustomRadioState createState() => _CustomRadioState();
 }
@@ -20,7 +20,7 @@ class _CustomRadioState extends State<CustomRadio> {
     return  Column(
       children: [
         RadioListTile(
-          value: 1,
+          value: 0,
           groupValue: widget.radioValue,
           selected: isSelected,
           onChanged: (int? value) {
@@ -34,7 +34,7 @@ class _CustomRadioState extends State<CustomRadio> {
           title: Text(tr('cash_on_delivery')),
         ),
         RadioListTile(
-          value: 2,
+          value: 1,
           groupValue: widget.radioValue,
           selected: !isSelected,
           toggleable: true,

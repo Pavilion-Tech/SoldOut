@@ -3,6 +3,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:soldout/layout/buyer_layout/cubit/buyer_cubit.dart';
 import 'package:soldout/models/buyer_model/home_model/category_model.dart';
 import 'package:soldout/shared/components/components.dart';
+import 'package:soldout/shared/images/images.dart';
 
 import '../../../../shared/components/constants.dart';
 import '../../screens/categories/categories_screen.dart';
@@ -31,9 +32,11 @@ class CategoryListView extends StatelessWidget {
   Widget categoryListView(CategoryModel model,context) {
     return InkWell(
       onTap: (){
+        BuyerCubit.get(context).currentCategoryPage = 1;
         navigateTo(context, CategoriesScreen(
           products: model.products!,
           name: model.name!,
+          id: model.id!,
         ));
       },
       child: Container(

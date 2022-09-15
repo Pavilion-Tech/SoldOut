@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:soldout/layout/buyer_layout/cubit/buyer_cubit.dart';
 import 'package:soldout/modules/buyer/auth/auth_cubit/auth_cubit.dart';
 import 'package:soldout/modules/buyer/screens/settings/setting_screens/my_account/addresses/address_cubit/cubit.dart';
+import 'package:soldout/modules/buyer/screens/settings/settings_cubit/settings_cubit.dart';
 import 'package:soldout/shared/components/components.dart';
 import '../../../../../../shared/components/constants.dart';
 import '../../../../../../shared/styles/colors.dart';
@@ -46,6 +47,7 @@ class MyAccountWidget extends StatelessWidget {
               navigateTo(context, Favorites());
             }),
             accountItem(tr('my_order_history'),(){
+              SettingsCubit.get(context).getOrder();
               navigateTo(context, OrderHistory());
             }),
             accountItem(tr('my_auctions'),(){

@@ -1,12 +1,18 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+import '../../../../models/buyer_model/product_model/review_model.dart';
 import '../../../../shared/components/constants.dart';
 import '../../../../shared/images/images.dart';
 import '../../../../shared/styles/colors.dart';
 
 class VProductReview extends StatelessWidget {
+
+  VProductReview({required this.reviews});
+
+  List<Reviews> reviews;
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +34,8 @@ class VProductReview extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Product Review',
-            style: TextStyle(
+            tr('product_review'),
+            style:const TextStyle(
                 color: defaultColor,
                 fontSize: 18,
                 fontWeight: FontWeight.bold
@@ -44,7 +50,7 @@ class VProductReview extends StatelessWidget {
             ),
           ),
           ListView.separated(
-            itemBuilder: (context, index) =>reviewProductItem(),
+            itemBuilder: (context, index) =>reviewProductItem(reviews[index]),
             separatorBuilder: (context, index) => Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: Container(
@@ -53,29 +59,32 @@ class VProductReview extends StatelessWidget {
                 color: Colors.grey.shade400,
               ),
             ),
-            itemCount: 5,
+            itemCount: reviews.length,
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
+            physics:const NeverScrollableScrollPhysics(),
           ),
         ],
       ),
     );
   }
 
-  Widget reviewProductItem() {
+  Widget reviewProductItem(Reviews review) {
+    String time =  DateFormat('',myLocale == 'ar'?'ar':'en')
+        .add_yMMMMEEEEd()
+        .format(DateTime.fromMillisecondsSinceEpoch(review.createdAt!));
     return Column(
       children: [
         Row(
           children: [
-            const Text(
-              'User Name',
+             Text(
+               review.userName!,
               maxLines: 1,
-              style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
+              style:const TextStyle(fontSize: 16,fontWeight: FontWeight.bold),
               overflow: TextOverflow.ellipsis,
             ),
-            Spacer(),
+            const Spacer(),
             RatingBar.builder(
-              initialRating: 4,
+              initialRating: review.rate!.toDouble(),
               itemSize: 13,
               direction: Axis.horizontal,
               ignoreGestures: true,
@@ -84,7 +93,7 @@ class VProductReview extends StatelessWidget {
               unratedColor: HexColor('#FFE000'),
               itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
               itemBuilder: (context, index) {
-                if (4 > index) {
+                if (review.rate! > index) {
                   return Image.asset(BuyerImages.fullStar);
                 } else {
                   return Image.asset(BuyerImages.noStar);
@@ -94,21 +103,17 @@ class VProductReview extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(
-          height: size!.height * .02,
-        ),
+        SizedBox(height: size!.height * .02,),
         Text(
-          'Product Name - Product Name - Product Name - Product Name - Product Name - Product NameProduct Name - Product Name - Product Name - Product Name - Product Name - Product NameProduct Name - Product Name - Product Name - Product Name - Product Name - Product NameProduct Name - Product Name - Product Name - Product Name - Product Name - Product NameProduct Name - Product Name - Product Name - Product Name - Product Name - Product NameProduct Name - Product Name - Product Name - Product Name - Product Name - Product NameProduct Name - Product Name - Product Name - Product Name - Product Name - Product NameProduct Name - Product Name - Product Name - Product Name - Product Name - Product NameProduct Name - Product Name - Product Name - Product Name - Product Name - Product NameProduct Name - Product Name - Product Name - Product Name - Product Name - Product NameProduct Name - Product Name - Product Name - Product Name - Product Name - Product NameProduct Name - Product Name - Product Name - Product Name - Product Name - Product Name',
+          review.review!,
           maxLines: 5,
-          style: TextStyle(height: 1.9),
+          style:const TextStyle(height: 1.9),
         ),
-        SizedBox(
-          height: size!.height * .01,
-        ),
+        SizedBox(height: size!.height * .01,),
         Align(
           alignment: AlignmentDirectional.centerEnd,
           child: Text(
-            '19, May, 2022 , 12:00 AM',
+            time,
             style: TextStyle(fontSize: 12, color: Colors.grey.shade400),
           ),
         ),
