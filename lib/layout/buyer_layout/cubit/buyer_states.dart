@@ -8,8 +8,6 @@ class JustEmitState extends BuyerStates {}
 
 class ChangeAuctionHintState extends BuyerStates {}
 
-class AddressPickedState extends BuyerStates {}
-
 class GetHomeDataLoadingState extends BuyerStates {}
 
 class GetHomeDataSuccessState extends BuyerStates {}
@@ -49,3 +47,9 @@ class GetProductSuccessState extends BuyerStates {}
 class GetProductWrongState extends BuyerStates {}
 
 class GetProductErrorState extends BuyerStates {}
+
+class GetNotificationLoadingState extends BuyerStates {}
+
+class GetNotificationSuccessState extends BuyerStates {}
+
+class GetNotificationErrorState extends BuyerStates {}

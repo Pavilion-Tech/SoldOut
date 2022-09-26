@@ -13,7 +13,6 @@ import '../../../../shared/components/constants.dart';
 import '../../widgets/home/carousel_slider.dart';
 import '../../widgets/home/category_list_view.dart';
 import '../../widgets/scroll_hint/scroll_hint.dart';
-import '../auction/auction_list_screen.dart';
 import '../search/search_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -35,7 +34,6 @@ class HomeScreen extends StatelessWidget {
               },
               height: size!.height * .20
           ),
-          //HomeLoading(),
           BlocConsumer<BuyerCubit, BuyerStates>(
             listener: (context, state) {},
             builder: (context, state) {
@@ -62,7 +60,8 @@ class HomeScreen extends StatelessWidget {
                     ),
                     Column(
                       children: [
-                        seeMore(tr('new_arrivals'), () {
+                        if(cubit.homeModel!.data!.newProducts!.isNotEmpty)
+                          seeMore(tr('new_arrivals'), () {
                           navigateTo(context, ListArrivals());
                         }),
                         Container(
@@ -73,18 +72,24 @@ class HomeScreen extends StatelessWidget {
                             child: ConditionalBuilder(
                                 condition: cubit.homeModel!.data!.newProducts!.isNotEmpty,
                                 fallback: (context)=>
-                              const Center(child: Text('No Arrivals Items Yet'),),
-                                builder:(context) => ListProducts())
+                                    Center(child: Text(tr('no_arrivals')),),
+                                builder:(context) =>const ListProducts())
                         ),
+                        if(cubit.homeModel!.data!.newAuctions!.isNotEmpty)
                         seeMore(tr('new_auctions'), () {
-                          navigateTo(context, AuctionsListScreen());
+                          cubit.getHomeData(context,isAuction: true);
                         }),
                         Container(
                             height: size!.height * .20,
                             alignment: AlignmentDirectional.centerStart,
                             padding:
                             EdgeInsetsDirectional.only(start: size!.width * .050),
-                            child: ListAuctions()),
+                            child:ConditionalBuilder(
+                                condition: cubit.homeModel!.data!.newAuctions!.isNotEmpty,
+                                fallback:(context)=> Center(child: Text(tr('no_auctions'))),
+                                builder:(context)=>  const ListAuctions()
+                            )
+                        ),
                         SizedBox(height: size!.height * .02),
                       ],
                     ),

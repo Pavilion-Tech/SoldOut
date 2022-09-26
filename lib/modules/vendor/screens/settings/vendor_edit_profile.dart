@@ -52,7 +52,7 @@ class VEditProfile extends StatelessWidget {
                             hint: tr('store_name'),
                             validator: (value){
                               if(value!.isEmpty){
-                                return 'Store Name Must Be Empty';
+                                return tr('store_empty');
                               }
                             }
                           ),

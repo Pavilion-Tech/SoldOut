@@ -41,7 +41,7 @@ class ListArrivals extends StatelessWidget {
                     fallback: (context)=>Column(
                       children: [
                         SizedBox(height: size!.height*.4),
-                        const Text('No Items Yet')
+                        Text(tr('no_arrivals'))
                       ],
                     ),
                     builder: (context)=>GridViewWidget(

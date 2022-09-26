@@ -56,7 +56,7 @@ class ForgetPassword extends StatelessWidget {
                           hint: tr('phone_sign_in'),
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return 'Phone Must Be Empty';
+                              return tr('phone_empty');
                             }
                           }
                       ),

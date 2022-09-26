@@ -52,7 +52,7 @@ class AuctionScreen extends StatelessWidget {
         onTap: () {
           showDialog(
               context: context,
-              builder: (context) => AuctionDialog(),
+              builder: (context) =>const AuctionDialog(),
           );
         },
         child: Container(
@@ -62,7 +62,7 @@ class AuctionScreen extends StatelessWidget {
             color: defaultColor,
             borderRadius: BorderRadiusDirectional.circular(10),
           ),
-          padding: EdgeInsets.symmetric(horizontal: 20),
+          padding:const EdgeInsets.symmetric(horizontal: 20),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

@@ -11,7 +11,6 @@ import 'package:soldout/shared/styles/colors.dart';
 import 'layout/buyer_layout/cubit/buyer_cubit.dart';
 import 'layout/vendor_layout/cubit/vendor_cubit.dart';
 import 'layout/vendor_layout/vendor_layout_screen.dart';
-import 'modules/buyer/widgets/scroll_hint/scroll_hint.dart';
 import 'modules/intro/onBoarding/onBoarding_screen.dart';
 import 'modules/intro/select_type/select_type.dart';
 
@@ -42,14 +41,14 @@ class _SplashScreenState extends State<SplashScreen> {
           VendorCubit.get(context).getStatistic(context:context);
           navigateAndFinish(context, VendorLayout());
         } else {
-          navigateAndFinish(context, SelectType());
+          navigateAndFinish(context,const SelectType());
         }
       } else {
-        navigateAndFinish(context, OnBoardingScreen());
+        navigateAndFinish(context,const OnBoardingScreen());
       }
-
-
     });
+
+
     super.initState();
   }
 
@@ -69,7 +68,7 @@ class _SplashScreenState extends State<SplashScreen> {
           return Container(
             alignment: AlignmentDirectional.center,
             child: Image.asset(
-              BuyerImages.splashLogo, width: size!.width * .7,),
+              BuyerImages.logo, width: size!.width * .7,),
           );
         },
       ),

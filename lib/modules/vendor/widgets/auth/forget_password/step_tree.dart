@@ -54,7 +54,7 @@ class ResetPassword extends StatelessWidget {
                             isPassword: cubit.resetPassword,
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return 'Password Must Be Empty';
+                                return tr('password_empty');
                               }
                             },
                             suffix: IconButton(
@@ -71,10 +71,10 @@ class ResetPassword extends StatelessWidget {
                             isPassword: cubit.resetCPassword,
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return 'Confirm Password Must Be Empty';
+                                return tr('cPassword_empty');
                               }
                               if (value != passwordController.text) {
-                                return 'Confirm Password not correct';
+                                return tr('cPassword_not_correct');
                               }
                             },
                             suffix: IconButton(

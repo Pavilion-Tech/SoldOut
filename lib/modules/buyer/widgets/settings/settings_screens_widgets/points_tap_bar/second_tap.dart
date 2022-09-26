@@ -20,11 +20,11 @@ class SecondTap extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Container(
+            SizedBox(
                 height: 70,
                 width: 70,
                 child: Image.asset(BuyerImages.points,height: 70,width: 70,)),
-            SizedBox(height: 30,),
+            const SizedBox(height: 30,),
             Text.rich(
               TextSpan(
                   children: [

@@ -34,24 +34,24 @@ class EditProfileWidget extends StatelessWidget {
                       style: const TextStyle(
                           fontSize: 16, fontWeight: FontWeight.bold),
                     )),
-                SizedBox(height: 30,),
+                const SizedBox(height: 30,),
                 defaultTextField(
                     controller: nameController,
                     hint: tr('full_name_two'),
                     validator: (String? value) {
                       if (value!.isEmpty) {
-                        return 'Name Must Be Empty';
+                        return tr('name_empty');
                       }
                     }
                 ),
-                SizedBox(height: 15,),
+                const SizedBox(height: 15,),
                 defaultTextField(
                     controller: phoneController,
                     hint: tr('phone_sign_in'),
                     color: Colors.grey.shade200,
                     readOnly: true
                 ),
-                SizedBox(height: 15,),
+                const SizedBox(height: 15,),
                 defaultButton(
                     onTap: () {
                       FocusManager.instance.primaryFocus!.unfocus();

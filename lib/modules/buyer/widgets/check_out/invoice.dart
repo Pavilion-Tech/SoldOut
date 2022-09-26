@@ -47,7 +47,7 @@ class InvoiceWidget extends StatelessWidget {
                           tr('sub_total'),
                           style:const  TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Spacer(),
+                        const Spacer(),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [

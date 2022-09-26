@@ -44,7 +44,8 @@ class VMyAccountWidget extends StatelessWidget {
               },
               child:  Text(
                   tr('change_lang'),
-                  style:const TextStyle(fontWeight: FontWeight.bold)),
+                  style:const TextStyle(fontWeight: FontWeight.bold)
+              ),
             ),
           ],
         ),

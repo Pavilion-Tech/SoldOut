@@ -63,6 +63,9 @@ class VProductReview extends StatelessWidget {
             shrinkWrap: true,
             physics:const NeverScrollableScrollPhysics(),
           ),
+          if(reviews.isEmpty)
+            Text(tr('no_review')),
+            const SizedBox(height: 20,),
         ],
       ),
     );

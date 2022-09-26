@@ -46,44 +46,27 @@ class VProductItem extends StatelessWidget {
             ),
             child: Column(
               children: [
-                Stack(
-                  children: [
-                    SizedBox(
-                      height: size!.height * .11,
-                      width: size!.width * .5,
-                      child: Image.network(
-                        productModel.images![0].image!,
-                        fit: BoxFit.cover,
-                        errorBuilder: (c,o,s)=>const Icon(Icons.info),
-                        loadingBuilder: (context, child, loadingProgress) {
-                          if (loadingProgress == null) {
-                            return child;
-                          }
-                          return Center(
-                            child: CircularProgressIndicator(
-                              value: loadingProgress.expectedTotalBytes != null
-                                  ? loadingProgress.cumulativeBytesLoaded /
-                                  loadingProgress.expectedTotalBytes!
-                                  : null,
-                            ),
-                          );
-                        },
-
-                      ),
-                    ),
-                    Positioned(
-                      top: -size!.height * .010,
-                      right: -size!.width * .03,
-                      left: size!.width * .35,
-                      child: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.favorite_border_sharp,
-                          color: Colors.blue, size: 18,
+                SizedBox(
+                  height: size!.height * .11,
+                  width: size!.width * .5,
+                  child: Image.network(
+                    productModel.images![0].image!,
+                    fit: BoxFit.cover,
+                    errorBuilder: (c,o,s)=>const Icon(Icons.info),
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) {
+                        return child;
+                      }
+                      return Center(
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                              loadingProgress.expectedTotalBytes!
+                              : null,
                         ),
-                      ),
-                    ),
-                  ],
+                      );
+                    },
+                  ),
                 ),
                 SizedBox(height: size!.height * .009,),
                 Padding(
@@ -130,7 +113,7 @@ class VProductItem extends StatelessWidget {
                                 Row(
                                   children: [
                                     Text(
-                                      '${productModel.regularPrice} SAR',
+                                      '${productModel.regularPrice}',
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: const TextStyle(
@@ -140,10 +123,10 @@ class VProductItem extends StatelessWidget {
                                       ),
                                     ),
                                     if(productModel.salePrice !=null)
-                                      Container(
+                                      SizedBox(
                                         width: 50,
                                         child: Text(
-                                          '${productModel.salePrice} ${productModel.regularPrice! < 99999 ?tr('sar'):''}',
+                                          '${productModel.salePrice}',
                                           style:const TextStyle(
                                               color: Colors.grey,
                                               fontSize: 7,

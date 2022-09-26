@@ -20,9 +20,9 @@ class SettingsWiget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(tr('my_account')),
-        MyAccountWidget(),
+        const MyAccountWidget(),
         Text(tr('our_app')),
-        OurAppWidget(),
+        const OurAppWidget(),
         BlocConsumer<AuthCubit, AuthStates>(
           listener: (context, state) {},
           builder: (context, state) {

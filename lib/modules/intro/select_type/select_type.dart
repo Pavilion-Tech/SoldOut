@@ -1,8 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:soldout/layout/buyer_layout/cubit/buyer_cubit.dart';
 import '../../../../shared/components/components.dart';
 import '../../../../shared/components/constants.dart';
 import '../../../../shared/styles/colors.dart';
+import '../../../shared/firebase_helper/dynamic_links.dart';
 import '../../buyer/auth/sign_in/sign_in_screen.dart';
 import '../../vendor/auth/vendor_sign_in_screen.dart';
 
@@ -12,6 +14,14 @@ class SelectType extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    DynamicLinksClient.initDynamicLinks((String? value)
+    {
+      if(value!=null){
+        BuyerCubit.get(context).getProduct(id: int.parse(value));
+      }
+    });
+
     return Scaffold(
       body: Container(
         alignment: AlignmentDirectional.bottomCenter,

@@ -40,7 +40,7 @@ class VChangePassword extends StatelessWidget {
                             isPassword: cubit.oldPassword,
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return 'Old Password Must Be Empty';
+                                return tr('oPassword_empty');
                               }
                             },
                             suffix: IconButton(
@@ -51,14 +51,14 @@ class VChangePassword extends StatelessWidget {
                                     ? Icons.visibility
                                     : Icons.visibility_off))
                         ),
-                        SizedBox(height: 15,),
+                        const SizedBox(height: 15,),
                         defaultTextField(
                             hint: tr('new_password'),
                             controller: password,
                             isPassword: cubit.newPassword,
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return 'New Password Must Be Empty';
+                                return tr('nPassword_empty');
                               }
                             },
                             suffix: IconButton(
@@ -69,17 +69,17 @@ class VChangePassword extends StatelessWidget {
                                     ? Icons.visibility
                                     : Icons.visibility_off))
                         ),
-                        SizedBox(height: 15,),
+                        const SizedBox(height: 15,),
                         defaultTextField(
                             hint: tr('confirm_new_password'),
                             controller: passwordC,
                             isPassword: cubit.cNewPassword,
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return 'Confirm Password Must Be Empty';
+                                return tr('cPassword_empty');
                               }
                               if (value != password.text) {
-                                return 'Confirm Password not correct';
+                                return tr('cPassword_not_correct');
                               }
                             },
                             suffix: IconButton(
@@ -89,7 +89,7 @@ class VChangePassword extends StatelessWidget {
                                 icon: Icon(cubit.cNewPassword
                                     ? Icons.visibility
                                     : Icons.visibility_off))),
-                        SizedBox(height: 15,),
+                        const SizedBox(height: 15,),
                         state is! ChangePasswordLoadingState
                         ? defaultButton(
                             onTap: () {

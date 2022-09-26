@@ -26,20 +26,20 @@ class OurAppWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             accountItem(tr('contact_us'),(){
-              navigateTo(context, ContactUsScreen());
+              navigateTo(context,const ContactUsScreen());
             }),
-            SizedBox(height: 10,),
+            const SizedBox(height: 10,),
             accountItem(tr('about_us'),(){
               navigateTo(context, AboutUsScreen());
             }),
-            SizedBox(height: 10,),
+            const SizedBox(height: 10,),
             accountItem(tr('terms_conditions'),(){
               navigateTo(context, TermsAndConditionsScreen());
             }),
             Row(
               children: [
                 Text(tr('powered_by')),
-                Container(
+                SizedBox(
                   height: 60,
                   width: 100,
                   child: Stack(
@@ -71,8 +71,8 @@ class OurAppWidget extends StatelessWidget {
       child: Row(
         children: [
           Text(title),
-          Spacer(),
-          Icon(Icons.arrow_forward_ios,size: 14,),
+          const Spacer(),
+          const Icon(Icons.arrow_forward_ios,size: 14,),
         ],
       ),
     );

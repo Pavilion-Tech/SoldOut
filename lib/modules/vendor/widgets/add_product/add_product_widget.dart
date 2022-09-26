@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +8,6 @@ import 'package:soldout/layout/vendor_layout/cubit/vendor_cubit.dart';
 import 'package:soldout/layout/vendor_layout/cubit/vendor_states.dart';
 import 'package:soldout/modules/buyer/screens/settings/settings_cubit/settings_cubit.dart';
 import 'package:soldout/shared/components/components.dart';
-
 import '../../../../models/buyer_model/product_model/product_model.dart';
 import '../../../../shared/components/constants.dart';
 import '../../../../shared/styles/colors.dart';
@@ -17,7 +15,7 @@ import '../../../widgets/loadings/edit_loading/edit_loading.dart';
 import '../manage_product_widgets/delet_dialog.dart';
 
 class AddOrEditProductWidget extends StatelessWidget {
-  AddOrEditProductWidget({required this.isEdit,this.productModel});
+  AddOrEditProductWidget({required this.isEdit, this.productModel});
 
   var formKey = GlobalKey<FormState>();
 
@@ -25,56 +23,53 @@ class AddOrEditProductWidget extends StatelessWidget {
 
   ProductModel? productModel;
 
+  bool isCompleted = false;
 
   @override
-   Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     var cubit = VendorCubit.get(context);
-    if(productModel != null&&productModel!.images!.length != cubit.imagesId.length)
-    {
-
-      cubit.nameC.text =productModel!.name!;
-      cubit.descC.text =productModel!.desc!;
-      cubit.descC.text =productModel!.desc!;
+    print(isCompleted);
+    if (productModel != null &&
+        productModel!.images!.length != cubit.imagesId.length &&
+        !isCompleted) {
+      cubit.nameC.text = productModel!.name!;
+      cubit.descC.text = productModel!.desc!;
+      cubit.descC.text = productModel!.desc!;
       cubit.dropDownId = productModel!.categoryId;
       cubit.qnt.text = productModel!.stock!.toString();
       cubit.weight.text = productModel!.weight!.toString();
       cubit.price.text = productModel!.regularPrice!.toString();
       cubit.priceAfterDiscount.text = productModel!.salePrice!.toString();
 
-      for(var cate in SettingsCubit.get(context).settingsModel!.data!.categories!)
-      {
-        if(cate.id == productModel!.categoryId)
-        {
+      for (var cate
+          in SettingsCubit.get(context).settingsModel!.data!.categories!) {
+        if (cate.id == productModel!.categoryId) {
           cubit.dropDownValue = cate.name;
         }
       }
-        for(var image in productModel!.images!)
-        {
-          cubit.addImageToList(image.image!);
-          cubit.imagesId.add(image.id!);
-
-        }
+      for (var image in productModel!.images!) {
+        cubit.addImageToList(image.image!);
+        cubit.imagesId.add(image.id!);
+      }
+      isCompleted = true;
     }
     return BlocConsumer<VendorCubit, VendorStates>(
       listener: (context, state) {
-        if(isEdit)
-        {
-
-          if(state is ProductSuccessState)
-          {
+        if (isEdit) {
+          if (state is ProductSuccessState) {
             productModel = null;
             Navigator.pop(context);
           }
         }
-
       },
       builder: (context, state) {
         var cubit = VendorCubit.get(context);
 
         return ConditionalBuilder(
-          condition: productModel !=null ? cubit.imageFileList.isNotEmpty :true,
-          fallback: (context)=>const EditLoading(),
-          builder: (context)=> Form(
+          condition:
+              productModel != null ? cubit.imageFileList.isNotEmpty : true,
+          fallback: (context) => const EditLoading(),
+          builder: (context) => Form(
             key: formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,7 +81,9 @@ class AddOrEditProductWidget extends StatelessWidget {
                     fontSize: 22,
                   ),
                 ),
-                const SizedBox(height: 5,),
+                const SizedBox(
+                  height: 5,
+                ),
                 Text(
                   tr('indicates'),
                   style: const TextStyle(
@@ -97,15 +94,15 @@ class AddOrEditProductWidget extends StatelessWidget {
                   height: 15,
                 ),
                 defaultTextField(
-                    controller: cubit.nameC,
-                    hint: tr('product_name'),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Product Name Must Be Empty';
-                      }
-                    },
-                  onChanged: (value)=>formKey.currentState!.validate(),
-                    ),
+                  controller: cubit.nameC,
+                  hint: tr('product_name'),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return tr('product_empty');
+                    }
+                  },
+                  onChanged: (value) => formKey.currentState!.validate(),
+                ),
                 const SizedBox(
                   height: 15,
                 ),
@@ -120,18 +117,20 @@ class AddOrEditProductWidget extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                   child: TextFormField(
-                      onChanged: (value)=>formKey.currentState!.validate(),
+                      onChanged: (value) => formKey.currentState!.validate(),
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: tr('Description'),
                         hintStyle: TextStyle(
-                            color: HexColor('#A0AEC0'), fontSize: 16, height: 2),
+                            color: HexColor('#A0AEC0'),
+                            fontSize: 16,
+                            height: 2),
                       ),
                       maxLines: 5,
                       controller: cubit.descC,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'Description Must Be Empty';
+                          return tr('description_empty');
                         }
                       }),
                 ),
@@ -150,12 +149,12 @@ class AddOrEditProductWidget extends StatelessWidget {
                   ),
                   if (SettingsCubit.get(context).settingsModel != null)
                     Padding(
-                      padding:
-                          const EdgeInsets.symmetric(vertical: 3, horizontal: 15),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 3, horizontal: 15),
                       child: DropdownButtonFormField(
                         isExpanded: true,
                         validator: (value) =>
-                            value == null ? 'field required' : null,
+                            value == null ? tr('field_required') : null,
                         decoration:
                             const InputDecoration(border: InputBorder.none),
                         borderRadius: BorderRadius.circular(10),
@@ -193,77 +192,71 @@ class AddOrEditProductWidget extends StatelessWidget {
                       ),
                     ),
                 ]),
-                const SizedBox(
-                  height: 15,
-                ),
+                const SizedBox(height: 15,),
                 Row(
                   children: [
                     Expanded(
                       child: defaultTextField(
                           type: TextInputType.number,
                           controller: cubit.qnt,
-                          onChanged: (value)=>formKey.currentState!.validate(),
+                          onChanged: (value) =>
+                              formKey.currentState!.validate(),
                           hint: tr('quantity'),
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return 'Quantity Name Must Be Empty';
+                              return tr('quantity_empty');
                             }
                           }),
                     ),
-                    const SizedBox(
-                      width: 10,
-                    ),
+                    const SizedBox(width: 10,),
                     Expanded(
                       child: defaultTextField(
                           type: TextInputType.number,
                           controller: cubit.weight,
-                          onChanged: (value)=>formKey.currentState!.validate(),
+                          onChanged: (value) =>
+                              formKey.currentState!.validate(),
                           hint: tr('weight'),
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return 'Weight Name Must Be Empty';
+                              return tr('weight_empty');
                             }
                           }),
                     )
                   ],
                 ),
-                const SizedBox(
-                  height: 15,
-                ),
+                const SizedBox(height: 15,),
                 Row(
                   children: [
                     Expanded(
                       child: defaultTextField(
                           type: TextInputType.number,
                           controller: cubit.price,
-                          onChanged: (value)=>formKey.currentState!.validate(),
+                          onChanged: (value) =>
+                              formKey.currentState!.validate(),
                           hint: tr('price'),
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return 'Price Name Must Be Empty';
+                              return tr('price_empty');
                             }
                           }),
                     ),
-                    const SizedBox(
-                      width: 10,
-                    ),
+                    const SizedBox(width: 10,),
                     Expanded(
                       child: defaultTextField(
                           type: TextInputType.number,
                           controller: cubit.priceAfterDiscount,
-                          onChanged: (value)=>formKey.currentState!.validate(),
+                          onChanged: (value) =>
+                              formKey.currentState!.validate(),
                           hint: tr('price_after_discount'),
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return 'Price After Discount Name Must Be Empty';
+                              return tr('price_after_empty');
                             }
                           }),
                     )
                   ],
                 ),
-                const SizedBox(
-                  height: 15,
-                ),
+                const SizedBox(height: 15,),
                 InkWell(
                   onTap: () {
                     cubit.selectImages();
@@ -276,8 +269,8 @@ class AddOrEditProductWidget extends StatelessWidget {
                       border: Border.all(color: Colors.grey.shade200),
                     ),
                     alignment: AlignmentDirectional.center,
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 15),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -300,12 +293,12 @@ class AddOrEditProductWidget extends StatelessWidget {
                   SizedBox(
                     height: 150,
                     width: double.infinity,
-                    child:GridView.builder(
+                    child: GridView.builder(
                         itemCount: cubit.imageFileList.length,
                         scrollDirection: Axis.horizontal,
                         gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 1),
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 1),
                         itemBuilder: (BuildContext context, int index) {
                           return Stack(
                               alignment: AlignmentDirectional.center,
@@ -320,7 +313,10 @@ class AddOrEditProductWidget extends StatelessWidget {
                                     onPressed: () {
                                       cubit.imageFileList
                                           .remove(cubit.imageFileList[index]);
-                                      if(cubit.imagesId.isNotEmpty)cubit.imagesId.remove(cubit.imagesId[index]);
+                                      if (cubit.imagesId.isNotEmpty) {
+                                        cubit.imagesId
+                                            .remove(cubit.imagesId[index]);
+                                      }
                                       cubit.justEmit();
                                     },
                                     icon: const Icon(
@@ -330,9 +326,7 @@ class AddOrEditProductWidget extends StatelessWidget {
                               ]);
                         }),
                   ),
-                const SizedBox(
-                  height: 15,
-                ),
+                const SizedBox(height: 15,),
                 Align(
                   alignment: AlignmentDirectional.center,
                   child: state is! ProductLoadingState
@@ -343,9 +337,7 @@ class AddOrEditProductWidget extends StatelessWidget {
                       : const CircularProgressIndicator(),
                 ),
                 if (isEdit)
-                  const SizedBox(
-                    height: 15,
-                  ),
+                  const SizedBox(height: 15,),
                 if (isEdit)
                   Align(
                       alignment: AlignmentDirectional.center,
@@ -389,7 +381,7 @@ class AddOrEditProductWidget extends StatelessWidget {
           );
         }
       } else {
-        showToast(msg: 'Images Required', toastState: true);
+        showToast(msg: tr('images_required'), toastState: true);
       }
     }
   }

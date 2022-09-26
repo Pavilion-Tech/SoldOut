@@ -26,7 +26,9 @@ class OrderHistoryWidget extends StatelessWidget {
               {
                 cubit.searchOrder(int.parse(cubit.searchController.text.trim()));
                 if(cubit.searchOrderModel== null)
-                  showToast(msg: 'This Order Not Found');
+                {
+                  showToast(msg: tr('order_not_found'));
+                }
               }else
                 {
                   cubit.nullSearch();

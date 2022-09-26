@@ -1,9 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-
 import '../../../../../models/vendor_model/vendor_order_model.dart';
 import '../../../../../shared/components/constants.dart';
-import '../../../../../shared/styles/colors.dart';
 
 class VPurchasesDetailsItem extends StatelessWidget {
   VPurchasesDetailsItem({required this.model});
@@ -29,7 +27,7 @@ class VPurchasesDetailsItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '${model.id!}',
+            '${model.id}',
             style:const TextStyle(fontSize: 18, fontWeight: FontWeight.w900
             ),
           ),

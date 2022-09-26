@@ -27,11 +27,11 @@ class VOurAppWidget extends StatelessWidget {
             accountItem(tr('contact_us'),(){
               navigateTo(context, VContactUsScreen());
             }),
-            SizedBox(height: 10,),
+            const SizedBox(height: 10,),
             accountItem(tr('about_us'),(){
               navigateTo(context, AboutUsScreen(haveCart:false));
             }),
-            SizedBox(height: 10,),
+            const SizedBox(height: 10,),
             accountItem(tr('terms_conditions'),(){
               navigateTo(context, TermsAndConditionsScreen(haveCart:false));
             }),
@@ -46,10 +46,12 @@ class VOurAppWidget extends StatelessWidget {
       onTap: callback,
       child: Row(
         children: [
-          Text(title,
-          style: TextStyle(fontWeight: FontWeight.bold),),
-          Spacer(),
-          Icon(Icons.arrow_forward_ios,size: 14,),
+          Text(
+            title,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          const Spacer(),
+          const Icon(Icons.arrow_forward_ios,size: 14,),
         ],
       ),
     );

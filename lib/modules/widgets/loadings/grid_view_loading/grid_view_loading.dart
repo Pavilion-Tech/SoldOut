@@ -27,8 +27,8 @@ class GridViewLoading extends StatelessWidget {
             ),
             GridView.count(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              childAspectRatio: 1 / 1.02,
+              physics:const NeverScrollableScrollPhysics(),
+              childAspectRatio: size!.width / (size!.height / 2.1),
               mainAxisSpacing: 16,
               crossAxisSpacing: 5,
               crossAxisCount: 2,
@@ -95,7 +95,7 @@ class GridViewLoading extends StatelessWidget {
                             color: Colors.grey.shade300,
                           ),
                         ),
-                        SizedBox(height: 10,),
+                        const SizedBox(height: 10,),
                         Shimmer.fromColors(
                           baseColor: Colors.grey.shade300,
                           highlightColor: Colors.white,

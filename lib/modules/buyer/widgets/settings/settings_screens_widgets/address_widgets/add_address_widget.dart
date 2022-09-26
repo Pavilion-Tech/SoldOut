@@ -53,7 +53,7 @@ class _AddAddressWidgetState extends State<AddAddressWidget> {
               hint: tr('address_title'),
               validator: (value) {
                 if(value!.isEmpty){
-                  return ' Address Title Must Be Empty';
+                  return tr('address_title_empty');
                 }
               },
             ),
@@ -65,7 +65,7 @@ class _AddAddressWidgetState extends State<AddAddressWidget> {
               hint: tr('address'),
               validator: (value) {
                 if(value!.isEmpty){
-                  return ' Address Must Be Empty';
+                  return tr('address_empty');
                 }
               },
             ),
@@ -82,7 +82,7 @@ class _AddAddressWidgetState extends State<AddAddressWidget> {
                         isCity: true,
                         list: cubit.settingsModel!.data!.cities!,
                         value: cityDropDownValue,
-                        title: 'city'
+                        title: tr('city')
                     ),
                     const SizedBox(height: 20,),
                     if(neighborhoods != null)
@@ -90,7 +90,7 @@ class _AddAddressWidgetState extends State<AddAddressWidget> {
                           isCity: false,
                           list: neighborhoods!,
                           value: neighborhoodsDropDownValue,
-                          title: 'neighborhood'
+                          title: tr('neighborhood')
                       ),
                   ],
                 );
@@ -138,7 +138,7 @@ class _AddAddressWidgetState extends State<AddAddressWidget> {
           padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 15),
           child: DropdownButtonFormField(
             isExpanded: true,
-            validator: (value) => value == null ? 'field required' : null,
+            validator: (value) => value == null ? tr('field_required') : null,
             decoration: const InputDecoration(border: InputBorder.none),
             borderRadius: BorderRadius.circular(10),
             value: value,
@@ -160,9 +160,6 @@ class _AddAddressWidgetState extends State<AddAddressWidget> {
                     cityDropDownValue = city.name;
                     neighborhoods = city.neighborhoods!;
                     cityDropDownIndex = city.id;
-                    print(cityDropDownIndex.toString());
-                    print(neighborhoodsDropDownIndex);
-                    print(neighborhoodsDropDownValue);
                     setState(() {});
                   }
                 }
@@ -174,8 +171,6 @@ class _AddAddressWidgetState extends State<AddAddressWidget> {
                   if(city.name== newValue){
                     neighborhoodsDropDownValue = newValue as String;
                     neighborhoodsDropDownIndex = city.id;
-                    print(neighborhoodsDropDownValue);
-                    print(neighborhoodsDropDownIndex);
                     setState(() {});
                   }
                 }
@@ -199,8 +194,8 @@ class _AddAddressWidgetState extends State<AddAddressWidget> {
       if(widget.isEdit){
         cubit.editAddress(
             addressId: widget.addressId!,
-            title: addressTitleController.text.trim(),
-            address: addressController.text.trim(),
+            title: addressTitleController.text,
+            address: addressController.text,
             cityId: cityDropDownIndex!,
             neighborhoodId: neighborhoodsDropDownIndex!,
 
@@ -208,8 +203,8 @@ class _AddAddressWidgetState extends State<AddAddressWidget> {
         cubit.getAddress();
       }else{
         cubit.addAddress(
-            title: addressTitleController.text.trim(),
-            address: addressController.text.trim(),
+            title: addressTitleController.text,
+            address: addressController.text,
             cityId: cityDropDownIndex!,
             neighborhoodId: neighborhoodsDropDownIndex!
         );

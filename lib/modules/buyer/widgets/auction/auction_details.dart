@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:soldout/modules/buyer/screens/store_name/store_name_screen.dart';
+import 'package:soldout/modules/buyer/widgets/auction/count_down.dart';
 import 'package:soldout/modules/buyer/widgets/prodect/product_review.dart';
 import 'package:soldout/shared/images/images.dart';
 
@@ -117,10 +118,7 @@ class AuctionDetails extends StatelessWidget {
                       if (4 > index) {
                         return Image.asset(BuyerImages.fullStar);
                       } else {
-                        return Icon(
-                          Icons.star_border,
-                          size: 16,
-                        );
+                        return const Icon(Icons.star_border, size: 16,);
                       }
                     },
                     onRatingUpdate: (rating) {},
@@ -132,14 +130,7 @@ class AuctionDetails extends StatelessWidget {
                   ),
                 ],
               ),
-              Row(
-                children: [
-                  Text(
-                    'Status | 10:20:30',
-                    style: TextStyle(fontWeight: FontWeight.bold,color: defaultColor),
-                  )
-                ],
-              ),
+              CountDown(fontSize: 14),
           ],
         ),
 

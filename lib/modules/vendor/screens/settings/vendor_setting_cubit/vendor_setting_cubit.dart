@@ -1,10 +1,8 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:soldout/modules/vendor/screens/settings/vendor_setting_cubit/vendor_setting_states.dart';
 import 'package:soldout/shared/components/constants.dart';
@@ -21,7 +19,7 @@ class VSettingCubit extends Cubit<VSettingStates>
 
   TextEditingController attachRegister = TextEditingController();
 
-  File? file;
+  XFile? file;
   String? image;
   TextEditingController nameC = TextEditingController();
   TextEditingController phoneC = TextEditingController();
@@ -33,15 +31,17 @@ class VSettingCubit extends Cubit<VSettingStates>
     InternetConnectionChecker().onStatusChange.listen((event) {
       final state = event == InternetConnectionStatus.connected;
       isConnect = state;
-      print(isConnect);
       emit(JustEmitState());
     });
   }
 
+  ImagePicker imagePicker = ImagePicker();
+
   void selectFile()async{
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
-    if (result != null) {
-      file = File(result.files.single.path!);
+    final XFile? selectedImages = await
+    imagePicker.pickImage(source: ImageSource.gallery);
+    if (selectedImages != null) {
+      file = selectedImages;
       attachRegister.text = 'Commercial Register';
       emit(FilePickedState());
     }
@@ -81,8 +81,8 @@ class VSettingCubit extends Cubit<VSettingStates>
     emit(UpdateProfileLoadingState());
     FormData formData = FormData.fromMap({
       'name':nameC.text,
-      'device_type':0,
-      'firebase_token':'dasdasd',
+      'device_type':deviceType,
+      'firebase_token':fcmToken,
       'commercial_register':file != null
           ? await MultipartFile.fromFile(file!.path, filename:file!.path.split('/').last)
       :await MultipartFile.fromFile(image!, filename:image!.split('/').last),

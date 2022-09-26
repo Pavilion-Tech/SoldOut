@@ -39,7 +39,7 @@ class VSignUpWidget extends StatelessWidget {
                   controller: nameController,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'Store Name Must Be Empty';
+                      return tr('store_empty');
                     }
                   }),
               SizedBox(
@@ -55,7 +55,7 @@ class VSignUpWidget extends StatelessWidget {
                   ],
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'phone Must Be Empty';
+                      return tr('phone_empty');
                     }
                   }),
               SizedBox(
@@ -67,13 +67,13 @@ class VSignUpWidget extends StatelessWidget {
                   type: TextInputType.emailAddress,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'Emil Address Must Be Empty';
+                      return tr('email_empty');
                     }
                     if (!value.contains('@')) {
-                      return 'Emil Address invalid';
+                      return tr('email_invalid');
                     }
                     if (!value.contains('.')) {
-                      return 'Emil Address invalid';
+                      return tr('email_invalid');
                     }
                   }),
               SizedBox(
@@ -85,7 +85,7 @@ class VSignUpWidget extends StatelessWidget {
                   isPassword: cubit.password,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'Password Must Be Empty';
+                      return tr('password_empty');
                     }
                   },
                   suffix: IconButton(
@@ -104,10 +104,10 @@ class VSignUpWidget extends StatelessWidget {
                   isPassword: cubit.confirmPassword,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'Confirm Password Must Be Empty';
+                      return tr('cPassword_empty');
                     }
                     if (value != passwordController.text) {
-                      return 'Confirm Password not correct';
+                      return tr('cPassword_not_correct');
                     }
                   },
                   suffix: IconButton(
@@ -126,7 +126,7 @@ class VSignUpWidget extends StatelessWidget {
                   controller: cubit.attachRegister,
                   validator: (value){
                     if(value!.isEmpty){
-                      return 'Commercial Register Must Empty';
+                      return tr('commercial_empty');
                     }
                   },
                   onTap: () {
@@ -155,17 +155,16 @@ class VSignUpWidget extends StatelessWidget {
                 text: tr('sign_up'),
                 onTap: () {
                   FocusManager.instance.primaryFocus!.unfocus();
-                  cubit.register(
-                    name: nameController.text.trim(),
-                    email: emailController.text.trim(),
-                    phone: phoneController.text.trim(),
-                    password: passwordController.text.trim(),
-                    context: context,
-                  );
-                  // if(formKey.currentState!.validate())
-                  // {
-                  //
-                  // }
+                  if(formKey.currentState!.validate())
+                  {
+                    cubit.register(
+                      name: nameController.text.trim(),
+                      email: emailController.text.trim(),
+                      phone: phoneController.text.trim(),
+                      password: passwordController.text.trim(),
+                      context: context,
+                    );
+                  }
                   },
               ) : const CircularProgressIndicator(),
             ],

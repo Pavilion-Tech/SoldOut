@@ -1,6 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:soldout/layout/buyer_layout/buy_layout_screen.dart';
-import 'package:soldout/layout/buyer_layout/cubit/buyer_cubit.dart';
 import 'package:soldout/modules/widgets/contact_us_widget.dart';
 import 'package:soldout/shared/components/components.dart';
 
@@ -18,7 +17,7 @@ class VContactUsScreen extends StatelessWidget {
           children: [
             myAppBar(
                 context: context,
-                title: 'CONTACT US',
+                title: tr('contact_us'),
                 isArrowBack: true,
             ),
             MyContainer(

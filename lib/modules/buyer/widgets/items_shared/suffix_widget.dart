@@ -6,12 +6,14 @@ import '../../../../shared/components/constants.dart';
 import '../../../../shared/styles/colors.dart';
 
 class SuffixWidget extends StatefulWidget {
+
+  int value = 1;
+
   @override
   State<SuffixWidget> createState() => _SuffixWidgetState();
 }
 
 class _SuffixWidgetState extends State<SuffixWidget> {
-  int _value = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -72,12 +74,12 @@ class _SuffixWidgetState extends State<SuffixWidget> {
           ),
           RadioListTile(
             value: 1,
-            groupValue: _value,
-            selected: _value == 1,
+            groupValue: widget.value,
+            selected: widget.value == 1,
             onChanged: (int? value) {
               setState(() {
-                _value = value!;
-                print(_value);
+                widget.value = value!;
+                print(widget.value);
               });
             },
             activeColor: defaultColor,
@@ -87,11 +89,11 @@ class _SuffixWidgetState extends State<SuffixWidget> {
           ),
           RadioListTile(
             value: 2,
-            groupValue: _value,
-            selected: _value == 2,
+            groupValue: widget.value,
+            selected: widget.value == 2,
             onChanged: (int? value) {
               setState(() {
-                _value = value!;
+                widget.value = value!;
               });
             },
             activeColor: defaultColor,
@@ -101,11 +103,11 @@ class _SuffixWidgetState extends State<SuffixWidget> {
           ),
           RadioListTile(
             value: 3,
-            groupValue: _value,
-            selected: _value == 3,
+            groupValue: widget.value,
+            selected: widget.value == 3,
             onChanged: (int? value) {
               setState(() {
-                _value = value!;
+                widget.value = value!;
               });
             },
             activeColor: defaultColor,
@@ -115,11 +117,11 @@ class _SuffixWidgetState extends State<SuffixWidget> {
           ),
           RadioListTile(
             value: 4,
-            groupValue: _value,
-            selected: _value == 4,
+            groupValue: widget.value,
+            selected: widget.value == 4,
             onChanged: (int? value) {
               setState(() {
-                _value = value!;
+                widget.value = value!;
               });
             },
             activeColor: defaultColor,

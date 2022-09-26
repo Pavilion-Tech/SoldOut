@@ -3,17 +3,17 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:soldout/modules/buyer/screens/cart/cart_cubit/cart_cubit.dart';
-import 'package:soldout/modules/buyer/screens/cart/cart_cubit/cart_states.dart';
-import 'package:soldout/modules/buyer/screens/settings/setting_screens/my_account/addresses/address_cubit/cubit.dart';
-import 'package:soldout/modules/buyer/widgets/shimmers/cart_loading/cart_loading.dart';
-import 'package:soldout/shared/components/components.dart';
-import 'package:soldout/shared/images/images.dart';
+import '../../../../shared/components/components.dart';
 import '../../../../shared/components/constants.dart';
+import '../../../../shared/images/images.dart';
+import '../../../widgets/my_container.dart';
 import '../../auth/sign_in/sign_in_screen.dart';
 import '../../widgets/cart/cart_item.dart';
-import '../../../widgets/my_container.dart';
+import '../../widgets/shimmers/cart_loading/cart_loading.dart';
 import '../check_out/cart_check_out.dart';
+import '../settings/setting_screens/my_account/addresses/address_cubit/cubit.dart';
+import 'cart_cubit/cart_cubit.dart';
+import 'cart_cubit/cart_states.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);

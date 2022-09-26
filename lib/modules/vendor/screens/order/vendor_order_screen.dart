@@ -6,9 +6,7 @@ import 'package:soldout/layout/vendor_layout/cubit/vendor_cubit.dart';
 import 'package:soldout/layout/vendor_layout/cubit/vendor_states.dart';
 import 'package:soldout/modules/widgets/my_container.dart';
 import 'package:soldout/shared/components/components.dart';
-
 import '../../../widgets/loadings/address&order_loading/address&order_loading.dart';
-import '../../widgets/order/suffix_widget.dart';
 import '../../widgets/order/vendor_order_item_widget.dart';
 
 class VendorOrderScreen extends StatelessWidget {
@@ -41,11 +39,13 @@ class VendorOrderScreen extends StatelessWidget {
                               {
                                 cubit.searchOrder(int.parse(cubit.searchController.text.trim()));
                                 if(cubit.searchModel== null)
-                                  showToast(msg: 'This Order Not Found');
+                                {
+                                  showToast(msg: tr('order_not_found'));
+                                }
                               }else
-                              {
-                                cubit.nullSearch();
-                              }
+                                {
+                                  cubit.nullSearch();
+                                }
                             }
                         ),
                         if(cubit.vendorOrderModel!.data!.isNotEmpty&&cubit.searchModel== null)

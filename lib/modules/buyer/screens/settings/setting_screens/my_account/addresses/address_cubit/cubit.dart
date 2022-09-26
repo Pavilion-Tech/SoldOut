@@ -43,7 +43,7 @@ class AddressCubit extends Cubit<AddressStates> {
       'neighborhood_id': neighborhoodId,
     }).then((value) {
       if (value.data['status']&&value.statusCode == 200)  {
-        showToast(msg: 'Address Added Successfully');
+        showToast(msg: tr('address_added'));
         getAddress();
       } else {
         showToast(msg: tr('wrong'));
@@ -74,7 +74,7 @@ class AddressCubit extends Cubit<AddressStates> {
       'city_id': cityId,
     }).then((value) {
       if (value.data['status']&&value.statusCode == 200) {
-        showToast(msg: 'Address Edited Successfully');
+        showToast(msg: tr('address_edited'));
         getAddress();
       } else {
         showToast(msg: tr('wrong'));

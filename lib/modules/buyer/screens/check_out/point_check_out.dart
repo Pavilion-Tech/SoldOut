@@ -1,11 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:soldout/modules/buyer/widgets/check_out/delivery_address.dart';
 import 'package:soldout/modules/buyer/widgets/check_out/discount.dart';
 import 'package:soldout/modules/buyer/widgets/check_out/invoice.dart';
 import 'package:soldout/shared/components/components.dart';
 import '../../widgets/check_out/dialog.dart';
-import '../../widgets/check_out/list_store.dart';
 import '../../widgets/check_out/radio.dart';
 import '../../../widgets/my_container.dart';
 
@@ -41,7 +39,6 @@ class PointsCheckOutScreen extends StatelessWidget {
                   DiscountWidget(),
                   InvoiceWidget(isBuyPoints: true),
                   defaultButton(onTap: (){
-                    print(customRadio.radioValue);
                     showDialog(
                         context: context,
                         builder: (context)=>CheckOutDialog()

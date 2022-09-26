@@ -142,7 +142,7 @@ class ProductItem extends StatelessWidget {
                                 Row(
                                   children: [
                                     Text(
-                                      '${product!.regularPrice!} ${product!.regularPrice! < 99999 ?tr('sar'):''}',
+                                      '${product!.regularPrice!}',
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: const TextStyle(
@@ -150,18 +150,18 @@ class ProductItem extends StatelessWidget {
                                           fontSize: 10,
                                           fontWeight: FontWeight.bold),
                                     ),
-                                    // if(product!.salePrice !=null)
-                                    //   Container(
-                                    //     width: 35,
-                                    //     child: Text(
-                                    //       '${product!.salePrice} ${tr('sar')}',
-                                    //       style:const TextStyle(
-                                    //           color: Colors.grey,
-                                    //           fontSize: 7,
-                                    //           decoration: TextDecoration.lineThrough
-                                    //       ),
-                                    //     ),
-                                    //   ),
+                                    if(product!.salePrice !=null)
+                                      SizedBox(
+                                        width: 35,
+                                        child: Text(
+                                          '${product!.salePrice}',
+                                          style:const TextStyle(
+                                              color: Colors.grey,
+                                              fontSize: 7,
+                                              decoration: TextDecoration.lineThrough
+                                          ),
+                                        ),
+                                      ),
                                   ],
                                 ),
                               ],

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_polygon/flutter_polygon.dart';
-
 import '../../../../shared/components/constants.dart';
 import '../../../../shared/styles/colors.dart';
 

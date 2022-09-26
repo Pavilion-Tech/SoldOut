@@ -38,9 +38,9 @@ class HomeItemWidget extends StatelessWidget {
             children: [
               Text(
                 count,
-                style: TextStyle(fontWeight: FontWeight.w700,fontSize: 20),
+                style:const TextStyle(fontWeight: FontWeight.w700,fontSize: 20),
               ),
-              Spacer(),
+              const Spacer(),
               CircleAvatar(
                 radius: 11,
                 backgroundColor: circleColor,

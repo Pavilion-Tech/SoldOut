@@ -50,7 +50,7 @@ class UpdateScreen extends StatelessWidget {
               ),
               defaultButton(
                 onTap: (){
-                  navigateAndFinish(context, SplashScreen());
+                  navigateAndFinish(context,const SplashScreen());
                 },
                 text: tr('update_now'),
                 width: double.infinity,

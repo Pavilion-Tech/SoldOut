@@ -19,7 +19,8 @@ class ContactUsWidget extends StatelessWidget {
   var formKey = GlobalKey<FormState>();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)
+  {
     return BlocConsumer<SettingsCubit, SettingsStates>(
       listener: (context, state) {},
       builder: (context, state) {
@@ -35,9 +36,8 @@ class ContactUsWidget extends StatelessWidget {
                       controller: nameC,
                       hint: tr('full_name'),
                       validator: (value){
-                        if(value!.isEmpty){
-                          return 'Name Must Be Empty';
-                        }
+                        if(value!.isEmpty)tr('name_empty');
+
                       }
                     ),
                     Padding(
@@ -47,26 +47,24 @@ class ContactUsWidget extends StatelessWidget {
                           hint: tr('email_address_one'),
                           type: TextInputType.emailAddress,
                           validator: (value){
-                            if(value!.isEmpty){
-                              return 'Email Address Must Be Empty';
-                            }
+                            if(value!.isEmpty)tr('email_empty');
                           }
                       ),
                     ),
                     defaultTextField(
                         controller: phoneC,
                         hint: tr('phone'),
-                      type: TextInputType.phone
-
+                        type: TextInputType.phone,
+                        validator: (value){
+                          if(value!.isEmpty)tr('phone_empty');
+                        }
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 15),
                       child: defaultTextField(
                           controller: subjectC,
                           validator: (value){
-                            if(value!.isEmpty){
-                              return 'Subject Must Be Empty';
-                            }
+                            if(value!.isEmpty)tr('subject_empty');
                           },
                           hint: tr('subject')),
                     ),
@@ -83,9 +81,8 @@ class ContactUsWidget extends StatelessWidget {
                       child: TextFormField(
                         controller: messageC,
                         validator:  (value){
-                          if(value!.isEmpty){
-                            return 'Message Must Be Empty';
-                          }
+                          if(value!.isEmpty)tr('message_empty');
+
                           },
                         decoration: InputDecoration(
                           border: InputBorder.none,
@@ -119,9 +116,7 @@ class ContactUsWidget extends StatelessWidget {
                       style: const TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 16),
                     ),
-                    SizedBox(
-                      height: 15,
-                    ),
+                    const SizedBox(height: 15,),
                   ],
                 ),
               ),
@@ -133,60 +128,12 @@ class ContactUsWidget extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    SizedBox(
-                      height: 50,
-                      width: 50,
-                      child: Image.asset(
-                        BuyerImages.gmail,
-                        height: 50,
-                        width: 50,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 50,
-                      width: 50,
-                      child: Image.asset(
-                        BuyerImages.instagram,
-                        height: 50,
-                        width: 50,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 50,
-                      width: 50,
-                      child: Image.asset(
-                        BuyerImages.fb,
-                        height: 50,
-                        width: 50,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 50,
-                      width: 50,
-                      child: Image.asset(
-                        BuyerImages.phone,
-                        height: 50,
-                        width: 50,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 50,
-                      width: 50,
-                      child: Image.asset(
-                        BuyerImages.twitter,
-                        height: 50,
-                        width: 50,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 50,
-                      width: 50,
-                      child: Image.asset(
-                        BuyerImages.whatsapp,
-                        height: 50,
-                        width: 50,
-                      ),
-                    ),
+                    socialIcon(BuyerImages.gmail),
+                    socialIcon(BuyerImages.instagram),
+                    socialIcon(BuyerImages.fb),
+                    socialIcon(BuyerImages.phone),
+                    socialIcon(BuyerImages.twitter),
+                    socialIcon(BuyerImages.whatsapp),
                   ],
                 ),
               ),
@@ -194,6 +141,19 @@ class ContactUsWidget extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  Widget socialIcon(String path)
+  {
+    return SizedBox(
+      height: 50,
+      width: 50,
+      child: Image.asset(
+        path,
+        height: 50,
+        width: 50,
+      ),
     );
   }
 }

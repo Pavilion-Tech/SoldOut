@@ -14,14 +14,16 @@ import 'package:soldout/modules/vendor/screens/notification/notification_screen.
 import 'package:soldout/shared/components/components.dart';
 import 'package:soldout/shared/components/constants.dart';
 import '../../../models/buyer_model/list_products_model.dart';
+import '../../../models/notification_model.dart';
 import '../../../models/vendor_model/statistics_model.dart';
 import '../../../models/vendor_model/vendor_order_model.dart';
 import '../../../modules/vendor/screens/home/home_screen.dart';
-import '../../../modules/vendor/screens/manage_product/manage_product.dart';
 import '../../../modules/vendor/screens/order/vendor_order_screen.dart';
 import '../../../modules/vendor/screens/settings/vendor_settings_screen.dart';
+import '../../../shared/firebase_helper/dynamic_links.dart';
 import '../../../shared/network/remote/dio.dart';
 import '../../../shared/network/remote/end_point.dart';
+import '../../buyer_layout/cubit/buyer_cubit.dart';
 import 'vendor_states.dart';
 
 class VendorCubit extends Cubit<VendorStates>{
@@ -32,26 +34,41 @@ class VendorCubit extends Cubit<VendorStates>{
   int currentIndex = 0;
 
   GetStatistics? getStatistics;
+
   ListProductModel? listProductModel;
+
   VendorOrderModel? vendorOrderModel;
+
   VendorOrderData? searchModel;
+
+  NotificationModel? notificationModel;
+
   int pageProduct = 1;
 
   TextEditingController searchC = TextEditingController();
 
-
   TextEditingController nameC = TextEditingController();
+
   TextEditingController descC = TextEditingController();
+
   TextEditingController qnt = TextEditingController();
+
   TextEditingController weight = TextEditingController();
+
   TextEditingController price = TextEditingController();
+
   TextEditingController priceAfterDiscount = TextEditingController();
+
   String? dropDownValue;
+
   int? dropDownId;
 
   final ImagePicker imagePicker = ImagePicker();
+
   List<File> imageFileList = [];
+
   List<File> listImage = [];
+
   List<int> imagesId = [];
 
   List<Widget> screens = [
@@ -62,12 +79,20 @@ class VendorCubit extends Cubit<VendorStates>{
     const VendorSettingsScreen(),
   ];
 
-  checkInterNet()async{
+  void checkInterNet()async{
     InternetConnectionChecker().onStatusChange.listen((event) {
       final state = event == InternetConnectionStatus.connected;
       isConnect = state;
-      print(isConnect);
       emit(JustEmitState());
+    });
+  }
+
+  void dynamicLink(context){
+    DynamicLinksClient.initDynamicLinks((String? value)
+    {
+      if(value!=null){
+        BuyerCubit.get(context).getProduct(id: int.parse(value));
+      }
     });
   }
 
@@ -92,8 +117,6 @@ class VendorCubit extends Cubit<VendorStates>{
   Future addImageToList (String url)async
   {
     imageFileList.add(await getImage(url:url));
-    print(imageFileList);
-    print(imagesId);
     emit(JustEmitState());
   }
 
@@ -125,15 +148,12 @@ class VendorCubit extends Cubit<VendorStates>{
     String? checkUrl = lastDate!= null
         ? '/stores/getStatistics?start_date=$startDate&end_date=$lastDate'
         : null;
-    String url = checkUrl != null ? checkUrl : '/stores/getStatistics?start_date&end_date';
-    print(url);
-    print(vToken);
+    String url = checkUrl??'/stores/getStatistics?start_date&end_date';
     await DioHelper.getData(
       token: 'Bearer $vToken',
       url: url,
       lang: myLocale,
     ).then((value) {
-      print(value.data);
       if(value.statusCode == 200 && value.data['status'])
       {
         getStatistics = GetStatistics.fromJson(value.data);
@@ -154,18 +174,15 @@ class VendorCubit extends Cubit<VendorStates>{
     bool isPage = false,
   })async
   {
-    String url = '/stores/products?search_text=${text??''}&page=$page${sort!= null ?'&sort_type=':''}${sort!=null?sort:''}';
-    print(url);
+    String url = '/stores/products?search_text=${text??''}&page=$page${sort!= null ?'&sort_type=':''}${sort??''}';
     emit(GetProductLoadingState());
     await DioHelper.getData(
       url:url,
       token: 'Bearer $vToken',
       lang: myLocale,
     ).then((value) {
-      print(value.data);
       if(isPage)
       {
-        print(value.data['data']['products']);
         listProductModel!.data!.lastPage = value.data['data']['last_page'];
         listProductModel!.data!.currentPage = value.data['data']['current_page'];
         for(Map<String,dynamic> product in value.data['data']['products'])
@@ -183,7 +200,6 @@ class VendorCubit extends Cubit<VendorStates>{
         }
 
     }).catchError((e){
-      print(e.toString());
       emit(GetProductErrorState());
     });
   }
@@ -226,9 +242,8 @@ class VendorCubit extends Cubit<VendorStates>{
       lang: myLocale,
       formData:isEdit ?formDataForEdit :  formData
     ).then((value) {
-      print(value.data);
       if(value.statusCode==200&&value.data['status']){
-        showToast(msg: 'Item ${isEdit ?'Edited' : 'Added'} SuccessFul');
+        showToast(msg: isEdit?tr('item_edited'):tr('item_added'));
         nullingData();
         getProducts();
         emit(ProductSuccessState());
@@ -271,8 +286,7 @@ class VendorCubit extends Cubit<VendorStates>{
         'product_id':id
       }
     ).then((value) {
-      print(value.data);
-      showToast(msg: 'Product Deleted');
+      showToast(msg: tr('product_deleted'));
       getProducts();
       navigateAndFinish(context, VendorLayout());
       emit(DeleteProductSuccessState());
@@ -287,7 +301,6 @@ class VendorCubit extends Cubit<VendorStates>{
 
   void getMoreForProducts(){
     scrollController.addListener(() {
-      print(scrollController.offset);
     if(state is! GetProductLoadingState)
     {
       if(scrollController.offset==scrollController.position.maxScrollExtent){
@@ -298,8 +311,6 @@ class VendorCubit extends Cubit<VendorStates>{
             page: pageProduct,
             isPage: true
           );
-          // currentPage++;
-          // getListProductsForSearch(page: currentPage);
         }
       }
     }
@@ -339,9 +350,24 @@ class VendorCubit extends Cubit<VendorStates>{
     }
   }
 
-  void nullSearch()
+   void nullSearch()
   {
     searchModel = null;
     emit(SearchState());
+  }
+
+  void getNotifications()async
+  {
+    emit(GetNotificationLoadingState());
+    await DioHelper.getData(
+        url: fetchVNotification,
+        token: 'Bearer $vToken',
+        lang: myLocale
+    ).then((value) {
+      notificationModel = NotificationModel.fromJson(value.data);
+      emit(GetNotificationSuccessState());
+    }).catchError((e){
+      emit(GetNotificationErrorState());
+    });
   }
 }

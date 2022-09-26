@@ -1,81 +1,34 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:soldout/modules/buyer/widgets/auction/count_down.dart';
 import 'package:soldout/shared/components/components.dart';
-
+import '../../../../models/buyer_model/home_model/new_auctions_model.dart';
 import '../../../../shared/components/constants.dart';
-import '../../../../shared/styles/colors.dart';
 import '../../screens/auction/auction_screen.dart';
 
-class AuctionItem extends StatefulWidget {
+class AuctionItem extends StatelessWidget {
 
 
   AuctionItem({
-    required this.title,
-    required this.state,
-    required this.time,
-    this.isHome = false
+    this.isHome = false,
+    this.model
+
   });
 
-  String? title;
-  String? state;
-  String? time;
+
+  NewAuction? model;
   bool isHome;
 
 
   @override
-  State<AuctionItem> createState() => _ProductItemState();
-}
-
-class _ProductItemState extends State<AuctionItem> {
-  String? id;
-
-  Timer? timer;
-  Duration duration = const Duration(hours: 10,minutes: 30,seconds: 22);
-
-
-
-
-  // void startTimer(){
-  //   timer = Timer.periodic(Duration(seconds: 1), (timer) {
-  //     setCountDown();
-  //   });
-  // }
-  // void stopTimer(){
-  //   setState(() => timer!.cancel());
-  // }
-  // void setCountDown(){
-  //   final reduceSecondsBy = 1;
-  //   setState(() {
-  //     final seconds = duration.inSeconds - reduceSecondsBy;
-  //     if (seconds < 0) {
-  //       timer!.cancel();
-  //     } else {
-  //       duration = Duration(seconds: seconds);
-  //     }
-  //   });
-  // }
-  //
-  // @override
-  // void initState() {
-  //   super.initState();
-  // }
-
-  @override
   Widget build(BuildContext context) {
 
-
-    String strDigits(int n) => n.toString().padLeft(2, '0');
-    final hours = strDigits(duration.inHours.remainder(24));
-    final minutes = strDigits(duration.inMinutes.remainder(60));
-    final seconds = strDigits(duration.inSeconds.remainder(60));
     return InkWell(
       onTap: (){
         navigateTo(context, AuctionScreen());
       },
       child: Container(
         height: size!.height*.20,
-        width: size!.width*.45,
+        width: isHome ? size!.width*.9: size!.width*.45,
         clipBehavior: Clip.antiAliasWithSaveLayer,
         decoration: BoxDecoration(
           color: Colors.white,
@@ -83,17 +36,35 @@ class _ProductItemState extends State<AuctionItem> {
         ),
         child: Column(
           children: [
-            Container(
+            SizedBox(
                 height: size!.height*.12,
-                width: size!.width*.45,
-                child: Image.network('https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',fit: BoxFit.cover,)),
+                width:isHome ? size!.width*.9: size!.width*.45,
+                child: Image.network(
+                  model!.images![0].image!,
+                  fit: BoxFit.cover,
+                  errorBuilder: (c,o,s)=>const Icon(Icons.info),
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) {
+                      return child;
+                    }
+                    return Center(
+                      child: CircularProgressIndicator(
+                        value: loadingProgress.expectedTotalBytes != null
+                            ? loadingProgress.cumulativeBytesLoaded /
+                            loadingProgress.expectedTotalBytes!
+                            : null,
+                      ),
+                    );
+                  },
+                )
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 5),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.title!,
+                    model!.auctionName!,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(fontWeight: FontWeight.bold),
@@ -101,19 +72,10 @@ class _ProductItemState extends State<AuctionItem> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
-                        widget.state!,
-                        style:const TextStyle(fontWeight: FontWeight.bold),
-                      ),
                       const Spacer(),
-                      if(widget.isHome)
-                        Icon(Icons.timer,color: Colors.black,size: 18,),
-                      Text(
-                        '$hours:$minutes:$seconds',
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(color: defaultColor,fontSize: 12,fontWeight: FontWeight.bold),
-                      ),
+                      if(isHome)
+                        const Icon(Icons.timer,color: Colors.black,size: 18,),
+                        CountDown(fontSize: 12,endAt:model!.remainingTime!),
                     ],
                   ),
                 ],
@@ -124,4 +86,9 @@ class _ProductItemState extends State<AuctionItem> {
       ),
     );
   }
+
+
+
+
 }
+

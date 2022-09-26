@@ -4,12 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:soldout/modules/buyer/screens/settings/settings_cubit/settings_states.dart';
 import 'package:soldout/shared/components/components.dart';
-
+import '../../../../../models/buyer_model/get_points.dart';
 import '../../../../../models/buyer_model/order_model.dart';
 import '../../../../../models/buyer_model/settings_model.dart';
 import '../../../../../shared/components/constants.dart';
 import '../../../../../shared/network/remote/dio.dart';
 import '../../../../../shared/network/remote/end_point.dart';
+import '../../../widgets/paymen/payment.dart';
 
 class SettingsCubit extends Cubit<SettingsStates>{
   SettingsCubit(): super(InitState());
@@ -21,6 +22,8 @@ class SettingsCubit extends Cubit<SettingsStates>{
   OrderData? searchOrderModel;
 
   SettingsModel? settingsModel;
+
+  GetPointsModel? getPointsModel;
 
   TextEditingController searchController = TextEditingController();
 
@@ -94,10 +97,13 @@ class SettingsCubit extends Cubit<SettingsStates>{
           'message':message,
       }
     ).then((value) {
-      print(value.data);
       if(value.statusCode == 200 && value.data['status']){
-        showToast(msg: 'Message Sent Successful');
+        showToast(msg: tr('message_successfully'));
         emit(ContactUsSuccessState());
+      }else if(value.data!=null&&!value.data['status'])
+      {
+        showToast(msg:value.data['errors'].toString(),toastState: true);
+        emit(ContactUsWrongState());
       }else{
         showToast(msg: tr('wrong'),toastState: true);
         emit(ContactUsWrongState());
@@ -126,12 +132,96 @@ class SettingsCubit extends Cubit<SettingsStates>{
     emit(SearchState());
   }
 
+  void rateProduct({
+    required int id,
+    required double rate,
+    required String review,
+    required BuildContext context,
+  })async
+  {
+    emit(RateLoadingState());
+    await DioHelper.postData(
+        url: rateProducts,
+        lang: myLocale,
+        token: 'Bearer $token',
+        data: {
+          'rate':rate.toInt(),
+          'review':review,
+          'order_product_id':id,
+        }
+    ).then((value) {
+      if(value.statusCode == 200 && value.data['status']){
+        showToast(msg: 'Review Sent Successful');
+        Navigator.pop(context);
+        emit(RateSuccessState());
+      }else if(value.data!=null&&!value.data['status']){
+        showToast(msg: value.data['errors'].toString(),toastState: true);
+        emit(RateWrongState());
+      }else{
+        showToast(msg: tr('wrong'),toastState: true);
+        emit(RateWrongState());
+      }
+    }).catchError((e){
+      emit(RateErrorState());
+      showToast(msg: tr('wrong'),toastState: false);
+    });
+  }
+
+  void getAllPoints()async
+  {
+    emit(GetPointsLoadingState());
+    await DioHelper.getData(
+      url: points,
+      lang: myLocale,
+      token: 'Bearer $token',
+    ).then((value) {
+      if(value.statusCode == 200 && value.data['status']){
+        getPointsModel = GetPointsModel.fromJson(value.data);
+        emit(GetPointsSuccessState());
+      }else{
+        showToast(msg: tr('wrong'),toastState: true);
+        emit(GetPointsWrongState());
+      }
+    }).catchError((e){
+      emit(GetPointsErrorState());
+      showToast(msg: tr('wrong'),toastState: false);
+    });
+  }
+
+  void buyPoints({
+    required int id,
+    required BuildContext context,
+})async
+  {
+    emit(GetPointsLoadingState());
+    await DioHelper.postData(
+      url: points,
+      lang: myLocale,
+      token: 'Bearer $token',
+      data: {
+        'point_id':id
+      }
+    ).then((value) {
+     if(value.statusCode == 200){
+      String link = value.data['data']['payment_link'];
+      navigateTo(context, Payment(url: link,));
+       getAllPoints();
+      }
+      else{
+       showToast(msg: tr('wrong'),toastState: true);
+       emit(GetPointsWrongState());
+     }
+    }).catchError((e){
+      emit(GetPointsErrorState());
+      showToast(msg: tr('wrong'),toastState: false);
+    });
+  }
+
 
   checkInterNet()async{
     InternetConnectionChecker().onStatusChange.listen((event) {
       final state = event == InternetConnectionStatus.connected;
       isConnect = state;
-      print(isConnect);
       emit(CheckNetState());
     });
   }

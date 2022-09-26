@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:soldout/layout/buyer_layout/cubit/buyer_cubit.dart';
 import 'package:soldout/models/buyer_model/get_address_model.dart';
 import 'package:soldout/modules/buyer/screens/settings/settings_cubit/settings_cubit.dart';
 import 'package:soldout/shared/components/components.dart';
@@ -10,6 +9,7 @@ import '../../../../shared/components/constants.dart';
 import '../../../../shared/styles/colors.dart';
 
 class DeliveryAddress extends StatefulWidget {
+
   DeliveryAddress({this.getAddressModel,this.addressId});
 
   GetAddressModel? getAddressModel;
@@ -166,7 +166,7 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                       tr('other'),
                       style:const TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    if (currentAddress == otherIndex) Spacer(),
+                    if (currentAddress == otherIndex)const Spacer(),
                     if (currentAddress == otherIndex)
                      const Icon(Icons.check_circle, color: Colors.blue,),
                   ],
@@ -227,7 +227,7 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
           padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 15),
           child: DropdownButtonFormField(
             isExpanded: true,
-            validator: (value) => value == null ? 'field required' : null,
+            validator: (value) => value == null ? tr('field_required') : null,
             decoration: const InputDecoration(border: InputBorder.none),
             borderRadius: BorderRadius.circular(10),
             value: value,
@@ -249,9 +249,6 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                     cityDropDownValue = city.name;
                     neighborhoods = city.neighborhoods!;
                     widget.cityDropDownIndex = city.id;
-                    print(widget.cityDropDownIndex.toString());
-                    print(widget.neighborhoodsDropDownIndex);
-                    print(neighborhoodsDropDownValue);
                     setState(() {});
                   }
                 }
@@ -263,8 +260,6 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                   if(city.name== newValue){
                     neighborhoodsDropDownValue = newValue as String;
                     widget.neighborhoodsDropDownIndex = city.id;
-                    print(neighborhoodsDropDownValue);
-                    print(widget.neighborhoodsDropDownIndex);
                     setState(() {});
                   }
                 }

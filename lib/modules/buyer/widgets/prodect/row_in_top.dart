@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_polygon/flutter_polygon.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:soldout/layout/buyer_layout/cubit/buyer_cubit.dart';
 import 'package:soldout/layout/buyer_layout/cubit/buyer_states.dart';
 import 'package:soldout/modules/buyer/auth/sign_in/sign_in_screen.dart';
 import 'package:soldout/shared/components/components.dart';
-
+import 'package:soldout/shared/firebase_helper/dynamic_links.dart';
 import '../../../../shared/components/constants.dart';
 import '../../../../shared/styles/colors.dart';
 
@@ -51,7 +51,11 @@ class RowInTop extends StatelessWidget {
               child: Row(
                 children: [
                   InkWell(
-                    onTap: () {},
+                    onTap: () async {
+                      String uri = 'https://soldoutapp/?product=$id';
+                      Uri sharableLink = await DynamicLinksClient.createUri(uri);
+                      Share.share(sharableLink.toString());
+                    },
                     child: const CircleAvatar(
                       backgroundColor: defaultColorTwo,
                       radius: 17,
@@ -62,9 +66,7 @@ class RowInTop extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    width: 15,
-                  ),
+                  const SizedBox(width: 15,),
                   BlocConsumer<BuyerCubit, BuyerStates>(
                     listener: (context, state) {},
                     builder: (context, state) {

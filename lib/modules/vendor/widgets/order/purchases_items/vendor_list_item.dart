@@ -31,7 +31,7 @@ class VListStoreItem extends StatelessWidget {
           padding: const EdgeInsetsDirectional.all(5),
           child: ListView.separated(
             itemBuilder: (context,index)=>VPurchasesProductItem(product:products[index]),
-            separatorBuilder: (context,index)=>separatorBuilder,
+            separatorBuilder: (context,index)=>separatorBuilder(),
             itemCount: products.length,
             shrinkWrap: true,
             physics:const  NeverScrollableScrollPhysics(),
@@ -41,12 +41,14 @@ class VListStoreItem extends StatelessWidget {
     );
   }
 
-  Widget separatorBuilder = Padding(
-    padding: const EdgeInsetsDirectional.all(5),
-    child: Container(
-      height: 1,
-      width: double.infinity,
-      color: Colors.grey.shade200,
-    ),
-  );
+  Widget separatorBuilder (){
+    return Padding(
+      padding: const EdgeInsetsDirectional.all(5),
+      child: Container(
+        height: 1,
+        width: double.infinity,
+        color: Colors.grey.shade200,
+      ),
+    );
+  }
 }

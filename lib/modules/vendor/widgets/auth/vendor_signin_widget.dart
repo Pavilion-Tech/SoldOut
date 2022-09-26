@@ -43,7 +43,7 @@ class VSignInWidget extends StatelessWidget {
                 ],
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'Phone Must Be Empty';
+                    return tr('phone_empty');
                   }
                 },
               ),
@@ -54,7 +54,7 @@ class VSignInWidget extends StatelessWidget {
                   isPassword: cubit.passwordLogin,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'Password Must Be Empty';
+                      return tr('password_empty');
                     }
                   },
                   suffix: IconButton(
@@ -100,7 +100,7 @@ class VSignInWidget extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: () {
-                      navigateTo(context, VSignUpScreen());
+                      navigateTo(context,const VSignUpScreen());
                     },
                     child: Text(
                       tr('sign_up'),

@@ -48,7 +48,6 @@ class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
                     {
                       cubit.getProduct(
                         id: e.id!,
-                        context: context
                       );
                     }
 

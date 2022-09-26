@@ -1,9 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-
 import '../../../../../models/vendor_model/vendor_order_model.dart';
 import '../../../../../shared/components/constants.dart';
-import '../../../../../shared/images/images.dart';
 
 
 class VPurchasesProductItem extends StatelessWidget {

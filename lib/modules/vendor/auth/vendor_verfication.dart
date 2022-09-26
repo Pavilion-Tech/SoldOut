@@ -78,16 +78,16 @@ class _State extends State<VVerificationScreen> {
               VAuthCubit.get(context).activeVAccount(context: context);
             }
       }else{
-        showToast(msg: 'OTP Code Invalid',toastState: true);
+        showToast(msg: tr('otp_invalid'),toastState: true);
       }
     }else{
-      showToast(msg: 'OTP Code Must Be Empty',toastState: true);
+      showToast(msg: tr('code_empty'),toastState: true);
     }
   }
 
   @override
   void initState() {
-    showToast(msg: 'You\'r Code id $code');
+    showToast(msg: '${tr('code_is')} $code');
     startTimer();
     super.initState();
   }
@@ -128,7 +128,7 @@ class _State extends State<VVerificationScreen> {
                 ),
               ),
               SignWidget(
-                isVerfiy: widget.isStepTwo,
+                isVerify: widget.isStepTwo,
                 column: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

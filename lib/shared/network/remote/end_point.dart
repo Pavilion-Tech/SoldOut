@@ -11,6 +11,10 @@ const String editProfile = '/users/updateProfile';
 
 const String sendContactUs = '/sendContactUs';
 
+const String rateProducts = '/users/orders/rateProduct';
+
+const String points = '/users/points';
+
 const String settings = '/settings';
 
 const String addAddresses = '/users/addresses';
@@ -72,6 +76,11 @@ const String vEditProducts = '/stores/products/edit';
 const String vDeleteProduct = '/stores/products/delete';
 
 const String vOrder = '/stores/orders';
+
+const String fetchNotification = '/users/getNotificationsHistory';
+const String fetchVNotification = '/stores/getNotificationsHistory';
+
+
 
 
 

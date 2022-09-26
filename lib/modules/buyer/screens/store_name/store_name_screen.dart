@@ -1,13 +1,16 @@
+
+
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:soldout/layout/buyer_layout/buy_layout_screen.dart';
-import 'package:soldout/layout/buyer_layout/cubit/buyer_cubit.dart';
-import 'package:soldout/modules/widgets/loadings/grid_view_loading/grid_view_loading.dart';
-import 'package:soldout/shared/components/components.dart';
+
+import '../../../../layout/buyer_layout/buy_layout_screen.dart';
+import '../../../../layout/buyer_layout/cubit/buyer_cubit.dart';
 import '../../../../layout/buyer_layout/cubit/buyer_states.dart';
+import '../../../../shared/components/components.dart';
 import '../../../../shared/components/constants.dart';
+import '../../../widgets/loadings/grid_view_loading/grid_view_loading.dart';
 import '../../../widgets/my_container.dart';
 import '../../widgets/items_shared/grid_view.dart';
 import '../../widgets/sort/suffix.dart';
@@ -48,7 +51,7 @@ class StoreNameScreen extends StatelessWidget {
                   isArrowBack: true,
                   title: title ??
                       cubit.storeModel?.data?.products?[0].store?.name ??
-                      'Store Name',
+                      tr('store_name'),
                   isLastIcon: true,
                   lastIcon: Icons.shopping_cart,
                   lastButtonTap: () {
@@ -94,7 +97,7 @@ class StoreNameScreen extends StatelessWidget {
                                       SizedBox(
                                         height: size!.height * .4,
                                       ),
-                                      const Text('No Items Yet')
+                                      Text(tr('no_items_yet'))
                                     ],
                                   )),
                           if(state is SearchLoadingState)

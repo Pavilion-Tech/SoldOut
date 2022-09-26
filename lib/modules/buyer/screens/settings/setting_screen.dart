@@ -30,7 +30,7 @@ class SettingsScreen extends StatelessWidget {
               },
             ),
             MyContainer(
-                SettingsWiget(),
+                const SettingsWiget(),
                 noSize: true
             ),
 

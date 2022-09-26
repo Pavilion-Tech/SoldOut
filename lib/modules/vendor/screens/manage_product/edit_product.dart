@@ -23,8 +23,7 @@ class EditProduct extends StatelessWidget {
               context: context,
               arrowTap: (){
                 productModel = null;
-                VendorCubit.get(context).imageFileList.clear();
-                VendorCubit.get(context).imagesId.clear();
+                VendorCubit.get(context).nullingData();
                 Navigator.pop(context);
               },
               title: tr('edit_product'),

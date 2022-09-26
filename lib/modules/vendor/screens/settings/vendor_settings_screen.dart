@@ -16,7 +16,7 @@ class VendorSettingsScreen extends StatelessWidget {
         SingleChildScrollView(
           physics:const NeverScrollableScrollPhysics(),
           child: MyContainer(
-              VSettingsWiget(),
+              const VSettingsWidget(),
           ),
         ),
       ],

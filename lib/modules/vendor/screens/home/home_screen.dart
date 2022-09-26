@@ -9,7 +9,6 @@ import 'package:soldout/modules/vendor/screens/settings/vendor_setting_cubit/ven
 import 'package:soldout/modules/widgets/my_container.dart';
 import 'package:soldout/shared/components/components.dart';
 import 'package:soldout/shared/styles/colors.dart';
-
 import '../../widgets/home/filter_widget.dart';
 import '../../widgets/home/home_item_widget.dart';
 import '../../widgets/loading/home_loading.dart';

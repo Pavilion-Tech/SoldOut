@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:soldout/models/buyer_model/order_model.dart';
 import 'package:soldout/modules/widgets/track_order.dart';
 import 'package:soldout/shared/components/components.dart';
-import 'package:soldout/shared/images/images.dart';
 import 'package:soldout/shared/styles/colors.dart';
 
 import '../../../../../../shared/components/constants.dart';
@@ -46,7 +45,7 @@ class StoreOrderItem extends StatelessWidget {
                   context:context,
                   product: stores.products![index]
                 ),
-                separatorBuilder: (context,index)=>separatorBuilder,
+                separatorBuilder: (context,index)=>separatorBuilder(),
                 itemCount: stores.products!.length,
                 shrinkWrap: true,
                 physics:const  NeverScrollableScrollPhysics(),
@@ -92,7 +91,7 @@ class StoreOrderItem extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: (){
-                    navigateTo(context, RateAndReview());
+                    navigateTo(context, RateAndReview(id:product.id!));
                   },
                   child: Container(
                     alignment: AlignmentDirectional.center,
@@ -129,7 +128,7 @@ class StoreOrderItem extends StatelessWidget {
     );
   }
 
-  Widget separatorBuilder = Padding(
+  Widget separatorBuilder ()=> Padding(
     padding: const EdgeInsetsDirectional.all(5),
     child: Container(
       height: 1,

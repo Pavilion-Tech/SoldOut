@@ -1,9 +1,6 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -41,7 +38,6 @@ class VAuthCubit extends Cubit<VAuthStates>
     InternetConnectionChecker().onStatusChange.listen((event) {
       final state = event == InternetConnectionStatus.connected;
       isConnect = state;
-      print(isConnect);
       emit(JustEmitState());
     });
   }
@@ -97,7 +93,7 @@ class VAuthCubit extends Cubit<VAuthStates>
   required BuildContext context,
 }) async
   {
-    showToast(msg: 'please wait will take a few time');
+    showToast(msg: tr('wait'));
     emit(RegisterLoadingState());
     FormData formData = FormData.fromMap({
       'name':name,
@@ -124,7 +120,6 @@ class VAuthCubit extends Cubit<VAuthStates>
         emit(RegisterWrongState());
       }
     }).catchError((e){
-      print(e.toString());
       showToast(msg: tr('wrong'),toastState: false);
       emit(RegisterErrorState());
 
@@ -139,11 +134,10 @@ class VAuthCubit extends Cubit<VAuthStates>
         token: 'Bearer $vToken',
         data: {
           'code':code,
-          'device_type':0,
-          'firebase_token':'ffsasf',
+          'device_type':deviceType,
+          'firebase_token':fcmToken,
         }
     ).then((value) {
-      print(value.data);
       if(value.statusCode == 200 &&value.data['status']){
         timer!.cancel();
         timerFinished = true;
@@ -160,7 +154,6 @@ class VAuthCubit extends Cubit<VAuthStates>
       }
 
     }).catchError((e){
-      print(e.toString());
       showToast(msg: tr('wrong'),toastState: false);
       emit(ActiveAccountErrorState());
 
@@ -176,7 +169,7 @@ class VAuthCubit extends Cubit<VAuthStates>
     ).then((value) {
       if(value.statusCode == 200 &&value.data['status']){
         code = value.data['data']['code'];
-        showToast(msg: 'You\'r Code id $code');
+        showToast(msg: '${tr('code_is')} $code');
         emit(ActiveAccountSuccessState());
       }else if(value.data!= null && !value.data['status'])
       {
@@ -198,7 +191,7 @@ class VAuthCubit extends Cubit<VAuthStates>
   required String phone,
   required String password,
   required BuildContext context,
-}) async
+})  async
   {
     VendorCubit.get(context).currentIndex = 0;
     emit(LoginLoadingState());
@@ -207,14 +200,13 @@ class VAuthCubit extends Cubit<VAuthStates>
         data: {
           'phone':phone,
           'password':password,
-          'device_type':0,
-          'firebase_token':'gsdgs'
+          'device_type':deviceType,
+          'firebase_token':fcmToken
         }
         ).then((value) {
       if(value.statusCode == 200 &&value.data['status']){
         vToken = value.data['data']['access_token'];
         CacheHelper.saveData(key: 'vToken', value: vToken);
-        print(vToken);
         emit(LoginSuccessState());
         navigateTo(context, VendorLayout());
         VendorCubit.get(context).getStatistic(context: context);
@@ -229,7 +221,6 @@ class VAuthCubit extends Cubit<VAuthStates>
       }
 
     }).catchError((e){
-      print(e.toString());
       showToast(msg: tr('wrong'),toastState: false);
       emit(LoginErrorState());
 
@@ -238,18 +229,19 @@ class VAuthCubit extends Cubit<VAuthStates>
 
   void loginOut ({
     required BuildContext context,
+    required int deleteAccount,
   }) async
   {
     emit(LogOutLoadingState());
     await DioHelper.postData(
         url: vLogout,
         token: 'Bearer $vToken',
-        data: {'delete_account':0}
+        data: {'delete_account':deleteAccount}
     ).then((value) {
       if(value.statusCode == 200 &&value.data['status']){
         vToken = null;
         CacheHelper.removeData('vToken');
-        navigateAndFinish(context, SplashScreen());
+        navigateAndFinish(context,const SplashScreen());
         emit(LogOutSuccessState());
       }else if(value.data!= null && !value.data['status'])
       {
@@ -260,7 +252,6 @@ class VAuthCubit extends Cubit<VAuthStates>
         emit(LogOutWrongState());
       }
     }).catchError((e){
-      print(e.toString());
       showToast(msg: tr('wrong'),toastState: false);
       emit(LogOutErrorState());
     });
@@ -280,7 +271,7 @@ class VAuthCubit extends Cubit<VAuthStates>
     ).then((value) {
       if(value.statusCode == 200 &&value.data['status']){
         code = value.data['data']['reset_code'];
-        showToast(msg: 'You\'r Code id $code');
+        showToast(msg: '${tr('code_is')} $code');
         emit(RequestResetSuccessState());
       }else if(value.data!= null && !value.data['status'])
       {
@@ -337,9 +328,8 @@ class VAuthCubit extends Cubit<VAuthStates>
         }
     ).then((value) {
       if(value.statusCode == 200 &&value.data['status']){
-
         showDialog(context: context, builder: (context){
-          return ResetDialog();
+          return const ResetDialog();
         });
         emit(ResetSuccessState());
       }else if(value.data!= null && !value.data['status'])
@@ -347,7 +337,7 @@ class VAuthCubit extends Cubit<VAuthStates>
         showToast(msg: value.data['errors'].toString(),toastState: true);
         emit(ResetWrongState());
       }else{
-        showToast(msg: tr('wrong'),toastState: true);
+         showToast(msg: tr('wrong'),toastState: true);
         emit(ResetWrongState());
       }
     }).catchError((e){
@@ -355,5 +345,4 @@ class VAuthCubit extends Cubit<VAuthStates>
       emit(ResetErrorState());
     });
   }
-
 }

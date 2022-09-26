@@ -8,9 +8,7 @@ import 'package:soldout/modules/buyer/screens/cart/cart_cubit/cart_cubit.dart';
 import 'package:soldout/modules/buyer/screens/cart/cart_cubit/cart_states.dart';
 import 'package:soldout/shared/components/components.dart';
 import 'package:soldout/shared/styles/colors.dart';
-
 import '../../../../shared/components/constants.dart';
-import '../check_out/radio.dart';
 
 class CartItem extends StatefulWidget {
   CartItem({Key? key, required this.model}) : super(key: key);
@@ -59,7 +57,7 @@ class _CartItemState extends State<CartItem> {
                     ),
                   ),
                 ),
-                children: [],
+                children: const[],
               ),
               child: Container(
                 height: size!.height * .1,
@@ -108,7 +106,7 @@ class _CartItemState extends State<CartItem> {
                             color: Colors.red,
                             decoration: TextDecoration.lineThrough),
                       ),
-                    if (widget.model.stock != 0)
+                    if (widget.model.stockChanged!)
                       Row(
                         children: [
                           InkWell(
@@ -199,7 +197,7 @@ class _CartItemState extends State<CartItem> {
                       ),
                     ),
                   ),
-                  children: [],
+                  children: const[],
                 ),
                 child: Container(
                   height: size!.height * .1,

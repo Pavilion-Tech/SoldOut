@@ -47,13 +47,11 @@ class VProductDetails extends StatelessWidget {
               detailsItem(
                  Text(
                    productModel.desc!,
-                  maxLines: 5,
-                  style:const TextStyle(height: 1.9),
-                ),
+                   maxLines: 5,
+                   style:const TextStyle(height: 1.9),
+                 ),
               ),
-              SizedBox(
-                height: size!.height * .03,
-              ),
+              SizedBox(height: size!.height * .03,),
               VProductReview(reviews: productModel.reviews!),
               SizedBox(
                 height: size!.height*.02,

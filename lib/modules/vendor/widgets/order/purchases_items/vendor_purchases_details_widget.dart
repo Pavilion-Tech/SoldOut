@@ -1,8 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:soldout/modules/vendor/widgets/order/purchases_items/vendor_details_item.dart';
-import 'package:soldout/modules/vendor/widgets/order/purchases_items/vendor_invoice.dart';
 import 'package:soldout/shared/components/components.dart';
 import '../../../../../models/vendor_model/vendor_order_model.dart';
 import '../../../../../shared/styles/colors.dart';

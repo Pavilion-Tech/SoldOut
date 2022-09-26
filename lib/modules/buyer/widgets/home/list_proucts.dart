@@ -11,6 +11,7 @@ class ListProducts extends StatelessWidget {
   Widget build(BuildContext context) {
     var cubit = BuyerCubit.get(context);
     return ListView.separated(
+      physics:const BouncingScrollPhysics(),
       scrollDirection: Axis.horizontal,
       separatorBuilder: (context,index)=>SizedBox(width: size!.width * .020,),
       itemCount: cubit.homeModel!.data!.newProducts!.length > 6

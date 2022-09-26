@@ -27,7 +27,6 @@ class SignInScreen extends StatelessWidget {
           if(state is SignSuccessState){
             navigateTo(context, VerificationScreen(isNoty: isNoty));
           }
-          if(state is SignErrorState)showToast(msg:state.msg,toastState: false);
         },
         builder: (context, state) {
           var cubit = AuthCubit.get(context);
@@ -60,7 +59,7 @@ class SignInScreen extends StatelessWidget {
                           ],
                         validator: (value){
                             if(value!.isEmpty){
-                              return 'Phone Must Be Empty';
+                              return tr('phone_empty');
                             }
                         }
                       ),

@@ -54,7 +54,8 @@ class CheckOutScreen extends StatelessWidget {
                           builder: (context) {
                             deliveryAddress = DeliveryAddress(
                               getAddressModel: addressCubit.getAddressModel,
-                              addressId: addressCubit.getAddressModel!.data![0].id,
+                              addressId:
+                                  addressCubit.getAddressModel!.data![0].id,
                             );
                             return Column(
                               children: [
@@ -86,32 +87,39 @@ class CheckOutScreen extends StatelessWidget {
                                         .discountModel!.data!.totalCartPrice!,
                                   ),
                                 state2 is! CheckOutLoadingState
-                                ?defaultButton(
-                                    onTap: () {
-                                      print(deliveryAddress.addressId);
-                                      print(customRadio.radioValue);
-                                      if(deliveryAddress.addressId !=null
-                                          ||deliveryAddress.addressController.text.isNotEmpty
-                                          &&deliveryAddress.cityDropDownIndex !=null
-                                          &&deliveryAddress.neighborhoodsDropDownIndex !=null
-                                      )
-                                      {
-                                        cubit.checkOut(
-                                            context: context,
-                                            payMethod: customRadio.radioValue,
-                                            neighborhoodId: deliveryAddress.neighborhoodsDropDownIndex,
-                                            cityId: deliveryAddress.cityDropDownIndex,
-                                            address: deliveryAddress.addressController.text.trim(),
-                                            couponCode: discountWidget.couponController.text.trim(),
-                                            userAddressId: deliveryAddress.addressId
-                                        );
-                                      }else
-                                        {
-                                          showToast(msg: 'Select Address First');
-                                        }
-                                    },
-                                    text: tr('pay_now'))
-                                :const CircularProgressIndicator(),
+                                    ? defaultButton(
+                                        onTap: () {
+                                          if (deliveryAddress.addressId !=
+                                                  null ||
+                                              deliveryAddress.addressController
+                                                      .text.isNotEmpty &&
+                                                  deliveryAddress
+                                                          .cityDropDownIndex !=
+                                                      null &&
+                                                  deliveryAddress
+                                                          .neighborhoodsDropDownIndex !=
+                                                      null) {
+                                            cubit.checkOut(
+                                                context: context,
+                                                payMethod:
+                                                    customRadio.radioValue,
+                                                neighborhoodId: deliveryAddress
+                                                    .neighborhoodsDropDownIndex,
+                                                cityId: deliveryAddress
+                                                    .cityDropDownIndex,
+                                                address: deliveryAddress
+                                                    .addressController.text,
+                                                couponCode: discountWidget
+                                                    .couponController.text,
+                                                userAddressId:
+                                                    deliveryAddress.addressId);
+                                          } else {
+                                            showToast(
+                                                msg: tr('select_address'));
+                                          }
+                                        },
+                                        text: tr('pay_now'))
+                                    : const CircularProgressIndicator(),
                               ],
                             );
                           });

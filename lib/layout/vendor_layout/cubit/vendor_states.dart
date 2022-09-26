@@ -44,3 +44,9 @@ class GetOrderErrorState extends VendorStates {}
 
 class SearchState extends VendorStates {}
 
+class GetNotificationLoadingState extends VendorStates {}
+
+class GetNotificationSuccessState extends VendorStates {}
+
+class GetNotificationErrorState extends VendorStates {}
+

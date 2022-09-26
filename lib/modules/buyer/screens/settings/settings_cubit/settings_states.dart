@@ -22,6 +22,22 @@ class ContactUsSuccessState extends SettingsStates{}
 
 class ContactUsErrorState extends SettingsStates{}
 
+class RateLoadingState extends SettingsStates{}
+
+class RateWrongState extends SettingsStates{}
+
+class RateSuccessState extends SettingsStates{}
+
+class RateErrorState extends SettingsStates{}
+
+class GetPointsLoadingState extends SettingsStates{}
+
+class GetPointsWrongState extends SettingsStates{}
+
+class GetPointsSuccessState extends SettingsStates{}
+
+class GetPointsErrorState extends SettingsStates{}
+
 class GetSettingsSuccess extends SettingsStates {}
 
 class GetSettingsError extends SettingsStates {}

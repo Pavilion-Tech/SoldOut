@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -16,6 +15,7 @@ import '../../../widgets/check_out/dialog.dart';
 import '../../../widgets/paymen/payment.dart';
 
 class CartCubit extends Cubit<CartStates> {
+
   CartCubit() : super(InitState());
 
   static CartCubit get(context) => BlocProvider.of(context);
@@ -32,17 +32,14 @@ class CartCubit extends Cubit<CartStates> {
     InternetConnectionChecker().onStatusChange.listen((event) {
       final state = event == InternetConnectionStatus.connected;
       isConnect = state;
-      print(isConnect);
       emit(JustEmitState());
     });
   }
-
 
   void addToCart({
     int? productId,
     int? qty,
   }) async {
-    print(productId);
     emit(AddToCartLoadingState());
     await DioHelper.postData(
         url: carts,
@@ -57,7 +54,6 @@ class CartCubit extends Cubit<CartStates> {
         showToast(msg: value.data['msg']);
         getCart();
       } else {
-        print(value);
         showToast(msg: tr('wrong'), toastState: false);
         emit(AddToCartWrongState());
       }
@@ -81,7 +77,6 @@ class CartCubit extends Cubit<CartStates> {
         showToast(msg: value.data['msg']);
         getCart();
       } else {
-        print(value);
         showToast(msg: tr('wrong'), toastState: false);
         emit(RemoveToCartWrongState());
       }
@@ -99,7 +94,6 @@ class CartCubit extends Cubit<CartStates> {
       lang: myLocale,
       token: token!= null?'Bearer $token':null,
     ).then((value) {
-      print(value.data);
       if (value.statusCode == 200 && value.data['status']) {
         getCartModel = GetCartModel.fromJson(value.data);
         emit(GetCartSuccessState());
@@ -151,14 +145,13 @@ class CartCubit extends Cubit<CartStates> {
           else if(value.statusCode == 200)
           {
            showToast(msg: value.data['errors'].toString(),toastState: true);
-            emit(CheckCouponWrongState());
+           emit(CheckCouponWrongState());
           }
           else{
             showToast(msg: tr('wrong'),toastState: false);
             emit(CheckCouponWrongState());
           }
     }).catchError((e) {
-      print(e.toString());
       showToast(msg: tr('wrong'),toastState: false);
       emit(CheckCouponErrorState());
     });
@@ -182,7 +175,6 @@ class CartCubit extends Cubit<CartStates> {
       cityId:cityId,
       userAddressId: userAddressId,
     );
-    print(map);
     emit(CheckOutLoadingState());
     await DioHelper.postData(
         lang: myLocale,
@@ -192,7 +184,6 @@ class CartCubit extends Cubit<CartStates> {
     ).then((value) {
       if(value.statusCode == 200&& value.data['status'])
       {
-        print(value.data);
         String link = value.data['data']['payment_link'];
         var orderId = value.data['data']['order_id'];
         if(link.isNotEmpty)
@@ -212,7 +203,6 @@ class CartCubit extends Cubit<CartStates> {
       }
       else if(value.statusCode == 200)
       {
-        print(value.data['errors']);
         showToast(msg: value.data['errors'].toString(),toastState: true);
         emit(CheckOutWrongState());
       }
@@ -264,7 +254,6 @@ class CartCubit extends Cubit<CartStates> {
           'user_address_id':userAddressId,
         };
       }
-
     }
   }
 

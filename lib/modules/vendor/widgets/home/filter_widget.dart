@@ -15,7 +15,6 @@ class FilterWidget extends StatelessWidget {
 
   String changeFormat(TextEditingController controller){
     return'${controller.text.trim().split('/')[2]}-${checkNum(controller,1)??''}${controller.text.trim().split('/')[1]}-${checkNum(controller,0)??''}${controller.text.trim().split('/')[0]}';
-
   }
 
 
@@ -77,7 +76,7 @@ class FilterWidget extends StatelessWidget {
                           );
                         });
                       }else{
-                        showToast(msg: 'Choose From Date First',toastState: true);
+                        showToast(msg: tr('choose_date'),toastState: true);
                       }
                     }
                 )

@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:soldout/layout/buyer_layout/cubit/buyer_cubit.dart';
 import 'package:soldout/modules/buyer/auth/auth_cubit/auth_cubit.dart';
 import 'package:soldout/modules/buyer/screens/settings/setting_screens/my_account/addresses/address_cubit/cubit.dart';
@@ -10,7 +11,7 @@ import '../../../../../../shared/styles/colors.dart';
 import '../../../screens/settings/setting_screens/my_account/addresses/manage_address.dart';
 import '../../../screens/settings/setting_screens/my_account/edit_profile.dart';
 import '../../../screens/settings/setting_screens/my_account/favorites.dart';
-import '../../../screens/settings/setting_screens/my_account/my_auctions.dart';
+import '../../../screens/settings/setting_screens/my_account/my_auctions/my_auctions.dart';
 import '../../../screens/settings/setting_screens/my_account/order/order_history.dart';
 import '../../../screens/settings/setting_screens/my_account/points.dart';
 import 'change_lang_sheet.dart';
@@ -36,11 +37,11 @@ class MyAccountWidget extends StatelessWidget {
           children: [
             accountItem(tr('edit_profile'),(){
               AuthCubit.get(context).getProfile();
-              navigateTo(context, EditProfile());
+              navigateTo(context,const EditProfile());
             }),
             accountItem(tr('manage_address'),(){
               AddressCubit.get(context).getAddress();
-              navigateTo(context, ManageAddress());
+              navigateTo(context,const ManageAddress());
             }),
             accountItem(tr('my_fav'),(){
               BuyerCubit.get(context).getFav();
@@ -48,13 +49,14 @@ class MyAccountWidget extends StatelessWidget {
             }),
             accountItem(tr('my_order_history'),(){
               SettingsCubit.get(context).getOrder();
-              navigateTo(context, OrderHistory());
+              navigateTo(context,const OrderHistory());
             }),
             accountItem(tr('my_auctions'),(){
-              navigateTo(context, MyAuctions());
+              navigateTo(context,const MyAuctions());
             }),
             accountItem(tr('points'),(){
-              navigateTo(context, PointsScreen());
+              SettingsCubit.get(context).getAllPoints();
+              navigateTo(context,const PointsScreen());
             }),
             InkWell(
               onTap: (){
@@ -73,7 +75,11 @@ class MyAccountWidget extends StatelessWidget {
               child:Text(tr('change_lang')),
             ),
             InkWell(
-              onTap: (){},
+              onTap: (){
+                String uri = 'https://soldoutapp.page.link/w13Z';
+                Uri sharableLink = Uri.parse(uri);
+                Share.share(sharableLink.toString());
+              },
               child:Text(tr('share_app')),
             ),
 

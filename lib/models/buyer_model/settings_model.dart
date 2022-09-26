@@ -73,11 +73,13 @@ class Neighborhoods {
 class Categories {
   int? id;
   String? name;
+  String? hexColor;
 
 
   Categories.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
+    hexColor = json['hex_color'];
   }
 
 }

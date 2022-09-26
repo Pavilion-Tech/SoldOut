@@ -24,7 +24,7 @@
         </intent>
     </queries>
    <application
-        android:label="soldout"
+        android:label="Sold Out"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

@@ -28,7 +28,7 @@ class ManageAddress extends StatelessWidget {
               }
             ),
             MyContainer(
-                ManageAddressWidget(),
+                const ManageAddressWidget(),
                 noSize: true),
           ],
         ),

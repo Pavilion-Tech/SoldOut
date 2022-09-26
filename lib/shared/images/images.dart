@@ -1,7 +1,6 @@
 class BuyerImages{
 
-  static const splashLogo = 'assets/images/splash.png';
-  static const logo = 'assets/images/logo.png';
+  static const logo = 'assets/images/SoldoutLogo.png';
   static const indicatorOn = 'assets/images/indicator_on.png';
   static const indicatorOff = 'assets/images/indicator_off.png';
   static const skip = 'assets/images/skip.png';
@@ -22,6 +21,4 @@ class BuyerImages{
   static const cart = 'assets/images/cart.png';
   static const ops = 'assets/images/ops.png';
   static const update = 'assets/images/update.png';
-
-
 }

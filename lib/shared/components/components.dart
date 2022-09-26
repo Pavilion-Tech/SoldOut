@@ -7,7 +7,6 @@ import 'package:soldout/layout/buyer_layout/buy_layout_screen.dart';
 import 'package:soldout/modules/widgets/wrong_screens/no_connect.dart';
 import 'package:soldout/shared/images/images.dart';
 import 'package:soldout/shared/styles/colors.dart';
-
 import 'constants.dart';
 
 void navigateTo(context, widget) {
@@ -176,7 +175,7 @@ Widget myAppBar({
                 onPressed: (){
                   navigateAndFinish(context, BuyerLayout());
                 },
-                child: Text(tr('skip'),style: TextStyle(color: defaultColorTwo),),
+                child: Text(tr('skip'),style:const TextStyle(color: defaultColorTwo),),
             )
         ],
       ),
@@ -202,6 +201,6 @@ Future showToast ({required String msg , bool? toastState})
 
 checkNet(context) {
   if (!isConnect!) {
-    navigateAndFinish(context, NoConnect(),);
+    navigateAndFinish(context,const NoConnect(),);
   }
 }

@@ -19,7 +19,6 @@ class SignUpScreen extends StatelessWidget {
     return BlocConsumer<AuthCubit, AuthStates>(
       listener: (context, state) {
         if(state is SignSuccessState)navigateTo(context,VerificationScreen());
-        if(state is SignErrorState)showToast(msg:state.msg,toastState: false);
       },
       builder: (context, state) {
         var cubit = AuthCubit.get(context);
@@ -47,7 +46,7 @@ class SignUpScreen extends StatelessWidget {
                         controller: nameController,
                         validator: (value){
                           if(value!.isEmpty){
-                            return 'Name Must Be Empty';
+                            return tr('name_empty');
                           }
                         }
                       ),
@@ -62,7 +61,7 @@ class SignUpScreen extends StatelessWidget {
                           ],
                           validator: (value){
                             if(value!.isEmpty){
-                              return 'Phone Must Be Empty';
+                              return tr('phone_empty');
                             }
                           }
                       ),

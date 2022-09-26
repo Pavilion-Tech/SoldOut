@@ -12,6 +12,7 @@ import '../../../../../../layout/buyer_layout/buy_layout_screen.dart';
 import '../../../../../../layout/buyer_layout/cubit/buyer_cubit.dart';
 import '../../../../../../shared/components/constants.dart';
 
+
 class Favorites extends StatelessWidget {
 
   @override
@@ -45,7 +46,7 @@ class Favorites extends StatelessWidget {
                               : Column(
                             children: [
                               SizedBox(height: size!.height*.4),
-                              const Text('No Items Yet')
+                              Text(tr('no_fav'))
                             ],
                           ),
                           noSize: true,)

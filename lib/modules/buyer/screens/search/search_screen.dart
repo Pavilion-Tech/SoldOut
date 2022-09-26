@@ -77,15 +77,14 @@ class SearchScreen extends StatelessWidget {
                                 }),
                             if (cubit.searchModel!.data!.products!.isNotEmpty)
                               GridViewWidget(
-                                products: cubit.searchModel!.data!.products!,
-                              )
+                                products: cubit.searchModel!.data!.products!,)
                             else
                               Column(
                                 children: [
                                   SizedBox(
                                     height: size!.height * .4,
                                   ),
-                                  const Text('No Items Yet')
+                                  Text(tr('no_items_yet'))
                                 ],
                               ),
 

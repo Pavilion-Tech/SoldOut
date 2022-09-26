@@ -75,16 +75,16 @@ class _State extends State<VerificationScreen> {
           AuthCubit.get(context).logIn(context,widget.isNoty);
         });
       }else{
-        showToast(msg: 'OTP Code Invalid',toastState: true);
+        showToast(msg: tr('otp_invalid'),toastState: true);
       }
     }else{
-      showToast(msg: 'OTP Code Must Be Empty',toastState: true);
+      showToast(msg: tr('code_empty'),toastState: true);
     }
   }
 
   @override
   void initState() {
-    showToast(msg: 'You\'r Code id $code');
+    showToast(msg: '${tr('code_is')} $code');
     startTimer();
     super.initState();
   }
@@ -103,9 +103,7 @@ class _State extends State<VerificationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocConsumer<AuthCubit, AuthStates>(
-        listener: (context, state) {
-          if(state is GetCodeErrorState)showToast(msg:state.msg,toastState: false);
-        },
+        listener: (context, state) {},
         builder: (context, state) {
           var cubit = AuthCubit.get(context);
           return Stack(

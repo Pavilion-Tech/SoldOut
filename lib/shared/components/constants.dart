@@ -11,6 +11,8 @@ bool? isFirst;
 
 bool? showAuctionHint;
 
+String? fcmToken;
+
 String? myLocale;
 
 String? token;
@@ -19,7 +21,7 @@ String? vToken;
 
 int? code;
 
-int? deviceVersion;
+int? deviceType;
 
 var uuid;
 

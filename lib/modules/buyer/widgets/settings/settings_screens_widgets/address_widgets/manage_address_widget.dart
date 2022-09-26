@@ -15,7 +15,7 @@ import '../../../../../../shared/styles/colors.dart';
 import '../../../../screens/settings/setting_screens/my_account/addresses/add_address.dart';
 
 class ManageAddressWidget extends StatelessWidget {
-  const ManageAddressWidget({Key? key}) : super(key: key);
+  const  ManageAddressWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class ManageAddressWidget extends StatelessWidget {
                   Text(
                     tr('dont_have_address'),
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style:const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(
                     height: 50,

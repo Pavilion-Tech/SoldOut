@@ -44,7 +44,7 @@ class EditProfile extends StatelessWidget {
                             CircularProgressIndicator()
                           ],
                         ),
-                    condition: cubit.getProfileModel != null && state is! GetProfileLoadingState,
+                    condition: cubit.getProfileModel != null,
                   );
                 },
               ),

@@ -1,3 +1,4 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,6 +8,7 @@ import 'package:soldout/modules/widgets/my_container.dart';
 import 'package:soldout/shared/components/components.dart';
 import '../../../../layout/buyer_layout/buy_layout_screen.dart';
 import '../../../../layout/buyer_layout/cubit/buyer_cubit.dart';
+import '../../../../shared/components/constants.dart';
 import '../../widgets/items_shared/grid_view.dart';
 import '../../widgets/sort/suffix.dart';
 
@@ -61,44 +63,51 @@ class CategoriesScreen extends StatelessWidget {
                 ),
                 MyContainer(
                     noSize: true,
-                    Column(
-                      children: [
-                        defaultTextField(
-                            controller: cubit.categoryController,
-                            hint: tr('search_by_product'),
-                            suffix: suffix,
-                            onChanged: (String? value) {
-                              if (value!.length > 1) {
-                                cubit.currentCategoryPage = 1;
-                                cubit.getListProductsForCategory(
-                                    text: value,
-                                    id: id,
-                                    sort: suffix!.sort!.sortValue
+                    ConditionalBuilder(
+                      condition:products.isNotEmpty,
+                      fallback: (context)=>Column(children: [
+                        SizedBox(height: size!.height*.4,),
+                        Text(tr('no_items_yet')),
+                      ],),
+                      builder: (context)=>Column(
+                        children: [
+                          defaultTextField(
+                              controller: cubit.categoryController,
+                              hint: tr('search_by_product'),
+                              suffix: suffix,
+                              onChanged: (String? value) {
+                                if (value!.length > 1) {
+                                  cubit.currentCategoryPage = 1;
+                                  cubit.getListProductsForCategory(
+                                      text: value,
+                                      id: id,
+                                      sort: suffix!.sort!.sortValue
 
-                                );
+                                  );
+                                }
+                                if (value.length < 2) {
+                                  cubit.currentCategoryPage = 1;
+                                  cubit.categoryModel = null;
+                                  cubit.emitState();
+                                }
                               }
-                              if (value.length < 2) {
-                                cubit.currentCategoryPage = 1;
-                                cubit.categoryModel = null;
-                                cubit.emitState();
-                              }
-                            }
-                        ),
-                        if(cubit.categoryModel != null)
-                          Builder(builder:(context)
-                          {
-                            cubit.getMoreForCategory(id);
-                            return GridViewWidget(
-                                products: cubit.categoryModel!.data!.products!);
+                          ),
+                          if(cubit.categoryModel != null)
+                            Builder(builder:(context)
+                            {
+                              cubit.getMoreForCategory(id);
+                              return GridViewWidget(
+                                  products: cubit.categoryModel!.data!.products!);
 
-                          }),
-                        if(cubit.categoryModel == null)
-                         GridViewWidget(products: products),
+                            }),
+                          if(cubit.categoryModel == null)
+                            GridViewWidget(products: products),
 
 
-                        if(state is SearchLoadingState)
-                          const CircularProgressIndicator(),
-                      ],
+                          if(state is SearchLoadingState)
+                            const CircularProgressIndicator(),
+                        ],
+                      )
                     )
                 ),
               ],

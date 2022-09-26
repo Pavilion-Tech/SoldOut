@@ -22,7 +22,7 @@ class VHomeLoading extends StatelessWidget {
                 color: Colors.grey.shade300,
               ),
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             Row(
               children: [
                 Expanded(
@@ -40,7 +40,7 @@ class VHomeLoading extends StatelessWidget {
                       ),
                     ),
                 ),
-                SizedBox(width: 10,),
+                const SizedBox(width: 10,),
                 Expanded(
                   child: Shimmer.fromColors(
                     baseColor: Colors.grey.shade300,
@@ -60,7 +60,7 @@ class VHomeLoading extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 20,),
+        const SizedBox(height: 20,),
         Expanded(
           child: ListView.separated(
               itemBuilder: (context,index){
@@ -86,7 +86,7 @@ class VHomeLoading extends StatelessWidget {
                           color: Colors.grey.shade300,
                         ),
                       ),
-                      SizedBox(height: 10,),
+                      const SizedBox(height: 10,),
                       Row(
                         children: [
                           Shimmer.fromColors(
@@ -98,11 +98,11 @@ class VHomeLoading extends StatelessWidget {
                               color: Colors.grey.shade300,
                             ),
                           ),
-                          Spacer(),
+                          const Spacer(),
                           Shimmer.fromColors(
                             baseColor: Colors.grey.shade300,
                             highlightColor: Colors.white,
-                            child: CircleAvatar(
+                            child:const CircleAvatar(
                               radius: 11,
                               backgroundColor: Colors.grey,
                             ),
@@ -113,7 +113,7 @@ class VHomeLoading extends StatelessWidget {
                   ),
                 );
               },
-              separatorBuilder: (context,index)=>SizedBox(height: 20,),
+              separatorBuilder: (context,index)=>const SizedBox(height: 20,),
               itemCount: 3,
           ),
         ),

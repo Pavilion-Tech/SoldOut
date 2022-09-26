@@ -6,10 +6,7 @@ import 'package:soldout/layout/buyer_layout/buy_layout_screen.dart';
 import 'package:soldout/layout/buyer_layout/cubit/buyer_cubit.dart';
 import 'package:soldout/modules/buyer/screens/settings/settings_cubit/settings_cubit.dart';
 import 'package:soldout/modules/buyer/screens/settings/settings_cubit/settings_states.dart';
-import 'package:soldout/modules/widgets/contact_us_widget.dart';
 import 'package:soldout/shared/components/components.dart';
-
-import '../../shared/components/constants.dart';
 import 'loadings/about_app_loading/about_app_loading.dart';
 import 'my_container.dart';
 
@@ -43,7 +40,7 @@ class AboutUsScreen extends StatelessWidget {
                       fallback:(context)=>const AboutAppLoading(),
                       builder:(context)=> Text(
                         SettingsCubit.get(context).settingsModel!.data!.aboutUs!,
-                        style: TextStyle(height: 2, fontSize: 16),
+                        style:const TextStyle(height: 2, fontSize: 16),
                       ),
                     ),
 

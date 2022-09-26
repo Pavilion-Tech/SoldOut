@@ -17,7 +17,7 @@ class VendorManageProductList extends StatelessWidget {
 
 
 
-
+  @override
   Widget build(BuildContext context) {
     suffix = Suffix(apply: () {
       VendorCubit.get(context).getProducts(
@@ -92,7 +92,7 @@ class VendorManageProductList extends StatelessWidget {
                                       SizedBox(
                                         height: size!.height * .3,
                                       ),
-                                      const Text('No Products'),
+                                      Text(tr('no_items_yet')),
                                     ],
                                   ),
                                   if(state is GetProductLoadingState)

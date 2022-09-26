@@ -72,14 +72,14 @@ class _VerficationCodeState extends State<VerficationCode> {
           ),
           MyContainer(
             SingleChildScrollView(
-              physics: NeverScrollableScrollPhysics(),
+              physics:const NeverScrollableScrollPhysics(),
               child: Column(
                 children: [
                   StepWidget(
                     title: tr('step_two_of_three'),
                     description:tr('enter_code'),
                   ),
-              SizedBox(height: 30,),
+             const SizedBox(height: 30,),
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
