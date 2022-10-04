@@ -8,7 +8,6 @@ import 'package:soldout/shared/components/components.dart';
 import 'package:soldout/shared/components/constants.dart';
 import 'package:soldout/shared/images/images.dart';
 import 'package:soldout/shared/styles/colors.dart';
-import 'layout/buyer_layout/cubit/buyer_cubit.dart';
 import 'layout/vendor_layout/cubit/vendor_cubit.dart';
 import 'layout/vendor_layout/vendor_layout_screen.dart';
 import 'modules/intro/onBoarding/onBoarding_screen.dart';
