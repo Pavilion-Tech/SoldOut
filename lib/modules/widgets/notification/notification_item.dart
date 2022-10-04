@@ -17,7 +17,7 @@ class NotificationItem extends StatelessWidget {
   Widget build(BuildContext context) {
      time =DateFormat('',myLocale == 'ar'?'ar':'en')
         .add_yMMMMEEEEd()
-        .format(DateTime.fromMillisecondsSinceEpoch(notificationModel.createdAt!));
+        .format(DateTime.fromMillisecondsSinceEpoch(Duration(seconds: notificationModel.createdAt!).inMilliseconds));
     return Container(
       padding: const EdgeInsetsDirectional.only(
         top: 8,

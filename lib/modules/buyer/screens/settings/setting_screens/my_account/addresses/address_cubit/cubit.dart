@@ -20,7 +20,6 @@ class AddressCubit extends Cubit<AddressStates> {
     InternetConnectionChecker().onStatusChange.listen((event) {
       final state = event == InternetConnectionStatus.connected;
       isConnect = state;
-      print(isConnect);
       emit(JustEmitState());
     });
   }
@@ -101,7 +100,6 @@ class AddressCubit extends Cubit<AddressStates> {
         emit(GetAddressWrongState());
       }
     }).catchError((e) {
-      print(e);
       showToast(msg: e.toString(),toastState: false);
       emit(GetAddressErrorState());
     });
@@ -124,7 +122,6 @@ class AddressCubit extends Cubit<AddressStates> {
         emit(RemoveAddressWrongState());
       }
     }).catchError((e) {
-      print(e);
       showToast(msg: e.toString(),toastState: false);
       emit(RemoveAddressErrorState());
     });

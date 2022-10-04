@@ -29,11 +29,12 @@ class ProductScreen extends StatelessWidget {
             fallback: (context)=>ProductLoading(),
             builder:(context)=> Stack(
               children: [
-                MPageView(
-                    pageController: pageController, images: product!.images!),
+                MPageView(pageController:pageController,images:product!.images!),
                 RowInTop(id: product!.id!),
-                MIndicator(pageController: pageController,
-                    lengthPageView: product!.images!.length),
+                MIndicator(
+                    pageController: pageController,
+                    lengthPageView: product!.images!.length
+                ),
                 ProductDetails(product: product),
               ],
             ),

@@ -8,7 +8,7 @@ class CategoryListViewLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: size!.height * .046,
       child: ListView.separated(
         itemBuilder: (context, index) =>

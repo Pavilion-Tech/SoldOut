@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:soldout/layout/vendor_layout/cubit/vendor_cubit.dart';
@@ -28,7 +29,6 @@ class AddOrEditProductWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var cubit = VendorCubit.get(context);
-    print(isCompleted);
     if (productModel != null &&
         productModel!.images!.length != cubit.imagesId.length &&
         !isCompleted) {
@@ -64,10 +64,8 @@ class AddOrEditProductWidget extends StatelessWidget {
       },
       builder: (context, state) {
         var cubit = VendorCubit.get(context);
-
         return ConditionalBuilder(
-          condition:
-              productModel != null ? cubit.imageFileList.isNotEmpty : true,
+          condition: productModel !=null ? cubit.imageFileList.isNotEmpty:true,
           fallback: (context) => const EditLoading(),
           builder: (context) => Form(
             key: formKey,
@@ -96,6 +94,10 @@ class AddOrEditProductWidget extends StatelessWidget {
                 defaultTextField(
                   controller: cubit.nameC,
                   hint: tr('product_name'),
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(48),
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
                   validator: (value) {
                     if (value!.isEmpty) {
                       return tr('product_empty');
@@ -134,9 +136,7 @@ class AddOrEditProductWidget extends StatelessWidget {
                         }
                       }),
                 ),
-                const SizedBox(
-                  height: 15,
-                ),
+                const SizedBox(height: 15,),
                 Stack(children: [
                   Container(
                     height: size!.height * .06,
@@ -150,13 +150,13 @@ class AddOrEditProductWidget extends StatelessWidget {
                   if (SettingsCubit.get(context).settingsModel != null)
                     Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 3, horizontal: 15),
+                          vertical: 3,
+                          horizontal: 15
+                      ),
                       child: DropdownButtonFormField(
                         isExpanded: true,
-                        validator: (value) =>
-                            value == null ? tr('field_required') : null,
-                        decoration:
-                            const InputDecoration(border: InputBorder.none),
+                        validator:(value)=>value==null?tr('field_required'):null,
+                        decoration: const InputDecoration(border:InputBorder.none),
                         borderRadius: BorderRadius.circular(10),
                         value: cubit.dropDownValue,
                         icon: const Icon(Icons.keyboard_arrow_down),
@@ -170,16 +170,14 @@ class AddOrEditProductWidget extends StatelessWidget {
                             child: SizedBox(
                                 height: 60,
                                 width: double.infinity,
-                                child: Text(items.name!)),
+                                child: Text(items.name!,style: TextStyle(fontSize: 13),)),
                           );
                         }).toList(),
                         onChanged: (String? newValue) {
                           formKey.currentState!.validate();
                           cubit.dropDownValue = newValue;
                           for (var cate in SettingsCubit.get(context)
-                              .settingsModel!
-                              .data!
-                              .categories!) {
+                              .settingsModel!.data!.categories!) {
                             if (newValue == cate.name) {
                               cubit.dropDownId = cate.id;
                             }
@@ -199,12 +197,11 @@ class AddOrEditProductWidget extends StatelessWidget {
                       child: defaultTextField(
                           type: TextInputType.number,
                           controller: cubit.qnt,
-                          onChanged: (value) =>
-                              formKey.currentState!.validate(),
+                          onChanged:(value)=>formKey.currentState!.validate(),
                           hint: tr('quantity'),
-                          validator: (value) {
+                          validator: (value){
                             if (value!.isEmpty) {
-                              return tr('quantity_empty');
+                              return tr('field_required');
                             }
                           }),
                     ),
@@ -213,12 +210,11 @@ class AddOrEditProductWidget extends StatelessWidget {
                       child: defaultTextField(
                           type: TextInputType.number,
                           controller: cubit.weight,
-                          onChanged: (value) =>
-                              formKey.currentState!.validate(),
+                          onChanged:(value)=>formKey.currentState!.validate(),
                           hint: tr('weight'),
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return tr('weight_empty');
+                              return tr('field_required');
                             }
                           }),
                     )
@@ -231,12 +227,11 @@ class AddOrEditProductWidget extends StatelessWidget {
                       child: defaultTextField(
                           type: TextInputType.number,
                           controller: cubit.price,
-                          onChanged: (value) =>
-                              formKey.currentState!.validate(),
+                          onChanged:(value)=>formKey.currentState!.validate(),
                           hint: tr('price'),
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return tr('price_empty');
+                              return tr('field_required');
                             }
                           }),
                     ),
@@ -245,22 +240,14 @@ class AddOrEditProductWidget extends StatelessWidget {
                       child: defaultTextField(
                           type: TextInputType.number,
                           controller: cubit.priceAfterDiscount,
-                          onChanged: (value) =>
-                              formKey.currentState!.validate(),
                           hint: tr('price_after_discount'),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return tr('price_after_empty');
-                            }
-                          }),
+                          ),
                     )
                   ],
                 ),
                 const SizedBox(height: 15,),
                 InkWell(
-                  onTap: () {
-                    cubit.selectImages();
-                  },
+                  onTap: ()=>cubit.selectImages(),
                   child: Container(
                     height: size!.height * .06,
                     decoration: BoxDecoration(
@@ -270,17 +257,14 @@ class AddOrEditProductWidget extends StatelessWidget {
                     ),
                     alignment: AlignmentDirectional.center,
                     padding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 15),
+                        vertical: 10,
+                        horizontal: 15
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
-                          Icons.add_a_photo,
-                          color: HexColor('#A0AEC0'),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
+                        Icon(Icons.add_a_photo, color: HexColor('#A0AEC0'),),
+                        const SizedBox(width: 10,),
                         Text(
                           tr('upload_image'),
                           style: const TextStyle(fontWeight: FontWeight.bold),
@@ -296,9 +280,9 @@ class AddOrEditProductWidget extends StatelessWidget {
                     child: GridView.builder(
                         itemCount: cubit.imageFileList.length,
                         scrollDirection: Axis.horizontal,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 1),
+                        gridDelegate:const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 1
+                        ),
                         itemBuilder: (BuildContext context, int index) {
                           return Stack(
                               alignment: AlignmentDirectional.center,
@@ -313,7 +297,8 @@ class AddOrEditProductWidget extends StatelessWidget {
                                     onPressed: () {
                                       cubit.imageFileList
                                           .remove(cubit.imageFileList[index]);
-                                      if (cubit.imagesId.isNotEmpty) {
+                                      if (cubit.imagesId.isNotEmpty
+                                      &&cubit.imagesId.any((element)=>element==index)){
                                         cubit.imagesId
                                             .remove(cubit.imagesId[index]);
                                       }

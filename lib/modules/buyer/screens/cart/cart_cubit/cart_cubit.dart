@@ -118,11 +118,11 @@ class CartCubit extends Cubit<CartStates> {
         getCheckOutModel = GetCheckOutModel.fromJson(value.data);
         emit(GetCheckOutSuccessState());
       } else {
-        showToast(msg: tr('wrong'), toastState: false);
+        showToast(msg: tr('wrong'),toastState: false);
         emit(GetCheckOutWrongState());
       }
     }).catchError((e) {
-      showToast(msg: e.message, toastState: false);
+      showToast(msg: e.message,toastState: false);
       emit(GetCheckOutErrorState());
     });
   }
@@ -201,7 +201,7 @@ class CartCubit extends Cubit<CartStates> {
         showToast(msg: value.data['msg']);
         emit(CheckOutSuccessState());
       }
-      else if(value.statusCode == 200)
+      else if(value.statusCode == 200&& !value.data['status'])
       {
         showToast(msg: value.data['errors'].toString(),toastState: true);
         emit(CheckOutWrongState());

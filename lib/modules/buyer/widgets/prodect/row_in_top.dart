@@ -4,13 +4,13 @@ import 'package:share_plus/share_plus.dart';
 import 'package:soldout/layout/buyer_layout/cubit/buyer_cubit.dart';
 import 'package:soldout/layout/buyer_layout/cubit/buyer_states.dart';
 import 'package:soldout/modules/buyer/auth/sign_in/sign_in_screen.dart';
+import 'package:soldout/modules/buyer/screens/auction/auction_cubit/auction_cubit.dart';
 import 'package:soldout/shared/components/components.dart';
 import 'package:soldout/shared/firebase_helper/dynamic_links.dart';
 import '../../../../shared/components/constants.dart';
 import '../../../../shared/styles/colors.dart';
 
 class RowInTop extends StatelessWidget {
-
   RowInTop({this.isProduct = true, this.id});
 
   bool isProduct;
@@ -24,7 +24,9 @@ class RowInTop extends StatelessWidget {
       child: Row(
         children: [
           InkWell(
-            onTap: () {
+            onTap: (){
+              if(!isProduct)AuctionCubit.get(context).unsubscribePusher(id!);
+              BuyerCubit.get(context).getHomeData(context);
               Navigator.pop(context);
             },
             child: Container(
@@ -45,7 +47,7 @@ class RowInTop extends StatelessWidget {
             ),
           ),
           const Expanded(child: SizedBox()),
-          if(isProduct)
+          if (isProduct)
             Padding(
               padding: const EdgeInsetsDirectional.only(end: 25),
               child: Row(
@@ -73,10 +75,9 @@ class RowInTop extends StatelessWidget {
                       var cubit = BuyerCubit.get(context);
                       return InkWell(
                         onTap: () {
-                          if(token != null)
-                          {
+                          if (token != null) {
                             cubit.updateFav(id!);
-                          }else{
+                          } else {
                             navigateTo(context, SignInScreen());
                           }
                         },
@@ -85,10 +86,10 @@ class RowInTop extends StatelessWidget {
                           radius: 17,
                           child: Icon(
                             cubit.favorites[id!]!
-                                ?Icons.favorite
-                                :Icons.favorite_outline_sharp,
+                                ? Icons.favorite
+                                : Icons.favorite_outline_sharp,
                             size: 17,
-                            color:cubit.favorites[id!]!
+                            color: cubit.favorites[id!]!
                                 ? Colors.red
                                 : Colors.black,
                           ),

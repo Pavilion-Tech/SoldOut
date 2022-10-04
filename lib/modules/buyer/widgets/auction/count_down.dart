@@ -7,11 +7,12 @@ import '../../../../shared/styles/colors.dart';
 class CountDown extends StatefulWidget {
   CountDown({
     required this.fontSize,
-    this.endAt
+    required this.duration,
   });
 
   double fontSize;
-  int? endAt;
+  Duration duration;
+
 
   @override
   _CountDownState createState() => _CountDownState();
@@ -20,13 +21,11 @@ class CountDown extends StatefulWidget {
 class _CountDownState extends State<CountDown> {
 
   late Timer timer;
-  late Duration  duration;
 
 
 
 
   void startTimer(){
-    duration = Duration(milliseconds: widget.endAt!);
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setCountDown();
     });
@@ -35,11 +34,11 @@ class _CountDownState extends State<CountDown> {
   void setCountDown(){
     const reduceSecondsBy = 1;
     setState(() {
-      final seconds = duration.inSeconds - reduceSecondsBy;
+      final seconds = widget.duration.inSeconds - reduceSecondsBy;
       if (seconds < 0) {
         timer.cancel();
       } else {
-        duration = Duration(seconds: seconds);
+        widget.duration = Duration(seconds: seconds);
       }
     });
   }
@@ -61,9 +60,9 @@ class _CountDownState extends State<CountDown> {
   Widget build(BuildContext context) {
 
     String strDigits(int n) => n.toString().padLeft(2, '0');
-    final hours = strDigits(duration.inHours.remainder(24));
-    final minutes = strDigits(duration.inMinutes.remainder(60));
-    final seconds = strDigits(duration.inSeconds.remainder(60));
+    final hours = strDigits(widget.duration.inHours.remainder(24));
+    final minutes = strDigits(widget.duration.inMinutes.remainder(60));
+    final seconds = strDigits(widget.duration.inSeconds.remainder(60));
 
     return  Text(
       '$hours:$minutes:$seconds',

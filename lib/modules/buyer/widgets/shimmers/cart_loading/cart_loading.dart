@@ -36,7 +36,7 @@ class CartLoading extends StatelessWidget {
           separatorBuilder: (context,index)=>const SizedBox(height: 15,),
           itemCount: 5,
           shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
+          physics:const NeverScrollableScrollPhysics(),
           itemBuilder: (context,index)=> Container(
             height: size!.height*.1,
             width: double.infinity,
@@ -73,7 +73,7 @@ class CartLoading extends StatelessWidget {
                           color: Colors.grey.shade300
                         ),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Shimmer.fromColors(
                         baseColor: Colors.grey.shade300,
                         highlightColor: Colors.white,
@@ -86,7 +86,7 @@ class CartLoading extends StatelessWidget {
                     ],
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 Row(
                     children: [
                       Shimmer.fromColors(
@@ -97,7 +97,7 @@ class CartLoading extends StatelessWidget {
                           backgroundColor: Colors.grey.shade300,
                         ),
                       ),
-                      SizedBox(width: 5,),
+                      const SizedBox(width: 5,),
                       Shimmer.fromColors(
                         baseColor: Colors.grey.shade300,
                         highlightColor: Colors.white,
@@ -107,7 +107,7 @@ class CartLoading extends StatelessWidget {
                           color: Colors.grey.shade300,
                         ),
                       ),
-                      SizedBox(width: 5,),
+                      const SizedBox(width: 5,),
                       Shimmer.fromColors(
                         baseColor: Colors.grey.shade300,
                         highlightColor: Colors.white,

@@ -26,6 +26,7 @@ class OrderData {
   int? totalOrderPrice;
   int? createdAt;
   List<Stores>? stores;
+  AuctionOrder? auctionOrder;
 
 
   OrderData.fromJson(Map<String, dynamic> json) {
@@ -36,6 +37,7 @@ class OrderData {
     subTotal = json['sub_total'];
     totalShippingCharges = json['total_shipping_charges'];
     totalOrderPrice = json['total_order_price'];
+    auctionOrder = json['auction'] != null ? new AuctionOrder.fromJson(json['auction']) : null;
     createdAt = json['created_at'];
     if (json['stores'] != null) {
       stores = <Stores>[];
@@ -44,7 +46,6 @@ class OrderData {
       });
     }
   }
-
 }
 
 class Stores {
@@ -95,3 +96,20 @@ class Products {
 
 
 }
+
+class AuctionOrder {
+  int? id;
+  String? auctionName;
+  String? productName;
+  String? productDesc;
+  String? firstImage;
+
+  AuctionOrder.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    auctionName = json['auction_name'];
+    productName = json['product_name'];
+    productDesc = json['product_desc'];
+    firstImage = json['first_image'];
+  }
+}
+

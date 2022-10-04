@@ -13,8 +13,7 @@ import '../../widgets/items_shared/grid_view.dart';
 import '../../widgets/sort/suffix.dart';
 
 class CategoriesScreen extends StatelessWidget {
-  CategoriesScreen(
-      {required this.products, required this.name, required this.id});
+  CategoriesScreen({required this.products,required this.name,required this.id});
 
   List<ProductModel> products;
   String name;
@@ -57,7 +56,9 @@ class CategoriesScreen extends StatelessWidget {
                     navigateAndFinish(context, BuyerLayout());
                   },
                   arrowTap: (){
+                    cubit.getHomeData(context);
                     cubit.currentCategoryPage = 1;
+                    cubit.scrollControllerForCategory.removeListener(() {});
                     Navigator.pop(context);
                   }
                 ),
@@ -102,8 +103,6 @@ class CategoriesScreen extends StatelessWidget {
                             }),
                           if(cubit.categoryModel == null)
                             GridViewWidget(products: products),
-
-
                           if(state is SearchLoadingState)
                             const CircularProgressIndicator(),
                         ],

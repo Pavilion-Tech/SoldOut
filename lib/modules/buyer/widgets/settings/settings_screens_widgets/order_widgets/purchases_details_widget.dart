@@ -1,13 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:soldout/models/buyer_model/cart_model/get_checkout_model.dart';
 import 'package:soldout/modules/buyer/widgets/check_out/invoice.dart';
-import 'package:soldout/modules/buyer/widgets/check_out/store_checkout_item.dart';
 import 'package:soldout/modules/buyer/widgets/settings/settings_screens_widgets/order_widgets/store_order.dart';
-import 'package:soldout/shared/styles/colors.dart';
-
 import '../../../../../../models/buyer_model/order_model.dart';
 import '../../../../../../shared/components/constants.dart';
+import '../../../auction/auction_checkout_item.dart';
 
 class PurchasesDetailsWidget extends StatelessWidget {
 
@@ -51,6 +48,7 @@ class PurchasesDetailsWidget extends StatelessWidget {
                         model.shippingAddress!,
                         style:const TextStyle(fontSize: 12),
                         maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                   ))
                 ],
               ),
@@ -68,7 +66,8 @@ class PurchasesDetailsWidget extends StatelessWidget {
             ],
           ),
         ),
-        Padding(
+        if(model.auctionOrder==null)
+          Padding(
           padding:const EdgeInsets.symmetric(vertical: 15),
           child: ListView.separated(
             itemBuilder: (context, index) => StoreOrderItem(stores: model.stores![index]),
@@ -78,6 +77,12 @@ class PurchasesDetailsWidget extends StatelessWidget {
             physics:const NeverScrollableScrollPhysics(),
           ),
         ),
+        if(model.auctionOrder!=null)
+          AuctionCheckOutItem(
+              model.auctionOrder!.productName!,
+              model.auctionOrder!.auctionName!,
+              model.auctionOrder!.firstImage!,
+          ),
         InvoiceWidget(
         subTotal: model.subTotal,
         shippingCharges: model.totalShippingCharges,

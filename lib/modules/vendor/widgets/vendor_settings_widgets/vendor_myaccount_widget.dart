@@ -58,7 +58,7 @@ class VMyAccountWidget extends StatelessWidget {
       onTap: callback,
       child: Row(
         children: [
-          Text(title,style: TextStyle(fontWeight: FontWeight.bold),),
+          Text(title,style:const TextStyle(fontWeight: FontWeight.bold),),
           const Spacer(),
           const Icon(Icons.arrow_forward_ios,size: 14,),
         ],

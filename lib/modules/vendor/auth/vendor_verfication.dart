@@ -52,7 +52,6 @@ class _State extends State<VVerificationScreen> {
         otpController1.text + otpController2.text+
             otpController3.text+otpController4.text+
             otpController5.text+otpController6.text;
-    print(codeFromOtp);
     return int.parse(codeFromOtp) == code;
   }
 

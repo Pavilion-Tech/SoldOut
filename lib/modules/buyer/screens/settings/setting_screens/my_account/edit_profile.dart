@@ -7,7 +7,6 @@ import 'package:soldout/layout/buyer_layout/cubit/buyer_cubit.dart';
 import 'package:soldout/modules/buyer/auth/auth_cubit/auth_cubit.dart';
 import 'package:soldout/modules/buyer/auth/auth_cubit/auth_state.dart';
 import 'package:soldout/shared/components/components.dart';
-
 import '../../../../../widgets/my_container.dart';
 import '../../../../widgets/settings/settings_screens_widgets/edit_profile/edit_profile_widget.dart';
 
@@ -16,7 +15,6 @@ class EditProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var cubit = AuthCubit.get(context);
     return Scaffold(
       body: Stack(
         children: [
@@ -35,6 +33,7 @@ class EditProfile extends StatelessWidget {
               BlocConsumer<AuthCubit, AuthStates>(
                 listener: (context, state) {},
                 builder: (context, state) {
+                  var cubit = AuthCubit.get(context);
                   return ConditionalBuilder(
                     builder: (context) => EditProfileWidget(),
                     fallback: (context) =>
@@ -48,7 +47,8 @@ class EditProfile extends StatelessWidget {
                   );
                 },
               ),
-              noSize: false),
+              noSize: false
+          ),
         ],
       ),
     );

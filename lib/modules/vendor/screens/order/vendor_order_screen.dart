@@ -48,26 +48,20 @@ class VendorOrderScreen extends StatelessWidget {
                                 }
                             }
                         ),
-                        if(cubit.vendorOrderModel!.data!.isNotEmpty&&cubit.searchModel== null)
+                        if(cubit.vendorOrderModel!.data!.isNotEmpty)
                         ListView.separated(
                           shrinkWrap: true,
                           itemBuilder: (context, index) => OrderItem(
-                            model: cubit.vendorOrderModel!.data![index],
+                            model:cubit.searchModel!= null
+                                ?cubit.searchModel!
+                                : cubit.vendorOrderModel!.data![index],
                           ),
                           separatorBuilder: (context, index) =>
                              const SizedBox(height: 10,),
-                          itemCount: cubit.vendorOrderModel!.data!.length,
+                          itemCount:cubit.searchModel!= null
+                              ? 1
+                              : cubit.vendorOrderModel!.data!.length,
                         ),
-                        if(cubit.searchModel!= null)
-                          ListView.separated(
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) => OrderItem(
-                              model: cubit.searchModel!,
-                            ),
-                            separatorBuilder: (context, index) =>
-                            const SizedBox(height: 10,),
-                            itemCount: 1,
-                          ),
                         if(cubit.vendorOrderModel!.data!.isEmpty)
                           Center(child: Text(tr(tr('no_order'))),)
                       ],

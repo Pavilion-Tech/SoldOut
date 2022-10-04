@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_polygon/flutter_polygon.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:soldout/layout/buyer_layout/cubit/buyer_cubit.dart';
@@ -10,7 +9,6 @@ import 'package:soldout/modules/buyer/screens/cart/cart_cubit/cart_cubit.dart';
 import 'package:soldout/modules/buyer/screens/product/product_screen.dart';
 import 'package:soldout/shared/components/components.dart';
 import 'package:soldout/shared/images/images.dart';
-
 import '../../../../models/buyer_model/product_model/product_model.dart';
 import '../../../../shared/components/constants.dart';
 import '../../../../shared/styles/colors.dart';
@@ -142,7 +140,7 @@ class ProductItem extends StatelessWidget {
                                 Row(
                                   children: [
                                     Text(
-                                      '${product!.regularPrice!}',
+                                      '${product!.salePrice??product!.regularPrice}',
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: const TextStyle(
@@ -154,7 +152,7 @@ class ProductItem extends StatelessWidget {
                                       SizedBox(
                                         width: 35,
                                         child: Text(
-                                          '${product!.salePrice}',
+                                          '${product!.regularPrice}',
                                           style:const TextStyle(
                                               color: Colors.grey,
                                               fontSize: 7,

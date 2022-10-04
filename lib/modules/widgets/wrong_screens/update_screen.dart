@@ -1,11 +1,7 @@
-import 'dart:html';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:soldout/shared/images/images.dart';
 import '../../../shared/components/components.dart';
-
-import '../../../shared/components/constants.dart';
 import '../../../splash_screen.dart';
 
 class UpdateScreen extends StatelessWidget {

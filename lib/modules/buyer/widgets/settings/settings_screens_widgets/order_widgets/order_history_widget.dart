@@ -3,12 +3,11 @@ import 'package:flutter/material.dart';
 import '../../../../../../models/buyer_model/order_model.dart';
 import '../../../../../../shared/components/components.dart';
 import '../../../../../../shared/components/constants.dart';
-import '../../../../../../shared/styles/colors.dart';
 import '../../../../screens/settings/setting_screens/my_account/order/purchases_details.dart';
 import '../../../../screens/settings/settings_cubit/settings_cubit.dart';
 
 class OrderHistoryWidget extends StatelessWidget {
-
+  const OrderHistoryWidget({Key? key}) :super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,25 +34,19 @@ class OrderHistoryWidget extends StatelessWidget {
                 }
             }
         ),
-        if(cubit.orderModel!.data!.isNotEmpty&&cubit.searchOrderModel == null)
+        if(cubit.orderModel!.data!.isNotEmpty)
           ListView.separated(
             shrinkWrap: true,
             itemBuilder: (context,index)=>orderItem(
               context: context,
-              model:  cubit.orderModel!.data![index],
+              model: cubit.searchOrderModel != null
+                  ? cubit.searchOrderModel!
+                  :  cubit.orderModel!.data![index],
             ),
             separatorBuilder: (context,index)=>const SizedBox(height: 10,),
-            itemCount: cubit.orderModel!.data!.length,
-          ),
-        if(cubit.searchOrderModel != null)
-          ListView.separated(
-            shrinkWrap: true,
-            itemBuilder: (context,index)=>orderItem(
-              context: context,
-              model:  cubit.searchOrderModel!,
-            ),
-            separatorBuilder: (context,index)=>const SizedBox(height: 10,),
-            itemCount: 1,
+            itemCount: cubit.searchOrderModel != null
+                ? 1
+                :cubit.orderModel!.data!.length,
           ),
         if(cubit.orderModel!.data!.isEmpty)
           Center(child: Text(tr('no_order'))),

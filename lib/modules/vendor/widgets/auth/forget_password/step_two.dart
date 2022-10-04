@@ -13,7 +13,7 @@ import '../../../../../shared/styles/colors.dart';
 import '../../../../widgets/my_container.dart';
 
 class VerficationCode extends StatefulWidget {
-   VerficationCode({Key? key}) : super(key: key);
+  VerficationCode({Key? key}) : super(key: key);
 
   @override
   State<VerficationCode> createState() => _VerficationCodeState();

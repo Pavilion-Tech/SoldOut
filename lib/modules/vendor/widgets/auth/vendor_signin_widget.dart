@@ -5,8 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:soldout/modules/vendor/auth/auth_cubit/auth_cubit.dart';
 import 'package:soldout/modules/vendor/auth/auth_cubit/auth_states.dart';
 import 'package:soldout/modules/vendor/widgets/auth/forget_password/step_one.dart';
-
-import '../../../../layout/vendor_layout/vendor_layout_screen.dart';
 import '../../../../shared/components/components.dart';
 import '../../../../shared/components/constants.dart';
 import '../../auth/vendor_sign_up_screen.dart';

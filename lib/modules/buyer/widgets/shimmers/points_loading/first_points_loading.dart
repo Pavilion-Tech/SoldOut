@@ -33,7 +33,7 @@ class PointsLoading extends StatelessWidget {
                     color: Colors.grey,
                   ),
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
                 Shimmer.fromColors(
                   baseColor: Colors.grey.shade300,
                   highlightColor: Colors.white,

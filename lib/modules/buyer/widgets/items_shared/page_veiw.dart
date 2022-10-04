@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:soldout/models/buyer_model/product_model/images_model.dart';
 import 'package:soldout/shared/components/constants.dart';
@@ -11,7 +10,7 @@ class MPageView extends StatelessWidget
   List<Images> images;
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: size!.height * .385,
       width: double.infinity,
       child: PageView.builder(

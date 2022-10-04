@@ -26,7 +26,7 @@ class SecondPointsLoading extends StatelessWidget {
                 radius: 30,
                 backgroundColor: Colors.grey.shade300,)
             ),
-            SizedBox(height: 30,),
+            const SizedBox(height: 30,),
             Shimmer.fromColors(
                 baseColor: Colors.grey.shade300,
                 highlightColor: Colors.white,

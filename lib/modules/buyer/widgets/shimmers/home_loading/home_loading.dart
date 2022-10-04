@@ -22,7 +22,7 @@ class HomeLoading extends StatelessWidget
           ),
           child: Column(
             children: [
-              CarouselSliderLoading(),
+              const CarouselSliderLoading(),
               CategoryListViewLoading(),
             ],
           ),
@@ -35,7 +35,7 @@ class HomeLoading extends StatelessWidget
                 alignment: AlignmentDirectional.centerStart,
                 padding:
                 EdgeInsetsDirectional.only(start: size!.width * .050),
-                child: ListProductsLoading()
+                child:const ListProductsLoading()
             ),
             seeMore,
             Container(
@@ -43,7 +43,7 @@ class HomeLoading extends StatelessWidget
                 alignment: AlignmentDirectional.centerStart,
                 padding:
                 EdgeInsetsDirectional.only(start: size!.width * .050),
-                child: ListAuctionsLoading()),
+                child:const ListAuctionsLoading()),
             SizedBox(height: size!.height * .02),
           ],
         ),

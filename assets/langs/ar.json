@@ -44,7 +44,7 @@
   "order_successful": "تهانينا ، لقد تم دفع طلبك بنجاح. الطلب هو ",
   "continue_shopping": "مواصلة التسوق",
   "notification": "إشعار",
-  "my_fav": "أُفضله",
+  "my_fav": "المفضلة",
   "settings": "الإعدادات",
   "my_account": "حسابي",
   "edit_profile": "تعديل معلومات ملف الشخصي",
@@ -57,7 +57,7 @@
   "our_app": "تطبيقنا",
   "contact_us": "اتصل بنا",
   "about_us": "معلومات عنا",
-  "terms_conditions": "البنود و الظروف",
+  "terms_conditions": "الشروط و الاحكام",
   "powered_by": "مشغل بواسطة   |",
   "logout": "تسجيل خروج",
   "personal_information": "معلومات شخصية",
@@ -69,15 +69,15 @@
   "address": "عنوان *",
   "neighborhood": "حيّ *",
   "swipe_to_remove": "اسحب لليمين للإزالة",
-  "search_by_order": "البحث عن طريق معرف الطلب",
+  "search_by_order": "البحث عن طريق رقم الطلب",
   "order_status": "حالة الطلب",
   "rejected": "الطلب مرفوض",
   "new_order": "طلب جديد",
-  "processing": "قيد المعالجة",
+  "processing2": "قيد المعالجة",
   "shipped": "تم الشحن",
   "completed": "مكتمل",
   "purchases_details": "تفاصيل المشتريات - #",
-  "rate_review": "معدل ومراجعة",
+  "rate_review": "التقيم",
   "how_would_rate": "كيف تقيم هذا المنتج *",
   "tap_on_stars": "اضغط على النجوم للاختيار",
   "leave_comment": "اترك تعليقا",
@@ -87,8 +87,8 @@
   "press+": "اضغط على \"+\" متى أردت المزايدة ونقطة",
   "will_deducted": "ستخصم من رصيدك ويضاف ريال على قيمة السلعة",
   "points_refunded": "(سيتم استرداد نقاطك إذا لم يتم منحك المزاد)",
-  "user_bids": "عطاءات المستخدم",
-  "join_auction": "مزاد الانضمام | 30 قطعة نقدية",
+  "user_bids": "مزايدات المستخدم",
+  "join_auction": "الانظمام للمزاد | ",
   "congrats": "مبروك",
   "pay_for_product": " ادفع مقابل منتجك",
   "payment": "دفع",
@@ -173,6 +173,7 @@
   "no_order": "لا توجد طلبات حتى الآن",
   "bid": "المناقصة",
   "coin": "عملة",
+  "coins": "عملة",
   "verification_success": "تم التحقق بنجاح",
   "data_updated": "تم تحديث البيانات بنجاح",
   "phone_empty": "يجب ألا يكون الهاتف فارغًا",
@@ -213,11 +214,13 @@
   "product_deleted": "تم حذف المنتج",
   "no_arrivals": "لا توجد عناصر قادمة حتى الآن",
   "no_auctions": "لا توجد عناصر مزادات حتى الآن",
-  "no_fav": "لا توجد عناصر مفضلة حتى الآن"
-
-
-
-
-
+  "no_fav": "لا توجد عناصر مفضلة حتى الآن",
+  "coin_left": "عملات متبقية",
+  "joined": "تم الانضمام بنجاح",
+  "no_bids": "لا يوجد مزايدات حتي الان",
+  "coupon_empty": "يجب ألا تكون القسيمة فارغة",
+  "auction_status": "حالة المزاد",
+  "finished": "انتهي",
+  "processing": "جاري"
 
 }

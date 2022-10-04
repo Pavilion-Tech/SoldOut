@@ -4,7 +4,6 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:soldout/layout/vendor_layout/vendor_nav_screen.dart';
 import 'package:soldout/shared/images/images.dart';
 import 'package:soldout/shared/styles/colors.dart';
-
 import '../../shared/components/components.dart';
 import '../../shared/components/constants.dart';
 import 'cubit/vendor_cubit.dart';

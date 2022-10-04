@@ -16,6 +16,7 @@ class VendorNotificationHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    VendorCubit.get(context).getNotifications();
     return SingleChildScrollView(
       child: Stack(
         children: [

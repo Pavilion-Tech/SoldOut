@@ -24,17 +24,19 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
 
 
+  late Timer timer;
+
   @override
   void initState() {
-    Timer(const Duration(seconds: 4), () async
+    timer = Timer(const Duration(seconds: 4), () async
     {
       if(isConnect!= null)checkNet(context);
       // final status = await NewVersion().getVersionStatus();
       // print(status);
       if (onBoarding != null) {
         if (token != null) {
-          BuyerCubit.get(context).currentIndex=0;
-          BuyerCubit.get(context).getHomeData(context);
+          // BuyerCubit.get(context).currentIndex=0;
+          // BuyerCubit.get(context).getHomeData(context);
           navigateAndFinish(context, BuyerLayout());
         } else if (vToken != null) {
           VendorCubit.get(context).currentIndex = 0;
@@ -52,6 +54,12 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -59,11 +67,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: defaultColorTwo,
       body: BlocConsumer<SettingsCubit, SettingsStates>(
-        listener: (context, state) {
-          if(!mounted){
-            if(isConnect!=null)checkNet(context);
-          }
-        },
+        listener: (context, state) {},
         builder: (context, state) {
           return Container(
             alignment: AlignmentDirectional.center,

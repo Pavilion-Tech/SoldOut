@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:soldout/models/buyer_model/get_address_model.dart';
 import 'package:soldout/modules/buyer/screens/settings/settings_cubit/settings_cubit.dart';
 import 'package:soldout/shared/components/components.dart';
-
 import '../../../../models/buyer_model/settings_model.dart';
 import '../../../../shared/components/constants.dart';
 import '../../../../shared/styles/colors.dart';
 
 class DeliveryAddress extends StatefulWidget {
 
-  DeliveryAddress({this.getAddressModel,this.addressId});
+    DeliveryAddress({this.getAddressModel,this.addressId});
 
   GetAddressModel? getAddressModel;
   int? cityDropDownIndex;

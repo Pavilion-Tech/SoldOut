@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:soldout/layout/buyer_layout/cubit/buyer_states.dart';
 import 'package:soldout/modules/buyer/widgets/items_shared/grid_view.dart';
-import 'package:soldout/modules/widgets/loadings/grid_view_loading/grid_view_loading.dart';
 import 'package:soldout/modules/widgets/my_container.dart';
 import 'package:soldout/shared/components/components.dart';
 

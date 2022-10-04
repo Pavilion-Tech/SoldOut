@@ -23,7 +23,7 @@ class SearchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     suffix = Suffix(apply: () {
       BuyerCubit.get(context).getListProductsForSearch(
-        text: searchController.text.trim(),
+        text: searchController.text,
         sort: suffix!.sort!.sortValue,
         page: BuyerCubit.get(context).currentSearchPage,
       );
@@ -46,7 +46,9 @@ class SearchScreen extends StatelessWidget {
                   isLastIcon: true,
                   lastIcon: Icons.shopping_cart,
                   arrowTap: (){
+                    cubit.getHomeData(context);
                     cubit.currentSearchPage = 1;
+                    cubit.scrollControllerForSearch.removeListener((){});
                     Navigator.pop(context);
                   },
                   lastButtonTap: () {
@@ -87,7 +89,6 @@ class SearchScreen extends StatelessWidget {
                                   Text(tr('no_items_yet'))
                                 ],
                               ),
-
                             if(state is SearchLoadingState)
                               const CircularProgressIndicator(),
                           ],

@@ -71,48 +71,11 @@ class SettingsCubit extends Cubit<SettingsStates>{
       }
     }).catchError((e){
       emit(GetOrderErrorState());
+      print(e.toString());
       showToast(msg: tr('wrong'),toastState: false);
     });
   }
 
-  void contactUs({
-  required String name,
-  required String email,
-  required String phone,
-  required String subject,
-  required String message,
-})async
-  {
-    String currentToken = token != null ? token! : vToken!;
-    emit(ContactUsLoadingState());
-    await DioHelper.postData(
-        url: sendContactUs,
-        lang: myLocale,
-        token: 'Bearer $currentToken',
-        data: {
-          'name':name,
-          'email':email,
-          'phone':phone,
-          'subject':subject,
-          'message':message,
-      }
-    ).then((value) {
-      if(value.statusCode == 200 && value.data['status']){
-        showToast(msg: tr('message_successfully'));
-        emit(ContactUsSuccessState());
-      }else if(value.data!=null&&!value.data['status'])
-      {
-        showToast(msg:value.data['errors'].toString(),toastState: true);
-        emit(ContactUsWrongState());
-      }else{
-        showToast(msg: tr('wrong'),toastState: true);
-        emit(ContactUsWrongState());
-      }
-    }).catchError((e){
-      emit(ContactUsErrorState());
-      showToast(msg: tr('wrong'),toastState: false);
-    });
-  }
 
   void searchOrder(int id)
   {
@@ -167,6 +130,46 @@ class SettingsCubit extends Cubit<SettingsStates>{
     });
   }
 
+  void contactUs({
+  required String name,
+  required String email,
+  required String phone,
+  required String subject,
+  required String message,
+})async
+  {
+    String currentToken = token != null ? token! : vToken!;
+    emit(ContactUsLoadingState());
+    await DioHelper.postData(
+        url: sendContactUs,
+        lang: myLocale,
+        token: 'Bearer $currentToken',
+        data: {
+          'name':name,
+          'email':email,
+          'phone':phone,
+          'subject':subject,
+          'message':message,
+      }
+    ).then((value) {
+      if(value.statusCode == 200 && value.data['status']){
+        showToast(msg: tr('message_successfully'));
+        emit(ContactUsSuccessState());
+      }else if(value.data!=null&&!value.data['status'])
+      {
+        showToast(msg:value.data['errors'].toString(),toastState: true);
+        emit(ContactUsWrongState());
+      }else{
+        showToast(msg: tr('wrong'),toastState: true);
+        emit(ContactUsWrongState());
+      }
+    }).catchError((e){
+      emit(ContactUsErrorState());
+      showToast(msg: tr('wrong'),toastState: false);
+    });
+  }
+
+
   void getAllPoints()async
   {
     emit(GetPointsLoadingState());
@@ -204,8 +207,7 @@ class SettingsCubit extends Cubit<SettingsStates>{
     ).then((value) {
      if(value.statusCode == 200){
       String link = value.data['data']['payment_link'];
-      navigateTo(context, Payment(url: link,));
-       getAllPoints();
+      navigateTo(context, Payment(url: link,isPoints: true,));
       }
       else{
        showToast(msg: tr('wrong'),toastState: true);

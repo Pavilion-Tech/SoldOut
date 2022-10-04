@@ -10,16 +10,10 @@ import 'package:soldout/shared/components/components.dart';
 import 'package:soldout/shared/styles/colors.dart';
 import '../../../../shared/components/constants.dart';
 
-class CartItem extends StatefulWidget {
+class CartItem extends StatelessWidget {
   CartItem({Key? key, required this.model}) : super(key: key);
 
   GetCartData model;
-
-  @override
-  State<CartItem> createState() => _CartItemState();
-}
-
-class _CartItemState extends State<CartItem> {
 
   late int currentQnt;
   @override
@@ -28,10 +22,10 @@ class _CartItemState extends State<CartItem> {
       listener: (context, state) {},
       builder: (context, state) {
         var cubit = CartCubit.get(context);
-        currentQnt = widget.model.qty!;
-        if(widget.model.priceChanged!)
+        currentQnt = model.qty!;
+        if(model.priceChanged!)
         {
-          showToast(msg: '${tr('price_changed')} (${widget.model.name})');
+          showToast(msg: '${tr('price_changed')} (${model.name})');
         }
         return Stack(
           children: [
@@ -40,9 +34,7 @@ class _CartItemState extends State<CartItem> {
               endActionPane: ActionPane(
                 extentRatio: 0.35,
                 motion: InkWell(
-                  onTap: () {
-                    cubit.removeFromCart(widget.model.productId!);
-                  },
+                  onTap: ()=> cubit.removeFromCart(model.productId!),
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: const BorderRadiusDirectional.only(
@@ -75,7 +67,7 @@ class _CartItemState extends State<CartItem> {
                       height: size!.height * .15,
                       width: size!.width * .3,
                       child: Image.network(
-                        widget.model.firstImage!,
+                        model.firstImage!,
                       ),
                     ),
                     const SizedBox(
@@ -87,44 +79,42 @@ class _CartItemState extends State<CartItem> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            widget.model.name!,
+                            model.name!,
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                           const Spacer(),
                           Text(
-                            '${widget.model.piecePrice} ${tr('sar')}',
+                            '${model.piecePrice} ${tr('sar')}',
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
                     ),
                     const Spacer(),
-                    if (widget.model.stockChanged!)
+                    if (model.stockChanged!)
                       Text(
                         tr('out_of_stock'),
                         style: const TextStyle(
                             color: Colors.red,
                             decoration: TextDecoration.lineThrough),
                       ),
-                    if (widget.model.stockChanged!)
+                    if (!model.stockChanged!)
                       Row(
                         children: [
                           InkWell(
                             onTap: () {
                               if(currentQnt == 1)
                               {
-                                cubit.removeFromCart(widget.model.productId!);
+                                cubit.removeFromCart(model.productId!);
                               }
                               else
-                                {
-                                  setState(() {
-                                    currentQnt--;
-                                  });
-                                  cubit.addToCart(
-                                    productId: widget.model.productId!,
-                                    qty: currentQnt,
-                                  );
-                                }
+                              {
+                                currentQnt--;
+                                cubit.addToCart(
+                                  productId: model.productId!,
+                                  qty: currentQnt,
+                                );
+                              }
 
                             },
                             child: CircleAvatar(
@@ -146,20 +136,18 @@ class _CartItemState extends State<CartItem> {
                           ),
                           InkWell(
                             onTap: () {
-                              if(currentQnt != widget.model.stock!)
+                              if(currentQnt != model.stock!)
                               {
-                                setState(() {
-                                  currentQnt++;
-                                });
+                                currentQnt++;
                                 cubit.addToCart(
-                                  productId: widget.model.productId!,
+                                  productId: model.productId!,
                                   qty:currentQnt,
                                 );
                               }
                               else
-                                {
-                                  showToast(msg: tr('out_of_stock'));
-                                }
+                              {
+                                showToast(msg: tr('out_of_stock'));
+                              }
 
                             },
                             child: CircleAvatar(
@@ -177,12 +165,13 @@ class _CartItemState extends State<CartItem> {
                 ),
               ),
             ),
-            if (widget.model.stockChanged!)
+            if (model.stockChanged!)
               Slidable(
                 direction: Axis.horizontal,
                 endActionPane: ActionPane(
                   extentRatio: 0.35,
                   motion: InkWell(
+                    onTap: ()=> cubit.removeFromCart(model.productId!),
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: const BorderRadiusDirectional.only(
@@ -213,4 +202,7 @@ class _CartItemState extends State<CartItem> {
       },
     );
   }
+
 }
+
+

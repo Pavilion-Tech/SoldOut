@@ -1,23 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:soldout/layout/buyer_layout/cubit/buyer_cubit.dart';
-import 'package:soldout/models/buyer_model/home_model/category_model.dart';
 import 'package:soldout/models/buyer_model/settings_model.dart';
 import 'package:soldout/modules/buyer/screens/auction/auction_cubit/auction_cubit.dart';
 import 'package:soldout/modules/buyer/screens/settings/settings_cubit/settings_cubit.dart';
-import 'package:soldout/shared/components/components.dart';
-import 'package:soldout/shared/images/images.dart';
-
 import '../../../../models/buyer_model/home_model/new_auctions_model.dart';
 import '../../../../shared/components/constants.dart';
-import '../../screens/categories/categories_screen.dart';
 
 
 class CategoryListViewAutions extends StatelessWidget {
 
   CategoryListViewAutions({required this.newAuctions});
 
-  List<NewAuction> newAuctions;
+  List<AuctionModel> newAuctions;
 
 
 
@@ -44,8 +38,8 @@ class CategoryListViewAutions extends StatelessWidget {
         AuctionCubit.get(context).currentCategory(newAuctions, model.id!);
       },
       child: Container(
-        width: size!.width * .225,
         alignment: AlignmentDirectional.center,
+        padding: EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadiusDirectional.circular(12),
           color: HexColor(model.hexColor!),

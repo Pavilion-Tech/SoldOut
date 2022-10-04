@@ -36,26 +36,23 @@ class AuthCubit extends Cubit<AuthStates> {
   Future logIn(context, bool isNoty) async {
     emit(LoginLoadingState());
     bool model = CartCubit.get(context).getCartModel != null;
-    bool? haveCart =
-        model ? CartCubit.get(context).getCartModel!.data!.isNotEmpty : null;
+    bool?haveCart=model?CartCubit.get(context).getCartModel!.data!.isNotEmpty:null;
     return await DioHelper.postData(url: login, data: {
       'phone': phoneController.text.trim(),
       'code': code,
       'device_type': deviceType,
       'firebase_token': fcmToken,
-      'uuid': haveCart != null
-          ? haveCart
-              ? uuid.toString()
-              : null
-          : null,
+      'uuid': haveCart != null ? haveCart ? uuid.toString() : null : null,
     }).then((value) {
       if (value.statusCode == 200 && value.data['status']) {
         showToast(msg: tr('verification_success'));
         CacheHelper.saveData(key: 'token', value: token);
         timer!.cancel();
         timerFinished = true;
-        BuyerCubit.get(context).getHomeData(context);
-        CartCubit.get(context).getCart();
+        if(BuyerCubit.get(context).homeModel!=null){
+          BuyerCubit.get(context).getHomeData(context);
+          CartCubit.get(context).getCart();
+        }
         navigateAndFinish(context, BuyerLayout());
         emit(LoginSuccessState());
       } else {
@@ -104,13 +101,16 @@ class AuthCubit extends Cubit<AuthStates> {
   }
 
   void signOut(context, int delete) async {
+    CartCubit.get(context).getCartModel = null;
     token = null;
     CacheHelper.removeData('token');
-    CartCubit.get(context).getCartModel = null;
     navigateAndFinish(context, const SplashScreen());
-    emit(SignOutLoadingState());
     await DioHelper.postData(
-        url: logout, token: 'Bearer $token', data: {'delete_account': delete});
+        url: logout,
+        token: 'Bearer $token',
+        data: {'delete_account': delete}
+        );
+    emit(SignOutLoadingState());
   }
 
   void updateProfile(String name) async {
@@ -121,6 +121,9 @@ class AuthCubit extends Cubit<AuthStates> {
       'firebase_token': fcmToken,
     }).then((value) {
       if (value.data['status']) {
+        CacheHelper.removeData('token');
+        token = value.data['data']['access_token'];
+        CacheHelper.saveData(key: 'token', value: token);
         showToast(msg: tr('data_updated'));
         emit(UpdateProfileSuccessState());
       } else {

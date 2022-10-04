@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_polygon/flutter_polygon.dart';
@@ -113,7 +112,7 @@ class VProductItem extends StatelessWidget {
                                 Row(
                                   children: [
                                     Text(
-                                      '${productModel.regularPrice}',
+                                      '${productModel.salePrice??productModel.regularPrice}',
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: const TextStyle(
@@ -126,7 +125,7 @@ class VProductItem extends StatelessWidget {
                                       SizedBox(
                                         width: 50,
                                         child: Text(
-                                          '${productModel.salePrice}',
+                                          '${productModel.regularPrice}',
                                           style:const TextStyle(
                                               color: Colors.grey,
                                               fontSize: 7,

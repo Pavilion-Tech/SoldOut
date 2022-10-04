@@ -40,27 +40,21 @@ class VendorHomeScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         filterWidget,
-                        const SizedBox(
-                          height: 20,
-                        ),
+                        const SizedBox(height: 20,),
                         HomeItemWidget(
                           title: tr('product_count'),
                           count:
                               '${cubit.getStatistics!.data!.productsCount} ${tr('product')}',
                           circleColor: defaultColor,
                         ),
-                        const SizedBox(
-                          height: 20,
-                        ),
+                        const SizedBox(height: 20,),
                         HomeItemWidget(
                           title: tr('order_count'),
                           count:
                               '${cubit.getStatistics!.data!.ordersCount} ${tr('order')}',
                           circleColor: Colors.indigoAccent,
                         ),
-                        const SizedBox(
-                          height: 20,
-                        ),
+                        const SizedBox(height: 20,),
                         HomeItemWidget(
                           title: tr('total_revenue'),
                           count:

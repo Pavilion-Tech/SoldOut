@@ -44,6 +44,10 @@ class SignUpScreen extends StatelessWidget {
                       defaultTextField(
                         hint: tr('full_name'),
                         controller: nameController,
+                          inputFormatters: [
+                            LengthLimitingTextInputFormatter(16),
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
                         validator: (value){
                           if(value!.isEmpty){
                             return tr('name_empty');

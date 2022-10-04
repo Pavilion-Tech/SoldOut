@@ -67,8 +67,6 @@ void main() async{
   showAuctionHint = CacheHelper.getData(key: 'showAuctionHint');
 
   uuid = await Uuid.getUuid();
-  print(uuid);
-
 
   BlocOverrides.runZoned(
         () {
@@ -96,18 +94,22 @@ class SoldOut extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context)=> BuyerCubit()..checkInterNet()
-          ..dynamicLink()..getHomeData(context)
-          ..getNotifications(),
+          ..dynamicLink()..getHomeData(context),
         ),
         BlocProvider(create: (context)=> VendorCubit()
           ..checkInterNet()..dynamicLink(context)
-          ..getStatistic(context: context)..getNotifications(),
+          ..getStatistic(context: context),
         ),
-        BlocProvider(create: (context)=> AuctionCubit()),
-        BlocProvider(create: (context)=> AuthCubit()..checkInterNet(),),
-        BlocProvider(create: (context)=> AddressCubit()..checkInterNet(),),
-        BlocProvider(create: (context)=> CartCubit()..getCart()
-          ..checkInterNet(),
+        BlocProvider(create: (context)=> AuctionCubit()..checkInterNet()
+          ..initPusher()
+        ),
+        BlocProvider(create: (context)=> AuthCubit()..checkInterNet(),
+        ),
+        BlocProvider(create: (context)=> AddressCubit()..checkInterNet()
+          ..getAddress(),
+        ),
+        BlocProvider(create: (context)=> CartCubit()..checkInterNet()
+          ..getCart(),
         ),
         BlocProvider(create: (context)=> SettingsCubit()..getSettingsData()
           ..checkInterNet(),

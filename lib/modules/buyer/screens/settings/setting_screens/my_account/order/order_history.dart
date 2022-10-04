@@ -8,7 +8,6 @@ import 'package:soldout/modules/buyer/screens/settings/settings_cubit/settings_c
 import 'package:soldout/modules/buyer/screens/settings/settings_cubit/settings_states.dart';
 import 'package:soldout/modules/widgets/loadings/address&order_loading/address&order_loading.dart';
 import 'package:soldout/shared/components/components.dart';
-
 import '../../../../../../widgets/my_container.dart';
 import '../../../../../widgets/settings/settings_screens_widgets/order_widgets/order_history_widget.dart';
 
@@ -42,7 +41,7 @@ class OrderHistory extends StatelessWidget {
                   ConditionalBuilder(
                     condition:cubit.orderModel!= null,
                     fallback: (context) => const AddressAndOrderLoading(),
-                    builder: (context) => OrderHistoryWidget(),
+                    builder: (context) =>const OrderHistoryWidget(),
                   ),
                 );
               },

@@ -94,13 +94,13 @@ class VProductDetails extends StatelessWidget {
         Row(
           children: [
             Text(
-              '${productModel.regularPrice} ${tr('sar')}',
+              '${productModel.salePrice??productModel.regularPrice}${tr('sar')}',
               style:const TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(width: 5,),
             if(productModel.salePrice!=null)
               Text(
-                 '${productModel.salePrice} ${tr('sar')}',
+                 '${productModel.regularPrice} ${tr('sar')}',
                 style:const TextStyle(
                     color: Colors.grey,
                     fontSize: 10,

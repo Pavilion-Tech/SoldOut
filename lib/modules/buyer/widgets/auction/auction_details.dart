@@ -1,20 +1,17 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:hexcolor/hexcolor.dart';
-import 'package:soldout/modules/buyer/screens/store_name/store_name_screen.dart';
 import 'package:soldout/modules/buyer/widgets/auction/count_down.dart';
-import 'package:soldout/modules/buyer/widgets/prodect/product_review.dart';
-import 'package:soldout/shared/images/images.dart';
-
-import '../../../../models/buyer_model/product_model/product_model.dart';
-import '../../../../shared/components/components.dart';
+import '../../../../models/buyer_model/home_model/new_auctions_model.dart';
 import '../../../../shared/components/constants.dart';
 import '../../../../shared/styles/colors.dart';
 import 'auction_review.dart';
 
 class AuctionDetails extends StatelessWidget {
+  AuctionDetails(this.model,this.duration);
 
+
+  AuctionModel model;
+  Duration duration;
 
   @override
   Widget build(BuildContext context) {
@@ -39,28 +36,19 @@ class AuctionDetails extends StatelessWidget {
           child: Column(
             children: [
               detailsItem(
-                productDetails(context),
+                productDetails(),
               ),
-              SizedBox(
-                height: size!.height * .03,
-              ),
+              SizedBox(height: size!.height * .03,),
               detailsItem(
-                const Text(
-                  'Product Name - Product Name - Product Name - Product Name - Product Name - Product NameProduct Name - Product Name - Product Name - Product Name - Product Name - Product NameProduct Name - Product Name - Product Name - Product Name - Product Name - Product NameProduct Name - Product Name - Product Name - Product Name - Product Name - Product NameProduct Name - Product Name - Product Name - Product Name - Product Name - Product NameProduct Name - Product Name - Product Name - Product Name - Product Name - Product NameProduct Name - Product Name - Product Name - Product Name - Product Name - Product NameProduct Name - Product Name - Product Name - Product Name - Product Name - Product NameProduct Name - Product Name - Product Name - Product Name - Product Name - Product NameProduct Name - Product Name - Product Name - Product Name - Product Name - Product NameProduct Name - Product Name - Product Name - Product Name - Product Name - Product NameProduct Name - Product Name - Product Name - Product Name - Product Name - Product Name',
+                 Text(
+                   model.productDesc!,
                   maxLines: 5,
-                  style: TextStyle(height: 1.9),
+                  style:const TextStyle(height: 1.9),
                 ),
               ),
-              SizedBox(
-                height: size!.height * .03,
-              ),
-              AuctionReview(),
-              SizedBox(
-                height: size!.height*.02,
-              ),
-              SizedBox(
-                height: size!.height*.02,
-              ),
+              SizedBox(height: size!.height * .03,),
+              UserBids(model.bids!),
+              SizedBox(height: size!.height*.02,),
             ],
           ),
         ),
@@ -82,14 +70,14 @@ class AuctionDetails extends StatelessWidget {
     );
   }
 
-  Widget productDetails(BuildContext context){
+  Widget productDetails(){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Product Name - Product Name - Product Name - Product Name - Product Name - Product Name',
+        Text(
+          model.productName!,
           maxLines: 2,
-          style: TextStyle(height: 2,fontWeight: FontWeight.bold),
+          style:const TextStyle(height: 2,fontWeight: FontWeight.bold),
           overflow: TextOverflow.ellipsis,
         ),
         SizedBox(
@@ -97,40 +85,18 @@ class AuctionDetails extends StatelessWidget {
         ),
         Row(
           children: [
-            const  Text(
-              '10000 SAR',
-              style: TextStyle(fontWeight: FontWeight.bold),
+            Text(
+              '${model.auctionOpeningPrice!} ${tr('sar')}',
+              style:const TextStyle(fontWeight: FontWeight.bold),
             ),
             const Spacer(),
-              Row(
-                children: [
-                  RatingBar.builder(
-                    initialRating: 4,
-                    itemSize: 13,
-                    direction: Axis.horizontal,
-                    ignoreGestures: true,
-                    itemCount: 5,
-                    allowHalfRating: true,
-                    unratedColor: HexColor('#FFE000'),
-                    itemPadding:
-                    const EdgeInsets.symmetric(horizontal: 1.0),
-                    itemBuilder: (context, index) {
-                      if (4 > index) {
-                        return Image.asset(BuyerImages.fullStar);
-                      } else {
-                        return const Icon(Icons.star_border, size: 16,);
-                      }
-                    },
-                    onRatingUpdate: (rating) {},
-                  ),
-                  Text(
-                    '(52)',
-                    style: TextStyle(
-                        fontSize: 12, color: Colors.grey.shade400),
-                  ),
-                ],
-              ),
-              CountDown(fontSize: 14),
+            Text(
+              '${tr('${model.status!}')} | ',
+              style:const TextStyle(
+              color: defaultColor,fontSize: 14,fontWeight: FontWeight.bold),
+            ),
+            if(model.status == 'processing')
+              CountDown(fontSize: 14,duration: duration),
           ],
         ),
 

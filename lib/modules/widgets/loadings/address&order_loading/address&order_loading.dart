@@ -34,14 +34,14 @@ class AddressAndOrderLoading extends StatelessWidget {
         ),
         ListView.separated(
           itemBuilder: (context, index) => address(),
-          separatorBuilder: (context, index) => SizedBox(
+          separatorBuilder: (context, index) => const SizedBox(
             height: 20,
           ),
           itemCount: 5,
           shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
+          physics:const NeverScrollableScrollPhysics(),
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         Align(
@@ -82,7 +82,7 @@ class AddressAndOrderLoading extends StatelessWidget {
               color: Colors.grey.shade300,
             ),
           ),
-          Spacer(),
+          const Spacer(),
           Shimmer.fromColors(
             baseColor: Colors.grey.shade300,
             highlightColor: Colors.white,

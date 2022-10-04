@@ -25,4 +25,7 @@ int? deviceType;
 
 var uuid;
 
+const String shareApp = 'https://soldoutapp.page.link/w13Z';
+
+
 

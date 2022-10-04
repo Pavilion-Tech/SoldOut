@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:soldout/layout/buyer_layout/cubit/buyer_cubit.dart';
 import 'package:soldout/modules/buyer/auth/auth_cubit/auth_cubit.dart';
+import 'package:soldout/modules/buyer/screens/auction/auction_cubit/auction_cubit.dart';
 import 'package:soldout/modules/buyer/screens/settings/setting_screens/my_account/addresses/address_cubit/cubit.dart';
 import 'package:soldout/modules/buyer/screens/settings/settings_cubit/settings_cubit.dart';
 import 'package:soldout/shared/components/components.dart';
@@ -36,11 +37,15 @@ class MyAccountWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             accountItem(tr('edit_profile'),(){
-              AuthCubit.get(context).getProfile();
+              if(AuthCubit.get(context).getProfileModel==null) {
+                AuthCubit.get(context).getProfile();
+              }
               navigateTo(context,const EditProfile());
             }),
             accountItem(tr('manage_address'),(){
-              AddressCubit.get(context).getAddress();
+              if(AddressCubit.get(context).getAddressModel==null){
+                AddressCubit.get(context).getAddress();
+              }
               navigateTo(context,const ManageAddress());
             }),
             accountItem(tr('my_fav'),(){
@@ -52,10 +57,10 @@ class MyAccountWidget extends StatelessWidget {
               navigateTo(context,const OrderHistory());
             }),
             accountItem(tr('my_auctions'),(){
+              AuctionCubit.get(context).myAuctions();
               navigateTo(context,const MyAuctions());
             }),
             accountItem(tr('points'),(){
-              SettingsCubit.get(context).getAllPoints();
               navigateTo(context,const PointsScreen());
             }),
             InkWell(
@@ -76,13 +81,11 @@ class MyAccountWidget extends StatelessWidget {
             ),
             InkWell(
               onTap: (){
-                String uri = 'https://soldoutapp.page.link/w13Z';
-                Uri sharableLink = Uri.parse(uri);
+                Uri sharableLink = Uri.parse(shareApp);
                 Share.share(sharableLink.toString());
               },
               child:Text(tr('share_app')),
             ),
-
           ],
         ),
       ),

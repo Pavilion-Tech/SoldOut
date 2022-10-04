@@ -83,7 +83,6 @@ Widget defaultTextField({
        borderRadius: BorderRadiusDirectional.circular(15),
          border: Border.all(color: Colors.grey.shade200),
         ),
-
       ),
       Padding(
       padding: const EdgeInsets.symmetric(vertical: 3,horizontal: 15),
@@ -95,12 +94,13 @@ Widget defaultTextField({
           validator: validator,
           controller: controller,
           keyboardType: type,
+          style: TextStyle(height: 1.1),
           decoration: InputDecoration(
             isDense: true,
             border: InputBorder.none,
             labelText: hint,
             suffixIcon: suffix,
-            hintStyle: TextStyle(color: HexColor('#A0AEC0')),
+            labelStyle: TextStyle(color: HexColor('#A0AEC0'),fontSize: 12),
           ),
           inputFormatters: inputFormatters,
         ),

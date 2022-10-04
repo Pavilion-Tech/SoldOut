@@ -16,7 +16,6 @@ import '../../../models/buyer_model/home_model/home_model.dart';
 import '../../../models/buyer_model/list_products_model.dart';
 import '../../../models/buyer_model/product_model/product_model.dart';
 import '../../../models/notification_model.dart';
-import '../../../modules/buyer/screens/auction/auction_list_screen.dart';
 import '../../../modules/buyer/screens/home/home_screen.dart';
 import '../../../shared/components/constants.dart';
 import '../../../shared/firebase_helper/dynamic_links.dart';
@@ -80,11 +79,6 @@ class BuyerCubit extends Cubit<BuyerStates> {
     });
   }
 
-  void changeAuctionHint() {
-    showAuctionHint = true;
-    emit(ChangeAuctionHintState());
-    CacheHelper.saveData(key: 'showAuctionHint', value: true);
-  }
 
   void emitState() {
     emit(JustEmitState());
@@ -102,36 +96,35 @@ class BuyerCubit extends Cubit<BuyerStates> {
     }
   }
 
-  void getHomeData(context,{bool isAuction = false}) async {
+  void getHomeData(context,) async {
     if (!isConnect!) checkNet(context);
     emit(GetHomeDataLoadingState());
-    await DioHelper.getData(url: userHomeData, lang: myLocale).then((value) {
+    await DioHelper.getData(
+        url: userHomeData,
+        lang: myLocale,
+        token: 'Bearer $token'
+    ).then((value) {
       if (value.statusCode == 200 && value.data['status']) {
         homeModel = HomeModel.fromJson(value.data);
         takeFav(homeModel!.data!.newProducts!);
         for (var category in homeModel!.data!.categories!) {
           takeFav(category.products!);
         }
-        if(isAuction)
-        {
-          navigateTo(context,AuctionsListScreen(
-            newAuctions:homeModel!.data!.newAuctions!,
-          ));
-        }
         emit(GetHomeDataSuccessState());
       } else {
-        showToast(msg: tr('wrong'), toastState: false);
+        showToast(msg: tr('wrong'), toastState: true);
         emit(GetHomeDataWrongState());
       }
     }).catchError((e) {
+      print(e.toString());
       showToast(msg: tr('wrong'), toastState: false);
       emit(GetHomeDataErrorState());
     });
   }
 
   void updateFav(int id) async {
-    emit(ChangeFavLoadingState());
     favorites[id] = !favorites[id]!;
+    emit(ChangeFavLoadingState());
     await DioHelper.postData(
         url: fav,
         token: 'Bearer $token',
@@ -140,8 +133,8 @@ class BuyerCubit extends Cubit<BuyerStates> {
           'product_id': id,
         }).then((value) {
       if (value.statusCode == 200 && value.data['status']) {
-        getFav();
-        } else {
+        emit(ChangeFavSuccessState());
+      } else {
         favorites[id] = !favorites[id]!;
         showToast(msg: tr('wrong'));
         emit(ChangeFavWrongState());
@@ -208,7 +201,6 @@ class BuyerCubit extends Cubit<BuyerStates> {
         emit(SearchWrongState());
       }
     }).catchError((e) {
-      print(e.toString());
       showToast(msg: tr('wrong'), toastState: false);
       emit(SearchErrorState());
     });
@@ -223,8 +215,7 @@ class BuyerCubit extends Cubit<BuyerStates> {
   }) async {
     emit(SearchLoadingState());
     await DioHelper.getData(
-      url:
-          '/users/home/getSearchProducts?sort_type=$sort&search_text=$text&page=$page&category_id=$id',
+      url: '/users/home/getSearchProducts?sort_type=$sort&search_text=$text&page=$page&category_id=$id',
       token: 'Bearer $token',
       lang: myLocale,
     ).then((value) {
@@ -262,8 +253,7 @@ class BuyerCubit extends Cubit<BuyerStates> {
   }) async {
     emit(SearchLoadingState());
     await DioHelper.getData(
-      url:
-          '/users/home/getSearchProducts?sort_type=$sort&search_text=$text&page=$page&store_id=$id',
+      url: '/users/home/getSearchProducts?sort_type=$sort&search_text=$text&page=$page&store_id=$id',
       token: 'Bearer $token',
       lang: myLocale,
     ).then((value) {
@@ -298,8 +288,9 @@ class BuyerCubit extends Cubit<BuyerStates> {
         .then((value) {
       if (value.statusCode == 200 && value.data['status']) {
         productDetailsModel = ProductModel.fromJson(value.data['data']);
-        favorites.addAll(
-            {productDetailsModel!.id!: productDetailsModel!.isFavourite!});
+        favorites.addAll({
+          productDetailsModel!.id!: productDetailsModel!.isFavourite!
+        });
         navigatorKey.currentState!.pushNamed(
           '/product',
         );
@@ -317,7 +308,6 @@ class BuyerCubit extends Cubit<BuyerStates> {
 
   void getMoreForSearch() {
     scrollControllerForSearch.addListener(() {
-      print(scrollControllerForSearch.offset);
       if (state is! SearchLoadingState) {
         if (scrollControllerForSearch.offset ==
             scrollControllerForSearch.position.maxScrollExtent) {
@@ -376,17 +366,16 @@ class BuyerCubit extends Cubit<BuyerStates> {
     });
   }
 
-  void getNotifications()async
-  {
+  void getNotifications() async {
     emit(GetNotificationLoadingState());
     await DioHelper.getData(
-      url: fetchNotification,
-      token: 'Bearer $token',
-      lang: myLocale
+        url: fetchNotification,
+        token: 'Bearer $token',
+        lang: myLocale
     ).then((value) {
       notificationModel = NotificationModel.fromJson(value.data);
       emit(GetNotificationSuccessState());
-    }).catchError((e){
+    }).catchError((e) {
       emit(GetNotificationErrorState());
     });
   }

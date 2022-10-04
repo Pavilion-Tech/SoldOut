@@ -1,11 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:soldout/models/buyer_model/cart_model/get_checkout_model.dart';
-import 'package:soldout/shared/components/components.dart';
-import 'package:soldout/shared/images/images.dart';
-import 'package:soldout/shared/styles/colors.dart';
 import '../../../../shared/components/constants.dart';
-import '../../screens/settings/setting_screens/my_account/order/rate_review.dart';
 
 class StoreCheckOutItem extends StatelessWidget {
 

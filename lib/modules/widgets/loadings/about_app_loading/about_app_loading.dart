@@ -7,8 +7,8 @@ class AboutAppLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      physics: NeverScrollableScrollPhysics(),
-        itemBuilder: (context,indxe){
+      physics:const NeverScrollableScrollPhysics(),
+        itemBuilder: (context,_){
         return Shimmer.fromColors(
           baseColor: Colors.grey.shade300,
           highlightColor: Colors.white,
@@ -19,9 +19,8 @@ class AboutAppLoading extends StatelessWidget {
           ),
         );
         },
-        separatorBuilder: (context,indxe){
-          return SizedBox(height: 20,);
-        },
+        separatorBuilder: (context,_)=> const SizedBox(height: 20,)
+        ,
         itemCount: 30,
     );
   }

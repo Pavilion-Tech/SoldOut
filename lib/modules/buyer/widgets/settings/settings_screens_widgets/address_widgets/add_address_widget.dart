@@ -1,14 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:soldout/layout/buyer_layout/cubit/buyer_cubit.dart';
 import 'package:soldout/modules/buyer/screens/settings/setting_screens/my_account/addresses/address_cubit/cubit.dart';
 import 'package:soldout/modules/buyer/screens/settings/setting_screens/my_account/addresses/address_cubit/state.dart';
 import 'package:soldout/modules/buyer/screens/settings/settings_cubit/settings_states.dart';
 import 'package:soldout/shared/components/components.dart';
 import 'package:soldout/shared/styles/colors.dart';
-
-import '../../../../../../layout/buyer_layout/cubit/buyer_states.dart';
 import '../../../../../../models/buyer_model/settings_model.dart';
 import '../../../../../../shared/components/constants.dart';
 import '../../../../screens/settings/settings_cubit/settings_cubit.dart';
@@ -51,6 +49,10 @@ class _AddAddressWidgetState extends State<AddAddressWidget> {
             defaultTextField(
               controller: addressTitleController,
               hint: tr('address_title'),
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(16),
+                FilteringTextInputFormatter.digitsOnly,
+              ],
               validator: (value) {
                 if(value!.isEmpty){
                   return tr('address_title_empty');
@@ -63,6 +65,10 @@ class _AddAddressWidgetState extends State<AddAddressWidget> {
             defaultTextField(
               controller: addressController,
               hint: tr('address'),
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(72),
+                FilteringTextInputFormatter.digitsOnly,
+              ],
               validator: (value) {
                 if(value!.isEmpty){
                   return tr('address_empty');

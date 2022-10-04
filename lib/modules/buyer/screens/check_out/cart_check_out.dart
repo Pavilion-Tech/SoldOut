@@ -20,10 +20,11 @@ class CheckOutScreen extends StatelessWidget {
     radioValue: 0,
   );
   late DeliveryAddress deliveryAddress;
-  DiscountWidget discountWidget = DiscountWidget();
+  DiscountWidget  discountWidget = DiscountWidget(true);
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -65,7 +66,9 @@ class CheckOutScreen extends StatelessWidget {
                                 select(tr('select_delivery_address')),
                                 deliveryAddress,
                                 select(tr('have_discount')),
-                                discountWidget,
+                                state is! CheckCouponLoadingState
+                                    ? discountWidget
+                                    : const LinearProgressIndicator(),
                                 if (cubit.discountModel == null)
                                   InvoiceWidget(
                                     isBuyPoints: false,
@@ -88,36 +91,7 @@ class CheckOutScreen extends StatelessWidget {
                                   ),
                                 state2 is! CheckOutLoadingState
                                     ? defaultButton(
-                                        onTap: () {
-                                          if (deliveryAddress.addressId !=
-                                                  null ||
-                                              deliveryAddress.addressController
-                                                      .text.isNotEmpty &&
-                                                  deliveryAddress
-                                                          .cityDropDownIndex !=
-                                                      null &&
-                                                  deliveryAddress
-                                                          .neighborhoodsDropDownIndex !=
-                                                      null) {
-                                            cubit.checkOut(
-                                                context: context,
-                                                payMethod:
-                                                    customRadio.radioValue,
-                                                neighborhoodId: deliveryAddress
-                                                    .neighborhoodsDropDownIndex,
-                                                cityId: deliveryAddress
-                                                    .cityDropDownIndex,
-                                                address: deliveryAddress
-                                                    .addressController.text,
-                                                couponCode: discountWidget
-                                                    .couponController.text,
-                                                userAddressId:
-                                                    deliveryAddress.addressId);
-                                          } else {
-                                            showToast(
-                                                msg: tr('select_address'));
-                                          }
-                                        },
+                                        onTap: () => submit(context),
                                         text: tr('pay_now'))
                                     : const CircularProgressIndicator(),
                               ],
@@ -132,6 +106,25 @@ class CheckOutScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void submit(BuildContext context) {
+    if (deliveryAddress.addressId != null
+        || deliveryAddress.addressController.text.isNotEmpty
+            && deliveryAddress.cityDropDownIndex != null
+            && deliveryAddress.neighborhoodsDropDownIndex != null
+    ) {
+      CartCubit.get(context).checkOut(
+          context: context,
+          payMethod: customRadio.radioValue,
+          neighborhoodId: deliveryAddress.neighborhoodsDropDownIndex,
+          cityId: deliveryAddress.cityDropDownIndex,
+          address: deliveryAddress.addressController.text,
+          couponCode: discountWidget.couponController.text,
+          userAddressId: deliveryAddress.addressId);
+    } else {
+      showToast(msg: tr('select_address'));
+    }
   }
 
   Widget select(String text) {

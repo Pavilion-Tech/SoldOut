@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ffi';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,13 +6,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:soldout/modules/buyer/auth/auth_cubit/auth_cubit.dart';
 import 'package:soldout/modules/buyer/auth/auth_cubit/auth_state.dart';
-import 'package:soldout/shared/network/local/cache_helper.dart';
 import 'package:soldout/shared/styles/colors.dart';
-import '../../../../layout/buyer_layout/buy_layout_screen.dart';
 import '../../../../shared/components/components.dart';
 import '../../../../shared/components/constants.dart';
 import '../../../widgets/sign_widget.dart';
-
 
 class VerificationScreen extends StatefulWidget {
   VerificationScreen({this.isNoty = false});
@@ -52,7 +48,6 @@ class _State extends State<VerificationScreen> {
    otpController1.text + otpController2.text+
    otpController3.text+otpController4.text+
    otpController5.text+otpController6.text;
-   print(codeFromOtp);
    return int.parse(codeFromOtp) == code;
   }
 
@@ -131,7 +126,8 @@ class _State extends State<VerificationScreen> {
                     SizedBox(height: size!.height * .05,),
                     otpForm(),
                     SizedBox(height: size!.height * .01,),
-                    state is! LoginLoadingState ? defaultButton(
+                    state is! LoginLoadingState
+                        ? defaultButton(
                         onTap: ()=>submit(context),
                         text: tr('verify')
                     ):const CircularProgressIndicator(),
@@ -211,9 +207,4 @@ class _State extends State<VerificationScreen> {
       ),
     );
   }
-
 }
-
-
-
-

@@ -1,13 +1,7 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:soldout/modules/buyer/widgets/items_shared/product_item.dart';
-import 'package:soldout/modules/buyer/widgets/sort/suffix.dart';
-import 'package:soldout/shared/components/components.dart';
-import 'package:soldout/shared/styles/colors.dart';
-
 import '../../../../models/buyer_model/product_model/product_model.dart';
 import '../../../../shared/components/constants.dart';
-import '../../../widgets/my_container.dart';
 
 class GridViewWidget extends StatelessWidget {
 

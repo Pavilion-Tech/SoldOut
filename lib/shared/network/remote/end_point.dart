@@ -1,4 +1,5 @@
 const String log = '/users/register';
+
 const String login = '/users/login';
 
 const String getPassCode = '/users/getPassCode';
@@ -42,6 +43,14 @@ const String coupon = '/users/carts/checkCoupon';
 const String checkout = '/users/carts/checkout';
 
 const String order = '/users/orders';
+
+const String auction = '/users/auctions';
+
+const String makeBid = '/users/auctions/makeBid';
+
+const String auctionFetchCheckOut = '/users/auctions/getCheckout?auction_id=';
+
+const String auctionCheckOut = '/users/auctions/checkout';
 
 ///////////////VENDOR////////
 

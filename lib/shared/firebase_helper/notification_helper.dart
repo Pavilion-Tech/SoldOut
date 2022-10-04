@@ -63,7 +63,7 @@ class NotificationHelper {
       );
       // Init Local Notifications Settings.
       var initializationSettingsAndroid =
-      const AndroidInitializationSettings('@mipmap/ic_launcher');
+      const AndroidInitializationSettings('@mipmap/launcher_icon');
       var initializationSettingsIOS = DarwinInitializationSettings(
         onDidReceiveLocalNotification: (_, __, ___, ____) async {},
         // there is other params needs to check !!
@@ -91,7 +91,7 @@ class NotificationHelper {
       channelDescription: 'AQAChanelDescription',
       importance: Importance.max,
       priority: Priority.high,
-      icon: '@mipmap/ic_launcher',
+      icon: '@mipmap/launcher_icon',
       ticker: 'ticker',
     );
     var iOSPlatformChannelSpecifics = const DarwinNotificationDetails();

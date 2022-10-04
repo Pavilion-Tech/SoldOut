@@ -15,8 +15,7 @@ class MIndicator extends StatelessWidget {
     return Positioned.directional(
       textDirection: myLocale == 'ar' ? TextDirection.rtl:TextDirection.ltr,
         top: size!.height * .33,
-        end: size!.width * .35,
-        start: size!.width * .43,
+        start: size!.width * .45,
         child: SmoothPageIndicator(
           controller: pageController, // PageController
           count: lengthPageView,

@@ -58,6 +58,10 @@ class StoreNameScreen extends StatelessWidget {
                     cubit.currentIndex = 2;
                     navigateAndFinish(context, BuyerLayout());
                   },
+                  arrowTap: (){
+                    cubit.scrollControllerForStore.removeListener(() {});
+                    Navigator.pop(context);
+                  }
                 ),
                 ConditionalBuilder(
                   condition: cubit.storeModel != null,

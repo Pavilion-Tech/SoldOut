@@ -35,7 +35,7 @@ class CartScreen extends StatelessWidget {
                 noSize: true,
                 ConditionalBuilder(
                   condition: cubit.getCartModel != null,
-                  fallback: (context)=>const CartLoading(),
+                  fallback: (context)=> const CartLoading(),
                   builder: (context){
                     if(cubit.getCartModel!.data!.isNotEmpty){
                       return Column(

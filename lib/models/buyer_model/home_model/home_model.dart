@@ -1,5 +1,4 @@
 import 'package:soldout/models/buyer_model/home_model/ads_model.dart';
-
 import '../product_model/product_model.dart';
 import 'category_model.dart';
 import 'new_auctions_model.dart';
@@ -22,7 +21,7 @@ class HomeData {
   List<AdsModel>? ads;
   List<CategoryModel>? categories;
   List<ProductModel>? newProducts;
-  List<NewAuction>? newAuctions;
+  List<AuctionModel>? newAuctions;
 
 
   HomeData.fromJson(Map<String, dynamic> json) {
@@ -45,9 +44,9 @@ class HomeData {
       });
     }
     if (json['new_auctions'] != null) {
-      newAuctions = <NewAuction>[];
+      newAuctions = <AuctionModel>[];
       json['new_auctions'].forEach((v) {
-        newAuctions!.add(NewAuction.fromJson(v));
+        newAuctions!.add(AuctionModel.fromJson(v));
       });
     }
   }

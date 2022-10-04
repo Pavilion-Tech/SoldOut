@@ -43,8 +43,8 @@ class _CheckOutDialogState extends State<CheckOutDialog> with SingleTickerProvid
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      insetPadding: EdgeInsets.symmetric(horizontal: 20),
-      contentPadding: EdgeInsets.symmetric(vertical: 20,horizontal: 10),
+      insetPadding: const EdgeInsets.symmetric(horizontal: 20),
+      contentPadding: const EdgeInsets.symmetric(vertical: 20,horizontal: 10),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadiusDirectional.circular(20),
       ),

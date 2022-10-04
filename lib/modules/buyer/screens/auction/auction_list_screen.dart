@@ -3,13 +3,10 @@ import 'package:flutter/material.dart';
 import '../../../../../layout/buyer_layout/buy_layout_screen.dart';
 import '../../../../../layout/buyer_layout/cubit/buyer_cubit.dart';
 import '../../../../../shared/components/components.dart';
-import '../../../../models/buyer_model/home_model/new_auctions_model.dart';
 import '../../widgets/items_shared/other_list_auction.dart';
 
 class AuctionsListScreen extends StatelessWidget {
-  AuctionsListScreen({required this.newAuctions});
 
-  List<NewAuction> newAuctions;
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +23,14 @@ class AuctionsListScreen extends StatelessWidget {
                 lastButtonTap: (){
                   BuyerCubit.get(context).changeIndex(2);
                   navigateAndFinish(context, BuyerLayout());
-                }
+                },
+              arrowTap: ()
+              {
+                BuyerCubit.get(context).getHomeData(context);
+                Navigator.pop(context);
+              }
             ),
-            AuctionsList(newAuctions: newAuctions),
+            AuctionsList(newAuctions: BuyerCubit.get(context).homeModel!.data!.newAuctions!),
           ],
         ),
       ),

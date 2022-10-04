@@ -15,7 +15,7 @@ class SignInScreen extends StatelessWidget {
 
   SignInScreen({this.isNoty = false});
   bool isNoty;
-  var forKey = GlobalKey<FormState>();
+  var formKey = GlobalKey<FormState>();
 
 
   @override
@@ -44,7 +44,7 @@ class SignInScreen extends StatelessWidget {
               ),
               SignWidget(
                 column: Form(
-                  key: forKey,
+                  key: formKey,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -57,7 +57,7 @@ class SignInScreen extends StatelessWidget {
                             LengthLimitingTextInputFormatter(10),
                             FilteringTextInputFormatter.digitsOnly,
                           ],
-                        validator: (value){
+                          validator: (value){
                             if(value!.isEmpty){
                               return tr('phone_empty');
                             }
@@ -70,7 +70,7 @@ class SignInScreen extends StatelessWidget {
                           text: tr('sign_in'),
                         onTap: (){
                           FocusManager.instance.primaryFocus!.unfocus();
-                          if(forKey.currentState!.validate()){
+                          if(formKey.currentState!.validate()){
                             AuthCubit.get(context).sign(phone:cubit.phoneController.text.trim());
                           }
                         },

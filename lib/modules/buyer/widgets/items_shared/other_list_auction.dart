@@ -14,12 +14,13 @@ import '../../../widgets/my_container.dart';
 class AuctionsList extends StatelessWidget {
   AuctionsList({required this.newAuctions});
 
-  List<NewAuction> newAuctions;
+  List<AuctionModel> newAuctions;
 
   @override
   Widget build(BuildContext context) {
-    AuctionCubit.get(context)
-        .currentCategory(newAuctions, newAuctions[0].categoryId!);
+    AuctionCubit.get(context).currentCategory(
+        newAuctions, newAuctions[0].categoryId!
+    );
     return BlocConsumer<AuctionCubit, AuctionStates>(
       listener: (context, state) {},
       builder: (context, state) {

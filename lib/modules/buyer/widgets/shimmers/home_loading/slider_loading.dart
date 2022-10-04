@@ -23,7 +23,7 @@ class CarouselSliderLoading extends StatelessWidget {
             ),
             height: size!.height * .18,
             width: size!.width * .9,
-            child: SizedBox(),
+            child:const SizedBox(),
           ),
         ),
         Shimmer.fromColors(

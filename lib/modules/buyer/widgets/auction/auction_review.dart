@@ -1,8 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:soldout/models/buyer_model/home_model/new_auctions_model.dart';
+import 'package:timeago/timeago.dart' as timeago;
 import '../../../../shared/styles/colors.dart';
 
-class AuctionReview extends StatelessWidget {
+class UserBids extends StatelessWidget {
+
+  UserBids(this.bids);
+
+  List<Bids> bids;
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +45,9 @@ class AuctionReview extends StatelessWidget {
               color: Colors.blue,
             ),
           ),
-          ListView.separated(
-            itemBuilder: (context, index) =>reviewAuctionItem(),
+          if(bids.isNotEmpty)
+            ListView.separated(
+            itemBuilder: (context, index) =>reviewAuctionItem(bids[index]),
             separatorBuilder: (context, index) => Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: Container(
@@ -49,10 +56,12 @@ class AuctionReview extends StatelessWidget {
                 color: Colors.grey.shade400,
               ),
             ),
-            itemCount: 5,
+            itemCount: bids.length,
             shrinkWrap: true,
             physics:const NeverScrollableScrollPhysics(),
           ),
+          if(bids.isEmpty)
+            Text(tr('no_bids')),
           const SizedBox(height: 20,),
         ],
       ),
@@ -60,28 +69,34 @@ class AuctionReview extends StatelessWidget {
   }
 
 
-  Widget reviewAuctionItem() {
+  Widget reviewAuctionItem(Bids bids) {
+   final time =DateTime.fromMillisecondsSinceEpoch(bids.createdAt!);
+   String ago = timeago.format(time, locale: 'en_short');
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 5),
+      padding: const EdgeInsets.symmetric(vertical: 5),
       child: Row(
         children: [
           Text(
-            'User Name',
+            bids.userName!,
             maxLines: 1,
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style:const TextStyle(fontWeight: FontWeight.bold),
             overflow: TextOverflow.ellipsis,
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 5),
+            padding:const EdgeInsets.symmetric(horizontal: 5),
             child: Container(
               width: 1,
               height: 10,
               color: Colors.black,
             ),
           ),
-          Text('1700 SAR',style: TextStyle(color: defaultColor),),
-          Spacer(),
-          Text('1m ago',style: TextStyle(color: Colors.grey,fontSize: 12),),
+          Text('${bids.bidAmount} ${tr('sar')}',
+            style:const TextStyle(
+                color: defaultColor,
+                fontSize: 12
+            ),),
+          const Spacer(),
+          Text('$ago ago',style:const TextStyle(color: Colors.grey,fontSize: 12),),
         ],
       ),
     );

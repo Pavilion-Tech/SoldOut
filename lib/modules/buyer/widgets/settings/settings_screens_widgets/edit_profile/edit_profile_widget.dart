@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:soldout/modules/buyer/auth/auth_cubit/auth_cubit.dart';
 import 'package:soldout/modules/buyer/auth/auth_cubit/auth_state.dart';
@@ -38,6 +39,10 @@ class EditProfileWidget extends StatelessWidget {
                 defaultTextField(
                     controller: nameController,
                     hint: tr('full_name_two'),
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(16),
+                      FilteringTextInputFormatter.digitsOnly,
+                    ],
                     validator: (String? value) {
                       if (value!.isEmpty) {
                         return tr('name_empty');

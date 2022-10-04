@@ -13,6 +13,7 @@ import '../../../../../../shared/components/components.dart';
 import '../../../../widgets/settings/settings_screens_widgets/points_tap_bar/first_tap.dart';
 import '../../../../widgets/settings/settings_screens_widgets/points_tap_bar/second_tap.dart';
 import '../../../../widgets/shimmers/points_loading/first_points_loading.dart';
+import '../../../../widgets/shimmers/points_loading/second_points_loading.dart';
 
 class PointsScreen extends StatefulWidget {
   const PointsScreen({Key? key}) : super(key: key);
@@ -34,6 +35,7 @@ class _PointsScreenState extends State<PointsScreen>
 
   @override
   Widget build(BuildContext context) {
+    SettingsCubit.get(context).getAllPoints();
     return Scaffold(
       body: SingleChildScrollView(
         physics: const NeverScrollableScrollPhysics(),
@@ -88,14 +90,14 @@ class _PointsScreenState extends State<PointsScreen>
                               ),
                               builder: (context)
                               {
-                                if(cubit.getPointsModel!.data!.isNotEmpty)
+                                if(cubit.getPointsModel!.data!.packages!.isNotEmpty)
                                 {
                                   return ListView.separated(
                                     itemBuilder: (context, index) =>
-                                        FirstTap(model:cubit.getPointsModel!.data![index]),
+                                        FirstTap(model:cubit.getPointsModel!.data!.packages![index]),
                                     separatorBuilder: (context, index) =>
                                     const SizedBox(height: 15,),
-                                    itemCount: cubit.getPointsModel!.data!.length,
+                                    itemCount: cubit.getPointsModel!.data!.packages!.length,
                                   );
                                 }else
                                   {
@@ -103,7 +105,11 @@ class _PointsScreenState extends State<PointsScreen>
                                   }
                               }
                             ),
-                            const SecondTap(),
+                            ConditionalBuilder(
+                              condition: cubit.getPointsModel!= null,
+                              fallback: (context)=>SecondPointsLoading(),
+                              builder: (context)=>const SecondTap(),
+                            ),
                           ],
                         ),
                       )

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -26,9 +25,9 @@ class ProductLoading extends StatelessWidget {
             top: size!.height * .35,
           ),
           child: Container(
-            decoration: BoxDecoration(
+            decoration:const  BoxDecoration(
               color: defaultColorTwo,
-              borderRadius: const BorderRadiusDirectional.only(
+              borderRadius: BorderRadiusDirectional.only(
                   topStart: Radius.circular(20), topEnd: Radius.circular(20)),
             ),
             padding: EdgeInsetsDirectional.only(
@@ -49,7 +48,7 @@ class ProductLoading extends StatelessWidget {
                   ),
                   detailsItem(
                     ListView.separated(
-                      physics: NeverScrollableScrollPhysics(),
+                      physics:const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemBuilder: (c,i){
                         return Shimmer.fromColors(
@@ -62,7 +61,7 @@ class ProductLoading extends StatelessWidget {
                           ),
                         );
                       },
-                      separatorBuilder: (c,i)=>SizedBox(height: 20,),
+                      separatorBuilder: (c,i)=>const SizedBox(height: 20,),
                       itemCount: 5,
                     ),
                   ),
@@ -219,7 +218,7 @@ class ProductLoading extends StatelessWidget {
                 color: Colors.grey.shade300,
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Shimmer.fromColors(
               baseColor: Colors.grey.shade300,
               highlightColor: Colors.white,
@@ -235,7 +234,7 @@ class ProductLoading extends StatelessWidget {
           height: size!.height * .02,
         ),
         ListView.separated(
-          physics: NeverScrollableScrollPhysics(),
+          physics:const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemBuilder: (c,i){
             return Shimmer.fromColors(
@@ -248,7 +247,7 @@ class ProductLoading extends StatelessWidget {
               ),
             );
           },
-          separatorBuilder: (c,i)=>SizedBox(height: 20,),
+          separatorBuilder: (c,i)=>const SizedBox(height: 20,),
           itemCount: 5,
         ),
         SizedBox(
@@ -269,5 +268,4 @@ class ProductLoading extends StatelessWidget {
       ],
     );
   }
-
 }

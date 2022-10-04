@@ -16,6 +16,7 @@ class NotificationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    BuyerCubit.get(context).getNotifications();
     return ConditionalBuilder(
       condition: token != null,
       fallback: (context) => SignInScreen(isNoty: true),

@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:soldout/modules/buyer/screens/auction/auction_cubit/auction_cubit.dart';
 
 import '../../../../shared/components/components.dart';
 import '../../../../shared/components/constants.dart';
@@ -7,7 +8,7 @@ import '../../../../shared/styles/colors.dart';
 
 class SuffixWidget extends StatefulWidget {
 
-  int value = 1;
+  int value = 0;
 
   @override
   State<SuffixWidget> createState() => _SuffixWidgetState();
@@ -56,7 +57,7 @@ class _SuffixWidgetState extends State<SuffixWidget> {
 
   Widget sortSheet(setState) {
     return Container(
-      height: size!.height * .40,
+      height: size!.height * .29,
       decoration: const BoxDecoration(
         borderRadius: BorderRadiusDirectional.only(
           topStart: Radius.circular(10),
@@ -67,10 +68,24 @@ class _SuffixWidgetState extends State<SuffixWidget> {
       child: Column(
         children: [
           Text(
-            tr('order_status'),
+            tr('auction_status'),
             style:const TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
           SizedBox(
             height: size!.height * .0125,
+          ),
+          RadioListTile(
+            value: 0,
+            groupValue: widget.value,
+            selected: widget.value == 0,
+            onChanged: (int? value) {
+              setState(() {
+                widget.value = value!;
+              });
+            },
+            activeColor: defaultColor,
+            title: Text(
+              tr('progress'),
+              style:const TextStyle(fontWeight: FontWeight.bold),),
           ),
           RadioListTile(
             value: 1,
@@ -79,54 +94,11 @@ class _SuffixWidgetState extends State<SuffixWidget> {
             onChanged: (int? value) {
               setState(() {
                 widget.value = value!;
-                print(widget.value);
               });
             },
             activeColor: defaultColor,
             title: Text(
-              tr('canceled'),
-              style:const TextStyle(fontWeight: FontWeight.bold),),
-          ),
-          RadioListTile(
-            value: 2,
-            groupValue: widget.value,
-            selected: widget.value == 2,
-            onChanged: (int? value) {
-              setState(() {
-                widget.value = value!;
-              });
-            },
-            activeColor: defaultColor,
-            title: Text(
-              tr('new_order'),
-              style:const TextStyle(fontWeight: FontWeight.bold),),
-          ),
-          RadioListTile(
-            value: 3,
-            groupValue: widget.value,
-            selected: widget.value == 3,
-            onChanged: (int? value) {
-              setState(() {
-                widget.value = value!;
-              });
-            },
-            activeColor: defaultColor,
-            title: Text(
-              tr('delivery'),
-              style:const TextStyle(fontWeight: FontWeight.bold),),
-          ),
-          RadioListTile(
-            value: 4,
-            groupValue: widget.value,
-            selected: widget.value == 4,
-            onChanged: (int? value) {
-              setState(() {
-                widget.value = value!;
-              });
-            },
-            activeColor: defaultColor,
-            title: Text(
-              tr('delivered'),
+              tr('finished'),
               style:const TextStyle(fontWeight: FontWeight.bold),),
           ),
           Padding(
@@ -135,7 +107,7 @@ class _SuffixWidgetState extends State<SuffixWidget> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 defaultButton(
-                  onTap: () {},
+                  onTap: ()=>Navigator.pop(context),
                   text: tr('discard'),
                   textColor: defaultColor,
                   buttonColor: defaultColorTwo,
@@ -143,7 +115,12 @@ class _SuffixWidgetState extends State<SuffixWidget> {
                 SizedBox(
                   width: size!.height * .008,
                 ),
-                defaultButton( onTap: () {}, text: tr('apply')),
+                defaultButton(
+                    onTap: () {
+                      AuctionCubit.get(context).sort(widget.value);
+                      Navigator.pop(context);
+                    },
+                    text: tr('apply')),
               ],
             ),
           ),

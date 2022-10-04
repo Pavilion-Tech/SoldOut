@@ -21,6 +21,7 @@ class VContactUsScreen extends StatelessWidget {
                 isArrowBack: true,
             ),
             MyContainer(
+              noSize: true,
               ContactUsWidget(),
               end: 0,
               start: 0,

@@ -103,7 +103,9 @@ class StoreOrderItem extends StatelessWidget {
                           color: defaultColor,
                           height:1.5,
                           fontSize: 12,
-                          fontWeight: FontWeight.bold),),
+                          fontWeight: FontWeight.bold
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -115,7 +117,10 @@ class StoreOrderItem extends StatelessWidget {
               children:  [
                 Text(
                   product.name!,
-                  style:const TextStyle(fontWeight: FontWeight.bold),),
+                  style:const TextStyle(fontWeight: FontWeight.bold),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
                 const Spacer(),
                 Text(
                   '(${product.qty} x ${product.piecePrice}) ${tr('sar')}',

@@ -35,7 +35,7 @@ class ResetPassword extends StatelessWidget {
               var cubit = VAuthCubit.get(context);
               return MyContainer(
                 SingleChildScrollView(
-                  physics: NeverScrollableScrollPhysics(),
+                  physics:const NeverScrollableScrollPhysics(),
                   child: Form(
                     key: formKey,
                     child: Column(

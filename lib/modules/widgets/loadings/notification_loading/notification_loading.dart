@@ -8,10 +8,10 @@ class NotificationListLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      separatorBuilder: (context,index)=>SizedBox(height: 20,),
+      separatorBuilder: (context,index)=>const SizedBox(height: 20,),
       itemCount: 6,
       shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
+      physics:const NeverScrollableScrollPhysics(),
       itemBuilder: (context,index){
         return Container(
           height: size!.height*.18,
@@ -37,11 +37,11 @@ class NotificationListLoading extends StatelessWidget {
                   color: Colors.grey.shade300,
                 ),
               ),
-              SizedBox(height: 13,),
+              const SizedBox(height: 13,),
               textItemLoading,
               textItemLoading,
               textItemLoading,
-              Spacer(),
+              const Spacer(),
               Align(
                 alignment: AlignmentDirectional.bottomEnd,
                 child: Shimmer.fromColors(

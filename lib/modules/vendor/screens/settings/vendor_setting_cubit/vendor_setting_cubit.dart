@@ -55,7 +55,6 @@ class VSettingCubit extends Cubit<VSettingStates>
         token: 'Bearer $vToken',
         lang: myLocale,
     ).then((value) {
-      print(value.data);
       if(value.statusCode == 200 &&value.data['status']){
         nameC.text = value.data['data']['name'];
         emailC.text = value.data['data']['email'];

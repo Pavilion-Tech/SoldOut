@@ -7,7 +7,6 @@ import 'package:soldout/modules/buyer/widgets/items_shared/grid_view.dart';
 import 'package:soldout/modules/widgets/loadings/grid_view_loading/grid_view_loading.dart';
 import 'package:soldout/modules/widgets/my_container.dart';
 import 'package:soldout/shared/components/components.dart';
-
 import '../../../../../../layout/buyer_layout/buy_layout_screen.dart';
 import '../../../../../../layout/buyer_layout/cubit/buyer_cubit.dart';
 import '../../../../../../shared/components/constants.dart';
@@ -42,8 +41,8 @@ class Favorites extends StatelessWidget {
                         builder:(context)=> MyContainer(
                           cubit.getFavModel!.data!.products!.isNotEmpty
                               ? GridViewWidget(
-                            products:cubit.getFavModel!.data!.products,)
-                              : Column(
+                            products:cubit.getFavModel!.data!.products,
+                          ) : Column(
                             children: [
                               SizedBox(height: size!.height*.4),
                               Text(tr('no_fav'))

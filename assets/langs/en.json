@@ -73,7 +73,7 @@
   "order_status": "Order Status",
   "rejected": "Order Rejected",
   "new_order": "New Order",
-  "processing": "Processing",
+  "processing2": "Processing",
   "shipped": "Shipped",
   "completed": "Completed",
   "purchases_details": "PURCHASES DETAILS - #",
@@ -85,10 +85,10 @@
   "submit_review": "SUBMIT REVIEW",
   "auction": "AUCTIONS",
   "press+": "Press \"+\" whenever you want to bid and a point",
-  "will_deducted": "will be deducted from your balance and a riyaal is added to the value of the item",
+  "will_deducted": "will be deducted from your balance and a SAR is added to the value of the item",
   "points_refunded": "(Your points will be refunded if the auction is not awarded to you)",
   "user_bids": "User Bids",
-  "join_auction": "JOIN AUCTION | 30 COINS",
+  "join_auction": "JOIN AUCTION | ",
   "congrats": "Congratulations",
   "pay_for_product": " Pay For Your Product",
   "payment": "PAYMENT",
@@ -132,7 +132,7 @@
   "determine": "Determine The Specifications Carefully",
   "indicates": "* Indicates A Required Field",
   "product_name": "Product Name *",
-  "Description": "Description Your Product / Price / Quantity / Size / Gendar / Type ........ *",
+  "Description": "Description Your Product / Price / Quantity / Size / Gender / Type ........ *",
   "quantity": "Quantity *",
   "weight": "Weight *",
   "price": "Price *",
@@ -147,7 +147,7 @@
   "add_new": "ADD NEW",
   "edit_product": "EDIT PRODUCT",
   "delete_product": "DELETE PRODUCT",
-  "delete_sure": "Are You Sure You Want To Delet Product ? This Action Can't Undone",
+  "delete_sure": "Are You Sure You Want To Delete Product ? This Action Can't Undone",
   "product_review": "Product Review",
   "choose_current_location": "Choose the current location",
   "edit_new_address": "Edit Address",
@@ -173,6 +173,7 @@
   "no_order": "No Orders Yet",
   "bid": "Bid",
   "coin": "Coin",
+  "coins": "COINS",
   "verification_success": "Verification Successfully",
   "data_updated": "Data Updated Successfully",
   "phone_empty": "Phone Must Not Be Empty",
@@ -213,11 +214,13 @@
   "product_deleted": "The Product Has Been Deleted",
   "no_arrivals": "No Arrivals Items Yet",
   "no_auctions": "No Auctions Items Yet",
-  "no_fav": "No Favorites Items Yet"
-
-
-
-
-
+  "no_fav": "No Favorites Items Yet",
+  "coin_left": "Coins Left",
+  "joined": "Joined Successful",
+  "no_bids": "No Bids Yet",
+  "coupon_empty": "Coupon Must Not Be Empty",
+  "auction_status": "Auction Status",
+  "finished": "Finished",
+  "processing": "Processing"
 
 }

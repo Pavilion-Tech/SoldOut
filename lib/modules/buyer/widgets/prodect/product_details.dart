@@ -49,8 +49,9 @@ class ProductDetails extends StatelessWidget {
               detailsItem(
                  Text(
                    product!.desc!,
-                  maxLines: 5,
-                  style:const TextStyle(height: 1.9),
+                   maxLines: 5,
+                   overflow: TextOverflow.ellipsis,
+                   style:const TextStyle(height: 1.9),
                 ),
               ),
               SizedBox(height: size!.height * .03,),
@@ -103,7 +104,7 @@ class ProductDetails extends StatelessWidget {
       children: [
          Text(
            product!.name!,
-          maxLines: 2,
+          maxLines: 1,
           style:const TextStyle(height: 2,fontWeight: FontWeight.bold),
           overflow: TextOverflow.ellipsis,
         ),
@@ -113,12 +114,12 @@ class ProductDetails extends StatelessWidget {
         Row(
           children: [
             Text(
-              '${product!.regularPrice} ${tr('sar')}',
+              '${product!.salePrice??product!.regularPrice} ${tr('sar')}',
               style:const TextStyle(fontWeight: FontWeight.bold),
             ),
             if(product!.salePrice !=null)
               Text(
-                 '${product!.salePrice} ${tr('sar')}',
+                 '${product!.regularPrice} ${tr('sar')}',
                 style:const TextStyle(
                     color: Colors.grey,
                     fontSize: 10,

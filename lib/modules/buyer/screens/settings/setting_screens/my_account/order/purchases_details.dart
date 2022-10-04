@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:soldout/shared/components/components.dart';
-
 import '../../../../../../../layout/buyer_layout/buy_layout_screen.dart';
 import '../../../../../../../layout/buyer_layout/cubit/buyer_cubit.dart';
 import '../../../../../../../models/buyer_model/order_model.dart';

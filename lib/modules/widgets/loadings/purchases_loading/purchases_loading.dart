@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:soldout/modules/buyer/widgets/check_out/invoice.dart';
-import 'package:soldout/modules/buyer/widgets/check_out/store_checkout_item.dart';
-import 'package:soldout/shared/styles/colors.dart';
-
 import '../../../../../../shared/components/constants.dart';
 
 class PurchasesDetailsLoading extends StatelessWidget {
@@ -33,7 +29,7 @@ class PurchasesDetailsLoading extends StatelessWidget {
                   color: Colors.grey.shade300,
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               Shimmer.fromColors(
                 baseColor: Colors.grey.shade300,
                 highlightColor: Colors.white,
@@ -43,7 +39,7 @@ class PurchasesDetailsLoading extends StatelessWidget {
                   color: Colors.grey.shade300,
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               Row(
                 children: [
                   Shimmer.fromColors(
@@ -55,7 +51,7 @@ class PurchasesDetailsLoading extends StatelessWidget {
                       color: Colors.grey.shade300,
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Shimmer.fromColors(
                     baseColor: Colors.grey.shade300,
                     highlightColor: Colors.white,
@@ -72,13 +68,13 @@ class PurchasesDetailsLoading extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.symmetric(vertical: 15),
+          padding:const EdgeInsets.symmetric(vertical: 15),
           child: ListView.separated(
             itemBuilder: (context, index) => listStoreLoading(),
-            separatorBuilder: (context, index) => SizedBox(height: 10,),
+            separatorBuilder: (context, index) =>const SizedBox(height: 10,),
             itemCount: 2,
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
+            physics:const NeverScrollableScrollPhysics(),
           ),
         ),
         invoiceLoading(),
@@ -148,7 +144,7 @@ class PurchasesDetailsLoading extends StatelessWidget {
                   color: Colors.grey.shade300,
                 ),
               ),
-                Spacer(),
+                const Spacer(),
                 Shimmer.fromColors(
                   baseColor: Colors.grey.shade300,
                   highlightColor: Colors.white,
@@ -179,7 +175,7 @@ class PurchasesDetailsLoading extends StatelessWidget {
             color: Colors.grey.shade300,
           ),
         ),
-        SizedBox(height: 10,),
+        const SizedBox(height: 10,),
         Container(
           alignment: AlignmentDirectional.centerStart,
           padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 18),
@@ -200,7 +196,7 @@ class PurchasesDetailsLoading extends StatelessWidget {
                       color: Colors.grey.shade300,
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Shimmer.fromColors(
                     baseColor: Colors.grey.shade300,
                     highlightColor: Colors.white,
@@ -212,7 +208,7 @@ class PurchasesDetailsLoading extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 25,),
+              const SizedBox(height: 25,),
               Row(
                 children: [
                   Shimmer.fromColors(
@@ -224,7 +220,7 @@ class PurchasesDetailsLoading extends StatelessWidget {
                       color: Colors.grey.shade300,
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Shimmer.fromColors(
                     baseColor: Colors.grey.shade300,
                     highlightColor: Colors.white,
@@ -236,7 +232,7 @@ class PurchasesDetailsLoading extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
               Row(
                 children: [
                   Shimmer.fromColors(
@@ -248,7 +244,7 @@ class PurchasesDetailsLoading extends StatelessWidget {
                       color: Colors.grey.shade300,
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Shimmer.fromColors(
                     baseColor: Colors.grey.shade300,
                     highlightColor: Colors.white,

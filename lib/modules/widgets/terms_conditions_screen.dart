@@ -42,7 +42,7 @@ class TermsAndConditionsScreen extends StatelessWidget {
                     fallback:(context)=>const AboutAppLoading(),
                     builder:(context)=> Text(
                       SettingsCubit.get(context).settingsModel!.data!.terms!,
-                      style: TextStyle(height: 2, fontSize: 16),
+                      style: const TextStyle(height: 2, fontSize: 16),
                     ),
                   ),
 

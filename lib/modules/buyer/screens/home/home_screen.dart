@@ -13,6 +13,9 @@ import '../../../../shared/components/constants.dart';
 import '../../widgets/home/carousel_slider.dart';
 import '../../widgets/home/category_list_view.dart';
 import '../../widgets/scroll_hint/scroll_hint.dart';
+import '../auction/auction_cubit/auction_cubit.dart';
+import '../auction/auction_cubit/auction_states.dart';
+import '../auction/auction_list_screen.dart';
 import '../search/search_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -39,66 +42,53 @@ class HomeScreen extends StatelessWidget {
             builder: (context, state) {
               var cubit = BuyerCubit.get(context);
               return ConditionalBuilder(
-                condition:cubit.homeModel != null,
-                fallback: (context)=>HomeLoading(),
-                builder:(context)=> Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(
-                        top: size!.height * .11,
-                        right: size!.width * .05,
-                        left: size!.width * .05,
-                        bottom: size!.height * .003,
-                      ),
-                      child: Column(
-                        children: [
-                          CarouselSliderWidget(),
-                          CategoryListView(),
-                        ],
-                      ),
-                    ),
+                condition: cubit.homeModel != null,
+                fallback: (context) => HomeLoading(),
+                builder: (context) =>
                     Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        if(cubit.homeModel!.data!.newProducts!.isNotEmpty)
-                          seeMore(tr('new_arrivals'), () {
-                          navigateTo(context, ListArrivals());
-                        }),
-                        Container(
-                            height: size!.height * .197,
-                            alignment: AlignmentDirectional.centerStart,
-                            padding:
-                            EdgeInsetsDirectional.only(start: size!.width * .050),
-                            child: ConditionalBuilder(
-                                condition: cubit.homeModel!.data!.newProducts!.isNotEmpty,
-                                fallback: (context)=>
-                                    Center(child: Text(tr('no_arrivals')),),
-                                builder:(context) =>const ListProducts())
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: size!.height * .11,
+                            right: size!.width * .05,
+                            left: size!.width * .05,
+                            bottom: size!.height * .003,
+                          ),
+                          child: Column(
+                            children: [
+                              CarouselSliderWidget(),
+                              CategoryListView(),
+                            ],
+                          ),
                         ),
-                        if(cubit.homeModel!.data!.newAuctions!.isNotEmpty)
-                        seeMore(tr('new_auctions'), () {
-                          cubit.getHomeData(context,isAuction: true);
-                        }),
-                        Container(
-                            height: size!.height * .20,
-                            alignment: AlignmentDirectional.centerStart,
-                            padding:
-                            EdgeInsetsDirectional.only(start: size!.width * .050),
-                            child:ConditionalBuilder(
-                                condition: cubit.homeModel!.data!.newAuctions!.isNotEmpty,
-                                fallback:(context)=> Center(child: Text(tr('no_auctions'))),
-                                builder:(context)=>  const ListAuctions()
-                            )
+                        Column(
+                          children: [
+                            if(cubit.homeModel!.data!.newProducts!.isNotEmpty)
+                              seeMore(tr('new_arrivals'), () {
+                                navigateTo(context, ListArrivals());
+                              }),
+                            const ListProducts(),
+                            if(cubit.homeModel!.data!.newAuctions!.isNotEmpty)
+                              seeMore(tr('new_auctions'), () {
+                                cubit.getHomeData(context);
+                                navigateTo(context, AuctionsListScreen());
+                              }),
+                            BlocConsumer<AuctionCubit, AuctionStates>(
+                              listener: (context, state) {},
+                              builder: (context, state) {
+                                return const ListAuctions();
+                              },
+                            ),
+                            SizedBox(height: size!.height * .02),
+                          ],
                         ),
-                        SizedBox(height: size!.height * .02),
                       ],
                     ),
-                  ],
-                ),
               );
             },
           ),
-          if(isFirst== null)
+          if(isFirst == null)
             const ScrollHintScreen()
         ],
       ),

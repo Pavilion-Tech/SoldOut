@@ -24,7 +24,7 @@ class MyAuctionList extends StatelessWidget {
       builder: (context, state) {
         var cubit = AuctionCubit.get(context);
         return ConditionalBuilder(
-          condition: cubit.categoryAuctions != null,
+          condition: cubit.myAuction != null,
           fallback: (context) => GridViewLoading(),
           builder: (context) => MyContainer(
             noSize: true,
@@ -33,21 +33,28 @@ class MyAuctionList extends StatelessWidget {
                 defaultTextField(
                   hint: tr('search_by_auction'),
                   suffix: suffixWidget,
-                  onChanged: (value)
-                  {
-
+                  onChanged: (value) {
+                    if(value.isNotEmpty)
+                    {
+                      cubit.search(value);
+                    }
+                    if(value.isEmpty)
+                    {
+                      cubit.nullSearch();
+                    }
                   }
                 ),
                 ConditionalBuilder(
-                  condition: cubit.categoryAuctions!.isNotEmpty,
+                  condition: cubit.myAuction!.data!.isNotEmpty||cubit.searchModel!.isNotEmpty,
                   fallback: (context) => Center(
                       child: Column(
                         children: [
-                          SizedBox(height: size!.height*.4,),
+                          SizedBox(
+                            height: size!.height * .4,
+                          ),
                           Text(tr('no_auctions')),
                         ],
-                      )
-                  ),
+                      )),
                   builder: (context) => GridView.count(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
@@ -56,10 +63,14 @@ class MyAuctionList extends StatelessWidget {
                     crossAxisSpacing: 5,
                     crossAxisCount: 2,
                     children: List.generate(
-                      cubit.categoryAuctions!.length,
+                      cubit.searchModel!=null
+                         ?cubit.searchModel!.length
+                         : cubit.myAuction!.data!.length,
                           (index) => AuctionItem(
-                        model: cubit.categoryAuctions![index],
-                      ),
+                            model:cubit.searchModel!=null
+                                ?cubit.searchModel![index]
+                                : cubit.myAuction!.data![index],
+                          ),
                     ),
                   ),
                 ),

@@ -7,7 +7,7 @@ class SettingsModel {
   SettingsModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     msg = json['msg'];
-    data = json['data'] != null ?  SettingsData.fromJson(json['data']) : null;
+    data = json['data'] != null ? new SettingsData.fromJson(json['data']) : null;
   }
 
 }
@@ -15,26 +15,38 @@ class SettingsModel {
 class SettingsData {
   String? aboutUs;
   String? terms;
+  String? email;
+  String? instagram;
+  String? facebook;
+  String? whatsapp;
+  String? twitter;
+  String? phone;
   List<Cities>? cities;
   List<Categories>? categories;
+
 
   SettingsData.fromJson(Map<String, dynamic> json) {
     aboutUs = json['about_us'];
     terms = json['terms'];
+    email = json['email'];
+    instagram = json['instagram'];
+    facebook = json['facebook'];
+    whatsapp = json['whatsapp'];
+    twitter = json['twitter'];
+    phone = json['phone'];
     if (json['cities'] != null) {
       cities = <Cities>[];
       json['cities'].forEach((v) {
-        cities!.add( Cities.fromJson(v));
-      });
-    }if (json['categories'] != null) {
-      categories = <Categories>[];
-      json['categories'].forEach((v) {
-        categories!.add( Categories.fromJson(v));
+        cities!.add(new Cities.fromJson(v));
       });
     }
-
+    if (json['categories'] != null) {
+      categories = <Categories>[];
+      json['categories'].forEach((v) {
+        categories!.add(new Categories.fromJson(v));
+      });
+    }
   }
-
 }
 
 class Cities {
@@ -43,18 +55,16 @@ class Cities {
   List<Neighborhoods>? neighborhoods;
 
 
-
   Cities.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     if (json['neighborhoods'] != null) {
       neighborhoods = <Neighborhoods>[];
       json['neighborhoods'].forEach((v) {
-        neighborhoods!.add( Neighborhoods.fromJson(v));
+        neighborhoods!.add(new Neighborhoods.fromJson(v));
       });
     }
   }
-
 
 }
 
@@ -68,17 +78,20 @@ class Neighborhoods {
     name = json['name'];
   }
 
+
 }
 
 class Categories {
   int? id;
   String? name;
+  String? logo;
   String? hexColor;
 
 
   Categories.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
+    logo = json['logo'];
     hexColor = json['hex_color'];
   }
 

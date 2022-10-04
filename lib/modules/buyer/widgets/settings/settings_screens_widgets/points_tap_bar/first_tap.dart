@@ -2,19 +2,15 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:soldout/models/buyer_model/get_points.dart';
 import 'package:soldout/modules/buyer/screens/settings/settings_cubit/settings_cubit.dart';
-import 'package:soldout/shared/components/components.dart';
 import 'package:soldout/shared/images/images.dart';
-
 import '../../../../../../shared/components/constants.dart';
-import '../../../../screens/check_out/cart_check_out.dart';
-import '../../../../screens/check_out/point_check_out.dart';
 
 
 class FirstTap extends StatelessWidget {
 
   FirstTap({required this.model});
 
-  GetPointsData model;
+  Packages model;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +48,7 @@ class FirstTap extends StatelessWidget {
                 ],
               ),
               const Spacer(),
-              Container(
+              SizedBox(
                 height: 40,
                   width: 40,
                   child: Image.asset(BuyerImages.points,height: 40,width: 40,))

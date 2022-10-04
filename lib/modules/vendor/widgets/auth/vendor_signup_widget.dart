@@ -1,12 +1,10 @@
 import 'dart:io';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:soldout/modules/vendor/auth/auth_cubit/auth_cubit.dart';
 import 'package:soldout/modules/vendor/auth/auth_cubit/auth_states.dart';
-import 'package:soldout/modules/vendor/widgets/auth/sign_up_dialog.dart';
 import '../../../../shared/components/components.dart';
 import '../../../../shared/components/constants.dart';
 

@@ -78,9 +78,7 @@ class _RateAndReviewState extends State<RateAndReview> {
                               style: TextStyle(
                                   color: HexColor('#A0AEC0'), fontSize: 12),
                             ),
-                            const SizedBox(
-                              height: 10,
-                            ),
+                            const SizedBox(height: 10,),
                             RatingBar.builder(
                               initialRating: rate,
                               itemSize: 40,
@@ -128,9 +126,22 @@ class _RateAndReviewState extends State<RateAndReview> {
                           ),
                           alignment: AlignmentDirectional.center,
                           padding: const EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 15),
+                              vertical: 10, horizontal: 15
+                          ),
                           child: TextFormField(
                             controller: reviewC,
+                            onFieldSubmitted:(String? val)
+                            {
+                              FocusManager.instance.primaryFocus!.unfocus();
+                              if (formKey.currentState!.validate()) {
+                                cubit.rateProduct(
+                                    id: widget.id,
+                                    rate: rate,
+                                    review: reviewC.text,
+                                    context: context
+                                );
+                              }
+                            },
                             decoration: InputDecoration(
                               border: InputBorder.none,
                               hintText: tr('tell_us_more'),

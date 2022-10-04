@@ -46,7 +46,7 @@ class ListAuctionsLoading extends StatelessWidget {
                         color: Colors.grey.shade300,
                       ),
                     ),
-                    SizedBox(height: 20,),
+                    const SizedBox(height: 20,),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [

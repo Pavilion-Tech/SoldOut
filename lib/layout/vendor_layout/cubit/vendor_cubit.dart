@@ -183,13 +183,11 @@ class VendorCubit extends Cubit<VendorStates>{
     ).then((value) {
       if(isPage)
       {
-        listProductModel!.data!.lastPage = value.data['data']['last_page'];
-        listProductModel!.data!.currentPage = value.data['data']['current_page'];
-        for(Map<String,dynamic> product in value.data['data']['products'])
+        listProductModel!.data!.lastPage=value.data['data']['last_page'];
+        listProductModel!.data!.currentPage=value.data['data']['current_page'];
+        for(Map<String,dynamic>product in value.data['data']['products'])
         {
-          listProductModel!.data!.products!.add(
-              ProductModel.fromJson(product)
-          );
+          listProductModel!.data!.products!.add(ProductModel.fromJson(product));
           emit(GetProductSuccessState());
         }
         emit(GetProductSuccessState());

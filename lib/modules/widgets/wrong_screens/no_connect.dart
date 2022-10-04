@@ -1,7 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:soldout/layout/buyer_layout/cubit/buyer_cubit.dart';
-import 'package:soldout/layout/vendor_layout/cubit/vendor_cubit.dart';
 import 'package:soldout/shared/components/components.dart';
 import 'package:soldout/shared/images/images.dart';
 import 'package:soldout/splash_screen.dart';
@@ -48,7 +46,7 @@ class NoConnect extends StatelessWidget {
               ),
               defaultButton(
                   onTap: (){
-                    navigateAndFinish(context, SplashScreen());
+                    navigateAndFinish(context,const SplashScreen());
                   },
                   text: tr('try_again'),
                 width: double.infinity,

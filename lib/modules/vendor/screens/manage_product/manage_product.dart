@@ -44,6 +44,7 @@ class VendorManageProductList extends StatelessWidget {
                     isArrowBack: true,
                   arrowTap: (){
                       cubit.pageProduct = 1;
+                      cubit.scrollController.removeListener(() {});
                       Navigator.pop(context);
                   }
                 ),

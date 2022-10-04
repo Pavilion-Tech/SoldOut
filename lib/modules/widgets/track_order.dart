@@ -19,7 +19,7 @@ class TrackOrder extends StatelessWidget {
           children: [
             const Spacer(),
             orderStatus(
-              title: tr('processing'),
+              title: tr('processing2'),
               isSelected: status == 'processing'
                   || status == 'shipped'
                   || status == 'completed',

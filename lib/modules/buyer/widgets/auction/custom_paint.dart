@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../../../../shared/components/constants.dart';
 
 class MCustomPaint extends StatelessWidget {
   const MCustomPaint({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
+    return  SizedBox(
       child: CustomPaint(
         size: Size(40,(40*0.5833333333333334).toDouble()),
         painter: RPSCustomPainter(),
