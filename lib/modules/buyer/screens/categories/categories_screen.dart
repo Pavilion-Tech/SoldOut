@@ -56,7 +56,7 @@ class CategoriesScreen extends StatelessWidget {
                     navigateAndFinish(context, BuyerLayout());
                   },
                   arrowTap: (){
-                    cubit.getHomeData(context);
+                    BuyerCubit.get(context).getHomeData(context);
                     cubit.currentCategoryPage = 1;
                     cubit.scrollControllerForCategory.removeListener(() {});
                     Navigator.pop(context);

@@ -24,14 +24,14 @@ class AddOrEditProductWidget extends StatelessWidget {
 
   ProductModel? productModel;
 
-  bool isCompleted = false;
+  int isCompleted = 0;
 
   @override
   Widget build(BuildContext context) {
     var cubit = VendorCubit.get(context);
     if (productModel != null &&
         productModel!.images!.length != cubit.imagesId.length &&
-        !isCompleted) {
+        isCompleted == 0) {
       cubit.nameC.text = productModel!.name!;
       cubit.descC.text = productModel!.desc!;
       cubit.descC.text = productModel!.desc!;
@@ -51,7 +51,7 @@ class AddOrEditProductWidget extends StatelessWidget {
         cubit.addImageToList(image.image!);
         cubit.imagesId.add(image.id!);
       }
-      isCompleted = true;
+      isCompleted++;
     }
     return BlocConsumer<VendorCubit, VendorStates>(
       listener: (context, state) {
@@ -79,18 +79,14 @@ class AddOrEditProductWidget extends StatelessWidget {
                     fontSize: 22,
                   ),
                 ),
-                const SizedBox(
-                  height: 5,
-                ),
+                const SizedBox(height: 5,),
                 Text(
                   tr('indicates'),
                   style: const TextStyle(
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                const SizedBox(
-                  height: 15,
-                ),
+                const SizedBox(height: 15,),
                 defaultTextField(
                   controller: cubit.nameC,
                   hint: tr('product_name'),
@@ -105,9 +101,7 @@ class AddOrEditProductWidget extends StatelessWidget {
                   },
                   onChanged: (value) => formKey.currentState!.validate(),
                 ),
-                const SizedBox(
-                  height: 15,
-                ),
+                const SizedBox(height: 15,),
                 Container(
                   height: size!.height * .2,
                   decoration: BoxDecoration(
@@ -116,8 +110,7 @@ class AddOrEditProductWidget extends StatelessWidget {
                     border: Border.all(color: Colors.grey.shade200),
                   ),
                   alignment: AlignmentDirectional.center,
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                  padding:const EdgeInsets.symmetric(vertical:10,horizontal:15),
                   child: TextFormField(
                       onChanged: (value) => formKey.currentState!.validate(),
                       decoration: InputDecoration(
@@ -156,21 +149,17 @@ class AddOrEditProductWidget extends StatelessWidget {
                       child: DropdownButtonFormField(
                         isExpanded: true,
                         validator:(value)=>value==null?tr('field_required'):null,
-                        decoration: const InputDecoration(border:InputBorder.none),
-                        borderRadius: BorderRadius.circular(10),
-                        value: cubit.dropDownValue,
-                        icon: const Icon(Icons.keyboard_arrow_down),
-                        items: SettingsCubit.get(context)
-                            .settingsModel!
-                            .data!
-                            .categories!
-                            .map((items) {
+                        decoration:const InputDecoration(border:InputBorder.none),
+                        borderRadius:BorderRadius.circular(10),
+                        value:cubit.dropDownValue,
+                        icon:const Icon(Icons.keyboard_arrow_down),
+                        items:SettingsCubit.get(context).settingsModel!.data!.categories!.map((items) {
                           return DropdownMenuItem(
                             value: items.name,
                             child: SizedBox(
-                                height: 60,
-                                width: double.infinity,
-                                child: Text(items.name!,style: TextStyle(fontSize: 13),)),
+                                height: 60, width: double.infinity,
+                                child: Text(items.name!,style: TextStyle(fontSize: 13),)
+                            ),
                           );
                         }).toList(),
                         onChanged: (String? newValue) {

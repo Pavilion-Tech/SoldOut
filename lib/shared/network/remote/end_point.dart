@@ -52,6 +52,8 @@ const String auctionFetchCheckOut = '/users/auctions/getCheckout?auction_id=';
 
 const String auctionCheckOut = '/users/auctions/checkout';
 
+const String searchE = '/users/home/getSearchProducts?';
+
 ///////////////VENDOR////////
 
 const String vRegister = '/stores/register';

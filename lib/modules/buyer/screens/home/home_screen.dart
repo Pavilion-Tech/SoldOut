@@ -21,6 +21,7 @@ import '../search/search_screen.dart';
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    BuyerCubit.get(context).getHomeData(context);
     return SingleChildScrollView(
       child: Stack(
         alignment: AlignmentDirectional.topCenter,
@@ -71,7 +72,6 @@ class HomeScreen extends StatelessWidget {
                             const ListProducts(),
                             if(cubit.homeModel!.data!.newAuctions!.isNotEmpty)
                               seeMore(tr('new_auctions'), () {
-                                cubit.getHomeData(context);
                                 navigateTo(context, AuctionsListScreen());
                               }),
                             BlocConsumer<AuctionCubit, AuctionStates>(

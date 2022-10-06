@@ -114,7 +114,6 @@ class AuctionCubit extends Cubit<AuctionStates>
     ).then((value) {
       if(value.statusCode == 200&&value.data['status'])
       {
-        BuyerCubit.get(context).getHomeData(context);
         isUserJoined = true;
         showToast(msg: tr('joined'));
         emit(AuctionSuccess());

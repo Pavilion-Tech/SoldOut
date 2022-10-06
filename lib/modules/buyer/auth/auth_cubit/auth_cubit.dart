@@ -50,7 +50,6 @@ class AuthCubit extends Cubit<AuthStates> {
         timer!.cancel();
         timerFinished = true;
         if(BuyerCubit.get(context).homeModel!=null){
-          BuyerCubit.get(context).getHomeData(context);
           CartCubit.get(context).getCart();
         }
         navigateAndFinish(context, BuyerLayout());
@@ -100,7 +99,7 @@ class AuthCubit extends Cubit<AuthStates> {
     });
   }
 
-  void signOut(context, int delete) async {
+  void signOut(context,int delete) async {
     CartCubit.get(context).getCartModel = null;
     token = null;
     CacheHelper.removeData('token');

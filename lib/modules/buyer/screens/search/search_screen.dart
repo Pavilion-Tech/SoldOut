@@ -46,7 +46,7 @@ class SearchScreen extends StatelessWidget {
                   isLastIcon: true,
                   lastIcon: Icons.shopping_cart,
                   arrowTap: (){
-                    cubit.getHomeData(context);
+                    BuyerCubit.get(context).getHomeData(context);
                     cubit.currentSearchPage = 1;
                     cubit.scrollControllerForSearch.removeListener((){});
                     Navigator.pop(context);

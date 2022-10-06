@@ -23,7 +23,10 @@ class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
       children: [
         Container(
           decoration:
-          BoxDecoration(borderRadius: BorderRadiusDirectional.circular(15)),
+          BoxDecoration(
+              color: Colors.grey.shade300,
+              borderRadius: BorderRadiusDirectional.circular(15)
+          ),
           height: size!.height * .18,
           width: size!.width * .9,
           clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -93,8 +96,10 @@ class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
     );
   }
 
-  Widget customIndicatorOn() => Image.asset(BuyerImages.indicatorOn,height: 20,width: 20,);
-  Widget customIndicatorOff() => Image.asset(BuyerImages.indicatorOff,height: 20,width: 20,);
+  Widget customIndicatorOn() =>
+      Image.asset(BuyerImages.indicatorOn,height: 20,width: 20,);
+  Widget customIndicatorOff() =>
+      Image.asset(BuyerImages.indicatorOff,height: 20,width: 20,);
 
   Widget image(String url){
     return Image.network(

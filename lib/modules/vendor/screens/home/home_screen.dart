@@ -18,6 +18,7 @@ class VendorHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    VendorCubit.get(context).getStatistic(context: context);
     return BlocConsumer<VendorCubit, VendorStates>(
         listener: (context, state) {},
         builder: (context, state) {

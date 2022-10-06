@@ -7,7 +7,6 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:soldout/modules/vendor/screens/settings/vendor_setting_cubit/vendor_setting_states.dart';
 import 'package:soldout/shared/components/constants.dart';
 import 'package:soldout/shared/network/remote/dio.dart';
-
 import '../../../../../shared/components/components.dart';
 import '../../../../../shared/network/remote/end_point.dart';
 
@@ -165,6 +164,9 @@ class VSettingCubit extends Cubit<VSettingStates>
       url: vChangeLang,
       token: 'Bearer $vToken',
       lang: lang,
+      data: {
+        'current_lang':lang
+      }
     );
   }
 

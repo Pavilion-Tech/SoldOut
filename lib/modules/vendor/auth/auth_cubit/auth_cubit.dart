@@ -209,8 +209,6 @@ class VAuthCubit extends Cubit<VAuthStates>
         CacheHelper.saveData(key: 'vToken', value: vToken);
         emit(LoginSuccessState());
         navigateTo(context, VendorLayout());
-        VendorCubit.get(context).getStatistic(context: context);
-
       }else if(value.data!= null && !value.data['status'])
       {
         showToast(msg: value.data['errors'].toString(),toastState: true);

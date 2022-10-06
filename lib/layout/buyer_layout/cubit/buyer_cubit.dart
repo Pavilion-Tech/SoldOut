@@ -6,7 +6,6 @@ import 'package:soldout/modules/buyer/screens/cart/cart_screen.dart';
 import 'package:soldout/modules/buyer/screens/notification/notification_screen.dart';
 import 'package:soldout/modules/buyer/screens/settings/setting_screen.dart';
 import 'package:soldout/shared/components/components.dart';
-import 'package:soldout/shared/network/local/cache_helper.dart';
 import 'package:soldout/shared/network/remote/dio.dart';
 import 'package:soldout/shared/network/remote/end_point.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -86,7 +85,6 @@ class BuyerCubit extends Cubit<BuyerStates> {
 
   void changeIndex(int index, {BuildContext? context}) {
     currentIndex = index;
-    if (currentIndex == 0) getHomeData(context);
     emit(ChangeIndexState());
   }
 
@@ -96,7 +94,7 @@ class BuyerCubit extends Cubit<BuyerStates> {
     }
   }
 
-  void getHomeData(context,) async {
+  void getHomeData(context) async {
     if (!isConnect!) checkNet(context);
     emit(GetHomeDataLoadingState());
     await DioHelper.getData(
@@ -167,39 +165,44 @@ class BuyerCubit extends Cubit<BuyerStates> {
     });
   }
 
+  void isPagination(ListProductModel? model,value,bool isPage)
+  {
+    if (value.statusCode == 200 && value.data['status']) {
+      if (isPage) {
+        model!.data!.lastPage = value.data['data']['last_page'];
+        model.data!.currentPage = value.data['data']['current_page'];
+        for (Map<String, dynamic> product in value.data['data']['products']) {
+          model.data!.products!.add(ProductModel.fromJson(product));
+          emit(SearchSuccessState());
+        }
+        takeFav(model.data!.products!);
+        emit(SearchSuccessState());
+      } else {
+        searchModel = ListProductModel.fromJson(value.data);
+        takeFav(searchModel!.data!.products!);
+        emit(SearchSuccessState());
+      }
+    } else if (value.data != null && !value.data['status']) {
+      showToast(msg: value.data['errors'].toString(), toastState: true);
+      emit(SearchWrongState());
+    }
+  }
+
   void getListProductsForSearch({
     String text = '',
     int sort = 1,
     int page = 1,
     bool isPage = false,
   }) async {
-    String url =
-        '/users/home/getSearchProducts?sort_type=$sort&search_text=$text&page=$page';
+    String url = '$searchE sort_type=$sort&search_text=$text&page=$page';
     emit(SearchLoadingState());
     await DioHelper.getData(
       url: url,
       token: 'Bearer $token',
       lang: myLocale,
     ).then((value) {
-      if (value.statusCode == 200 && value.data['status']) {
-        if (isPage) {
-          searchModel!.data!.lastPage = value.data['data']['last_page'];
-          searchModel!.data!.currentPage = value.data['data']['current_page'];
-          for (Map<String, dynamic> product in value.data['data']['products']) {
-            searchModel!.data!.products!.add(ProductModel.fromJson(product));
-            emit(SearchSuccessState());
-          }
-          takeFav(searchModel!.data!.products!);
-          emit(SearchSuccessState());
-        } else {
-          searchModel = ListProductModel.fromJson(value.data);
-          takeFav(searchModel!.data!.products!);
-          emit(SearchSuccessState());
-        }
-      } else if (value.data != null && !value.data['status']) {
-        showToast(msg: value.data['errors'].toString(), toastState: true);
-        emit(SearchWrongState());
-      }
+      isPagination(searchModel,value,isPage);
+      emit(SearchSuccessState());
     }).catchError((e) {
       showToast(msg: tr('wrong'), toastState: false);
       emit(SearchErrorState());
@@ -215,29 +218,12 @@ class BuyerCubit extends Cubit<BuyerStates> {
   }) async {
     emit(SearchLoadingState());
     await DioHelper.getData(
-      url: '/users/home/getSearchProducts?sort_type=$sort&search_text=$text&page=$page&category_id=$id',
+      url: '$searchE sort_type=$sort&search_text=$text&page=$page&category_id=$id',
       token: 'Bearer $token',
       lang: myLocale,
     ).then((value) {
-      if (value.statusCode == 200 && value.data['status']) {
-        if (isPage) {
-          categoryModel!.data!.lastPage = value.data['data']['last_page'];
-          categoryModel!.data!.currentPage = value.data['data']['current_page'];
-          for (Map<String, dynamic> product in value.data['data']['products']) {
-            categoryModel!.data!.products!.add(ProductModel.fromJson(product));
-            emit(SearchSuccessState());
-          }
-          takeFav(categoryModel!.data!.products!);
-          emit(SearchSuccessState());
-        } else {
-          categoryModel = ListProductModel.fromJson(value.data);
-          takeFav(categoryModel!.data!.products!);
-          emit(SearchSuccessState());
-        }
-      } else if (value.data != null && !value.data['status']) {
-        showToast(msg: value.data['errors'].toString(), toastState: true);
-        emit(SearchWrongState());
-      }
+      isPagination(categoryModel,value,isPage);
+      emit(SearchSuccessState());
     }).catchError((e) {
       showToast(msg: tr('wrong'), toastState: false);
       emit(SearchErrorState());
@@ -253,29 +239,12 @@ class BuyerCubit extends Cubit<BuyerStates> {
   }) async {
     emit(SearchLoadingState());
     await DioHelper.getData(
-      url: '/users/home/getSearchProducts?sort_type=$sort&search_text=$text&page=$page&store_id=$id',
+      url: '$searchE sort_type=$sort&search_text=$text&page=$page&store_id=$id',
       token: 'Bearer $token',
       lang: myLocale,
     ).then((value) {
-      if (value.statusCode == 200 && value.data['status']) {
-        if (isPage) {
-          storeModel!.data!.lastPage = value.data['data']['last_page'];
-          storeModel!.data!.currentPage = value.data['data']['current_page'];
-          for (Map<String, dynamic> product in value.data['data']['products']) {
-            storeModel!.data!.products!.add(ProductModel.fromJson(product));
-            emit(SearchSuccessState());
-          }
-          takeFav(storeModel!.data!.products!);
-          emit(SearchSuccessState());
-        } else {
-          storeModel = ListProductModel.fromJson(value.data);
-          takeFav(storeModel!.data!.products!);
-          emit(SearchSuccessState());
-        }
-      } else {
-        showToast(msg: tr('wrong'), toastState: true);
-        emit(SearchWrongState());
-      }
+      isPagination(storeModel,value,isPage);
+      emit(SearchSuccessState());
     }).catchError((e) {
       showToast(msg: tr('wrong'), toastState: false);
       emit(SearchErrorState());

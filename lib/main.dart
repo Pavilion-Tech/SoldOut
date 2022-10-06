@@ -32,6 +32,14 @@ void main() async{
     //options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  await EasyLocalization.ensureInitialized();
+
+  await CacheHelper.init();
+
+  DioHelper.init1();
+
+  NotificationHelper();
+
   if(defaultTargetPlatform == TargetPlatform.android)
   {
     deviceType = 0;
@@ -42,16 +50,8 @@ void main() async{
     deviceType = 1;
   }
 
-  DioHelper.init1();
-
   fcmToken = await  FirebaseMessaging.instance.getToken();
   print(fcmToken);
-
-  NotificationHelper();
-
-  await EasyLocalization.ensureInitialized();
-
-  await CacheHelper.init();
 
   onBoarding = CacheHelper.getData(key: 'onBoarding');
 
@@ -94,11 +94,10 @@ class SoldOut extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context)=> BuyerCubit()..checkInterNet()
-          ..dynamicLink()..getHomeData(context),
+          ..dynamicLink(),
         ),
         BlocProvider(create: (context)=> VendorCubit()
-          ..checkInterNet()..dynamicLink(context)
-          ..getStatistic(context: context),
+          ..checkInterNet()..dynamicLink(context),
         ),
         BlocProvider(create: (context)=> AuctionCubit()..checkInterNet()
           ..initPusher()

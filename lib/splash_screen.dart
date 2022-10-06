@@ -8,7 +8,6 @@ import 'package:soldout/shared/components/components.dart';
 import 'package:soldout/shared/components/constants.dart';
 import 'package:soldout/shared/images/images.dart';
 import 'package:soldout/shared/styles/colors.dart';
-import 'layout/buyer_layout/cubit/buyer_cubit.dart';
 import 'layout/vendor_layout/cubit/vendor_cubit.dart';
 import 'layout/vendor_layout/vendor_layout_screen.dart';
 import 'modules/intro/onBoarding/onBoarding_screen.dart';
@@ -35,12 +34,9 @@ class _SplashScreenState extends State<SplashScreen> {
       // print(status);
       if (onBoarding != null) {
         if (token != null) {
-          // BuyerCubit.get(context).currentIndex=0;
-          // BuyerCubit.get(context).getHomeData(context);
           navigateAndFinish(context, BuyerLayout());
         } else if (vToken != null) {
           VendorCubit.get(context).currentIndex = 0;
-          VendorCubit.get(context).getStatistic(context:context);
           navigateAndFinish(context, VendorLayout());
         } else {
           navigateAndFinish(context,const SelectType());

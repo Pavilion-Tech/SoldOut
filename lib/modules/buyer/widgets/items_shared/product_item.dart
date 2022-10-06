@@ -53,7 +53,9 @@ class ProductItem extends StatelessWidget {
                         child: Image.network(
                           product!.images![0].image!,
                           fit: BoxFit.cover,
-                          errorBuilder: (c,o,s)=>const Icon(Icons.info),
+                          errorBuilder: (c,Object o,s){
+                            return const Icon(Icons.info);
+                          },
                           loadingBuilder: (context, child, loadingProgress) {
                             if (loadingProgress == null) {
                               return child;
