@@ -83,7 +83,6 @@ class CategoriesScreen extends StatelessWidget {
                                       text: value,
                                       id: id,
                                       sort: suffix!.sort!.sortValue
-
                                   );
                                 }
                                 if (value.length < 2) {
@@ -109,6 +108,11 @@ class CategoriesScreen extends StatelessWidget {
                       )
                     )
                 ),
+                Container(
+                  width: size!.width,
+                  height: size!.height,
+                  child: cubit.flyingCart == null ? Container() : cubit.flyingCart,
+                )
               ],
             ),
           );

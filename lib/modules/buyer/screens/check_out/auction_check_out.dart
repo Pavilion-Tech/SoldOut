@@ -8,6 +8,8 @@ import 'package:soldout/modules/buyer/widgets/check_out/delivery_address.dart';
 import 'package:soldout/modules/buyer/widgets/check_out/discount.dart';
 import 'package:soldout/modules/buyer/widgets/check_out/invoice.dart';
 import 'package:soldout/shared/components/components.dart';
+import '../../../../layout/buyer_layout/buy_layout_screen.dart';
+import '../../../../layout/buyer_layout/cubit/buyer_cubit.dart';
 import '../../../widgets/loadings/purchases_loading/purchases_loading.dart';
 import '../../widgets/auction/auction_checkout_item.dart';
 import '../../widgets/check_out/radio.dart';
@@ -35,7 +37,10 @@ class AuctionCheckOutScreen extends StatelessWidget {
                 isLastIcon: true,
                 lastIcon: Icons.shopping_cart,
                 isArrowBack: true,
-                lastButtonTap: () {}),
+                lastButtonTap: () {
+                  BuyerCubit.get(context).changeIndex(2);
+                  navigateAndFinish(context, BuyerLayout());
+                }),
             MyContainer(
                 end: 0,
                 start: 0,

@@ -81,7 +81,6 @@ class SignUpScreen extends StatelessWidget {
                           {
                             AuthCubit.get(context).sign(
                                 name: nameController.text,
-                                phone: cubit.phoneController.text.trim()
                             );
                           }
                         },

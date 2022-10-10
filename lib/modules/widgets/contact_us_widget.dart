@@ -119,8 +119,7 @@ class ContactUsWidget extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsetsDirectional.only(top: 15, bottom: 50),
+                      padding:const EdgeInsetsDirectional.only(top:15,bottom:50),
                       child:state is! ContactUsLoadingState ?  defaultButton(
                           onTap: () {
                             if(formKey.currentState!.validate()){

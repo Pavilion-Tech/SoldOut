@@ -3,12 +3,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:soldout/layout/buyer_layout/cubit/buyer_cubit.dart';
 import 'package:soldout/modules/buyer/screens/product/product_screen.dart';
 import 'package:soldout/modules/vendor/auth/auth_cubit/auth_cubit.dart';
 import 'package:soldout/shared/bloc_observer.dart';
 import 'package:soldout/shared/components/constants.dart';
+import 'package:soldout/shared/firebase_helper/firebase_options.dart';
 import 'package:soldout/shared/firebase_helper/notification_helper.dart';
 import 'package:soldout/shared/network/local/cache_helper.dart';
 import 'package:soldout/shared/network/remote/dio.dart';
@@ -29,7 +31,7 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(
-    //options: DefaultFirebaseOptions.currentPlatform,
+    options: DefaultFirebaseOptions.currentPlatform,
   );
 
   await EasyLocalization.ensureInitialized();
@@ -62,11 +64,11 @@ void main() async{
   vToken = CacheHelper.getData(key: 'vToken');
   print(vToken);
 
-  isFirst = CacheHelper.getData(key: 'isFirst');
-
   showAuctionHint = CacheHelper.getData(key: 'showAuctionHint');
 
   uuid = await Uuid.getUuid();
+
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   BlocOverrides.runZoned(
         () {
@@ -96,8 +98,8 @@ class SoldOut extends StatelessWidget {
         BlocProvider(create: (context)=> BuyerCubit()..checkInterNet()
           ..dynamicLink(),
         ),
-        BlocProvider(create: (context)=> VendorCubit()
-          ..checkInterNet()..dynamicLink(context),
+        BlocProvider(create: (context)=> VendorCubit()..checkInterNet()
+          ..dynamicLink(context),
         ),
         BlocProvider(create: (context)=> AuctionCubit()..checkInterNet()
           ..initPusher()
@@ -110,12 +112,12 @@ class SoldOut extends StatelessWidget {
         BlocProvider(create: (context)=> CartCubit()..checkInterNet()
           ..getCart(),
         ),
-        BlocProvider(create: (context)=> SettingsCubit()..getSettingsData()
-          ..checkInterNet(),
+        BlocProvider(create: (context)=> SettingsCubit()..checkInterNet()
+          ..getSettingsData(),
         ),
         BlocProvider(create: (context)=> VAuthCubit()..checkInterNet()),
-        BlocProvider(create: (context)=> VSettingCubit()..getProfile()
-          ..checkInterNet()
+        BlocProvider(create: (context)=> VSettingCubit()..checkInterNet()
+          ..getProfile()
         ),
       ],
       child: MaterialApp(

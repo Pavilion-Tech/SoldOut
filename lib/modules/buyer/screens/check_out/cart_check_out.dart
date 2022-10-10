@@ -20,6 +20,8 @@ class CheckOutScreen extends StatelessWidget {
     radioValue: 0,
   );
   late DeliveryAddress deliveryAddress;
+
+
   DiscountWidget  discountWidget = DiscountWidget(true);
 
   @override

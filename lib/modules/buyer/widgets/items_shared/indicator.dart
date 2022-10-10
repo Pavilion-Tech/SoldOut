@@ -5,16 +5,17 @@ import '../../../../shared/components/constants.dart';
 import '../../../../shared/styles/colors.dart';
 
 class MIndicator extends StatelessWidget {
-  MIndicator({required this.pageController,required this.lengthPageView});
+  MIndicator({required this.pageController,required this.lengthPageView,this.zoomSize});
 
   PageController pageController;
   int lengthPageView;
+  double? zoomSize;
 
   @override
   Widget build(BuildContext context) {
     return Positioned.directional(
       textDirection: myLocale == 'ar' ? TextDirection.rtl:TextDirection.ltr,
-        top: size!.height * .33,
+        top: zoomSize??size!.height * .33,
         start: size!.width * .45,
         child: SmoothPageIndicator(
           controller: pageController, // PageController

@@ -5,14 +5,15 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:soldout/layout/buyer_layout/cubit/buyer_cubit.dart';
 import 'package:soldout/layout/buyer_layout/cubit/buyer_states.dart';
-import 'package:soldout/modules/buyer/screens/cart/cart_cubit/cart_cubit.dart';
 import 'package:soldout/modules/buyer/screens/product/product_screen.dart';
+import 'package:soldout/modules/buyer/widgets/items_shared/flying_cart.dart';
 import 'package:soldout/shared/components/components.dart';
 import 'package:soldout/shared/images/images.dart';
 import '../../../../models/buyer_model/product_model/product_model.dart';
 import '../../../../shared/components/constants.dart';
 import '../../../../shared/styles/colors.dart';
 import '../../auth/sign_in/sign_in_screen.dart';
+import '../../screens/cart/cart_cubit/cart_cubit.dart';
 
 class ProductItem extends StatelessWidget {
   ProductItem({this.isGrid = true, this.product});
@@ -53,7 +54,7 @@ class ProductItem extends StatelessWidget {
                         child: Image.network(
                           product!.images![0].image!,
                           fit: BoxFit.cover,
-                          errorBuilder: (c,Object o,s){
+                          errorBuilder: (c, Object o, s) {
                             return const Icon(Icons.info);
                           },
                           loadingBuilder: (context, child, loadingProgress) {
@@ -62,9 +63,10 @@ class ProductItem extends StatelessWidget {
                             }
                             return Center(
                               child: CircularProgressIndicator(
-                                value: loadingProgress.expectedTotalBytes != null
+                                value: loadingProgress.expectedTotalBytes !=
+                                        null
                                     ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes!
+                                        loadingProgress.expectedTotalBytes!
                                     : null,
                               ),
                             );
@@ -76,10 +78,9 @@ class ProductItem extends StatelessWidget {
                         left: isGrid ? size!.width * .35 : size!.width * .25,
                         child: IconButton(
                             onPressed: () {
-                              if(token != null)
-                              {
+                              if (token != null) {
                                 cubit.updateFav(product!.id!);
-                              }else{
+                              } else {
                                 navigateTo(context, SignInScreen());
                               }
                             },
@@ -131,10 +132,7 @@ class ProductItem extends StatelessWidget {
                                     if (product!.rate! > index) {
                                       return Image.asset(BuyerImages.fullStar);
                                     } else {
-                                      return const Icon(
-                                        Icons.star_border,
-                                        size: 16,
-                                      );
+                                      return const Icon(Icons.star_border,size:16,);
                                     }
                                   },
                                   onRatingUpdate: (rating) {},
@@ -142,7 +140,7 @@ class ProductItem extends StatelessWidget {
                                 Row(
                                   children: [
                                     Text(
-                                      '${product!.salePrice??product!.regularPrice}',
+                                      '${product!.salePrice ?? product!.regularPrice}',
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: const TextStyle(
@@ -150,16 +148,16 @@ class ProductItem extends StatelessWidget {
                                           fontSize: 10,
                                           fontWeight: FontWeight.bold),
                                     ),
-                                    if(product!.salePrice !=null)
+                                    if (product!.salePrice != null)
                                       SizedBox(
                                         width: 35,
                                         child: Text(
                                           '${product!.regularPrice}',
-                                          style:const TextStyle(
+                                          style: const TextStyle(
                                               color: Colors.grey,
                                               fontSize: 7,
-                                              decoration: TextDecoration.lineThrough
-                                          ),
+                                              decoration:
+                                                  TextDecoration.lineThrough),
                                         ),
                                       ),
                                   ],
@@ -169,16 +167,29 @@ class ProductItem extends StatelessWidget {
                           ),
                           const Spacer(),
                           InkWell(
-                            onTap: () {
+                            onTapDown: (TapDownDetails details) {
+                              var x = details.globalPosition.dx;
+                              var y = details.globalPosition.dy;
                               if (product!.stock != 0) {
                                 CartCubit.get(context).addToCart(
                                   productId: product!.id!,
                                   qty: 1,
                                 );
+                                cubit.flyingCart = FlyingCart(
+                                  y,x,
+                                  product!.images![0].image!,
+                                  isGrid: isGrid,
+                                );
+                                cubit.emitState();
+                                Future.delayed(Duration(seconds: 4), () {
+                                  cubit.flyingCart = null;
+                                  cubit.emitState();
+                                });
                               } else {
                                 showToast(msg: tr('out_of_stock'));
                               }
                             },
+                            onTap: null,
                             child: SizedBox(
                               height: 45,
                               width: 45,
@@ -197,4 +208,6 @@ class ProductItem extends StatelessWidget {
       },
     );
   }
+
+
 }

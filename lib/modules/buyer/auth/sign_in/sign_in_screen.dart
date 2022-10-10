@@ -71,7 +71,7 @@ class SignInScreen extends StatelessWidget {
                         onTap: (){
                           FocusManager.instance.primaryFocus!.unfocus();
                           if(formKey.currentState!.validate()){
-                            AuthCubit.get(context).sign(phone:cubit.phoneController.text.trim());
+                            AuthCubit.get(context).sign();
                           }
                         },
                       ),

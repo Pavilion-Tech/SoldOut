@@ -37,6 +37,7 @@ class OrderHistoryWidget extends StatelessWidget {
         if(cubit.orderModel!.data!.isNotEmpty)
           ListView.separated(
             shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
             itemBuilder: (context,index)=>orderItem(
               context: context,
               model: cubit.searchOrderModel != null

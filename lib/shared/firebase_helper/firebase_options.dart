@@ -16,26 +16,12 @@ import 'package:flutter/foundation.dart'
 /// ```
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
-    if (kIsWeb) {
-      return web;
-    }
+
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
         return ios;
-      case TargetPlatform.macOS:
-        return macos;
-      case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
-      case TargetPlatform.linux:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for linux - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
       default:
         throw UnsupportedError(
           'DefaultFirebaseOptions are not supported for this platform.',
@@ -43,43 +29,25 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDh7EI7_fdl6nmJM_lU9IF6wKbqcGA7N2g',
-    appId: '1:135827624937:web:088e4c6c71d6762fb57178',
-    messagingSenderId: '135827624937',
-    projectId: 'yfoz-2023',
-    authDomain: 'yfoz-2023.firebaseapp.com',
-    storageBucket: 'yfoz-2023.appspot.com',
-    measurementId: 'G-X2MRP6H4KN',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDR90MmmBWIho7cfCKoP5_M30r49y8zH3Q',
-    appId: '1:135827624937:android:cce362680a376d04b57178',
-    messagingSenderId: '135827624937',
-    projectId: 'yfoz-2023',
-    storageBucket: 'yfoz-2023.appspot.com',
+      apiKey: 'AIzaSyCEj2YbqrAlF0NDMYkdS8e5_UcKvjruIZM',
+      appId: '1:575890868187:android:e65631a843d5c65685c9fe',
+      messagingSenderId: '575890868187',
+      projectId: 'soldout-de9d4',
+      storageBucket: 'soldout-de9d4.appspot.com',
+      androidClientId: '575890868187-5v0ih68h4rojscild8phmcf2n3juejfk.apps.googleusercontent.com',
+      deepLinkURLScheme: 'https://soldoutapp.page.link/'
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCf8zPcF3JxXgspORJLP28X07H3YveOJKU',
-    appId: '1:135827624937:ios:7cf59594eadaed54b57178',
-    messagingSenderId: '135827624937',
-    projectId: 'yfoz-2023',
-    storageBucket: 'yfoz-2023.appspot.com',
-    androidClientId: '135827624937-lkb5pa1ncth5eaith4jv4beju5v8vbdc.apps.googleusercontent.com',
-    iosClientId: '135827624937-vtqtu1bqmtvb4hslr6ojcnork0hajjji.apps.googleusercontent.com',
-    iosBundleId: 'net.yfoz.customer',
+      apiKey: 'AIzaSyALNXHPs-UvXhKJNVnuRrIj_Azr6h3wj0M',
+      appId: '1:575890868187:ios:acafcc5d2c25498585c9fe',
+      messagingSenderId: '575890868187',
+      projectId: 'soldout-de9d4',
+      storageBucket: 'soldout-de9d4.appspot.com',
+      iosClientId: '575890868187-18rq2ns41sh350qpstodahlvce1kobcn.apps.googleusercontent.com',
+      iosBundleId: 'com.example.soldout',
+      deepLinkURLScheme: 'https://soldoutapp.page.link/'
   );
 
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCf8zPcF3JxXgspORJLP28X07H3YveOJKU',
-    appId: '1:135827624937:ios:7cf59594eadaed54b57178',
-    messagingSenderId: '135827624937',
-    projectId: 'yfoz-2023',
-    storageBucket: 'yfoz-2023.appspot.com',
-    androidClientId: '135827624937-lkb5pa1ncth5eaith4jv4beju5v8vbdc.apps.googleusercontent.com',
-    iosClientId: '135827624937-vtqtu1bqmtvb4hslr6ojcnork0hajjji.apps.googleusercontent.com',
-    iosBundleId: 'net.yfoz.customer',
-  );
 }

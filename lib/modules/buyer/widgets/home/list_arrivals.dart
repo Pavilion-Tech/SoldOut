@@ -17,40 +17,49 @@ class ListArrivals extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            myAppBar(
-                context: context,
-                title: tr('new_arrivals'),
-                isArrowBack: true,
-                isLastIcon: true,
-                lastIcon: Icons.shopping_cart,
-                lastButtonTap: () {
-                  BuyerCubit.get(context).changeIndex(2);
-                  navigateAndFinish(context, BuyerLayout());
-                }
-            ),
-            BlocConsumer<BuyerCubit, BuyerStates>(
-              listener: (context, state) {},
-              builder: (context, state) {
-                var cubit = BuyerCubit.get(context);
-                return MyContainer(
+        child: BlocConsumer<BuyerCubit, BuyerStates>(
+          listener: (context, state) {},
+          builder: (context, state) {
+            var cubit = BuyerCubit.get(context);
+
+            return Stack(
+              children: [
+                myAppBar(
+                    context: context,
+                    title: tr('new_arrivals'),
+                    isArrowBack: true,
+                    isLastIcon: true,
+                    lastIcon: Icons.shopping_cart,
+                    lastButtonTap: () {
+                      BuyerCubit.get(context).changeIndex(2);
+                      navigateAndFinish(context, BuyerLayout());
+                    }
+                ),
+                MyContainer(
                   ConditionalBuilder(
-                    condition: cubit.homeModel!.data!.newProducts!.isNotEmpty,
-                    fallback: (context)=>Column(
-                      children: [
-                        SizedBox(height: size!.height*.4),
-                        Text(tr('no_arrivals'))
-                      ],
-                    ),
-                    builder: (context)=>GridViewWidget(
-                      products:cubit.homeModel!.data!.newProducts!,),
+                    condition: cubit.homeModel!.data!.newProducts!
+                        .isNotEmpty,
+                    fallback: (context) =>
+                        Column(
+                          children: [
+                            SizedBox(height: size!.height * .4),
+                            Text(tr('no_arrivals'))
+                          ],
+                        ),
+                    builder: (context) =>
+                        GridViewWidget(
+                          products: cubit.homeModel!.data!.newProducts!,),
                   ),
                   noSize: true,
-                );
-              },
-            ),
-          ],
+                ),
+                Container(
+                  width: size!.width,
+                  height: size!.height,
+                  child: cubit.flyingCart == null ? Container() : cubit.flyingCart,
+                )
+              ],
+            );
+          },
         ),
       ),
     );

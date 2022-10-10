@@ -112,9 +112,7 @@ class _SuffixWidgetState extends State<SuffixWidget> {
                   textColor: defaultColor,
                   buttonColor: defaultColorTwo,
                 ),
-                SizedBox(
-                  width: size!.height * .008,
-                ),
+                SizedBox(width: size!.height * .008,),
                 defaultButton(
                     onTap: () {
                       AuctionCubit.get(context).sort(widget.value);

@@ -35,7 +35,6 @@ class AuctionItem extends StatelessWidget {
           {
             AuctionCubit.get(context).subscribePusher(model.id!);
           }
-
           AuctionCubit.get(context).auctionModel = model;
           AuctionCubit.get(context).duration = countDown.duration;
           navigateTo(context, AuctionScreen());

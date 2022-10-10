@@ -40,7 +40,6 @@ class CartCubit extends Cubit<CartStates> {
     int? productId,
     int? qty,
   }) async {
-    emit(AddToCartLoadingState());
     await DioHelper.postData(
         url: carts,
         lang: myLocale,
@@ -51,7 +50,7 @@ class CartCubit extends Cubit<CartStates> {
       'uuid': token != null ?null:uuid,
     }).then((value) {
       if (value.statusCode == 200 && value.data['status']) {
-        showToast(msg: value.data['msg']);
+        showToast(msg: tr('Item_added'));
         getCart();
       } else {
         showToast(msg: tr('wrong'), toastState: false);
@@ -74,7 +73,7 @@ class CartCubit extends Cubit<CartStates> {
           'product_id': productId,
         }).then((value) {
       if (value.statusCode == 200 && value.data['status']) {
-        showToast(msg: value.data['msg']);
+        showToast(msg: tr('Item_removed'));
         getCart();
       } else {
         showToast(msg: tr('wrong'), toastState: false);

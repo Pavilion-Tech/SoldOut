@@ -33,10 +33,15 @@ class AuthCubit extends Cubit<AuthStates> {
     });
   }
 
-  Future logIn(context, bool isNoty) async {
-    emit(LoginLoadingState());
+  bool? checkUUID(context)
+  {
     bool model = CartCubit.get(context).getCartModel != null;
-    bool?haveCart=model?CartCubit.get(context).getCartModel!.data!.isNotEmpty:null;
+    return  model?CartCubit.get(context).getCartModel!.data!.isNotEmpty:null;
+  }
+
+  Future logIn(context, bool isNoty) async {
+    bool? haveCart = checkUUID(context);
+    emit(LoginLoadingState());
     return await DioHelper.postData(url: login, data: {
       'phone': phoneController.text.trim(),
       'code': code,
@@ -64,12 +69,12 @@ class AuthCubit extends Cubit<AuthStates> {
     });
   }
 
-  void sign({String? name, required String phone}) async {
+  void sign({String? name}) async {
     emit(SignLoadingState());
     await DioHelper.postData(
       url: log,
       data: {
-        'phone': phone,
+        'phone': phoneController.text.trim(),
         'name': name,
       },
     ).then((value) {
@@ -119,7 +124,7 @@ class AuthCubit extends Cubit<AuthStates> {
       'device_type': deviceType,
       'firebase_token': fcmToken,
     }).then((value) {
-      if (value.data['status']) {
+      if (value.statusCode == 200&&value.data['status']) {
         CacheHelper.removeData('token');
         token = value.data['data']['access_token'];
         CacheHelper.saveData(key: 'token', value: token);
@@ -141,7 +146,7 @@ class AuthCubit extends Cubit<AuthStates> {
       url: getUserProfile,
       token: 'Bearer $token',
     ).then((value) {
-      if (value.statusCode == 200) {
+      if (value.statusCode == 200&&value.data['status']) {
         getProfileModel = GetProfileModel.fromJson(value.data);
         emit(GetProfileSuccessState());
       } else {

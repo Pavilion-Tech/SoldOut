@@ -29,7 +29,7 @@ class DynamicLinksClient {
       ),
       iosParameters:const IOSParameters(
         bundleId: 'com.example.soldout',
-        minimumVersion: '2',
+        minimumVersion: '1',
         // appStoreId: '123456789',
       ),
     );

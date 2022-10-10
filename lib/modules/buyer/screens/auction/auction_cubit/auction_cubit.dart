@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
-import 'package:soldout/layout/buyer_layout/cubit/buyer_cubit.dart';
 import 'package:soldout/modules/buyer/screens/settings/setting_screens/my_account/points.dart';
-import 'package:soldout/modules/buyer/screens/settings/settings_cubit/settings_cubit.dart';
 import 'package:soldout/shared/components/components.dart';
 import 'package:soldout/shared/network/remote/dio.dart';
 import '../../../../../models/buyer_model/checkout_auction_model.dart';
@@ -22,8 +20,6 @@ class AuctionCubit extends Cubit<AuctionStates>
 {
   AuctionCubit():super(InitState());
 
-
-
   static AuctionCubit get (context)=> BlocProvider.of(context);
 
   List<AuctionModel>? categoryAuctions;
@@ -37,7 +33,6 @@ class AuctionCubit extends Cubit<AuctionStates>
   CheckOutAuctionModel? checkOutAuctionModel;
 
   Map<String , dynamic> map ={};
-
 
   Duration duration = const Duration();
 
@@ -69,14 +64,12 @@ class AuctionCubit extends Cubit<AuctionStates>
       }
     }
     emit(ChangeCategorySuccess());
-
   }
 
   void justEmit()
   {
     emit(JustEmitState());
   }
-
 
   void myAuctions()async
   {
@@ -257,7 +250,7 @@ class AuctionCubit extends Cubit<AuctionStates>
         token: 'Bearer $token',
         lang: myLocale,
     ).then((value) {
-      if(value.statusCode == 200 &&value.data['status'])
+      if(value.statusCode == 200&&value.data['status'])
       {
         checkOutAuctionModel = CheckOutAuctionModel.fromJson(value.data);
         emit(CheckOutAuctionSuccess());
@@ -278,7 +271,6 @@ class AuctionCubit extends Cubit<AuctionStates>
     int? cityId,
     int? userAddressId,
     BuildContext? context,
-
   })async
   {
     checkOutData(

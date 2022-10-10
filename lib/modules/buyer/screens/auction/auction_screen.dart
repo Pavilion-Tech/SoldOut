@@ -49,7 +49,11 @@ class AuctionScreen extends StatelessWidget {
                     MPageView(
                         pageController: pageController,
                         images: cubit.auctionModel!.images!),
-                    RowInTop(isProduct: false, id: cubit.auctionModel!.id),
+                    RowInTop(
+                      isProduct: false,
+                      id: cubit.auctionModel!.id,
+                      status: cubit.auctionModel!.status,
+                    ),
                     MIndicator(
                         pageController: pageController,
                         lengthPageView: cubit.auctionModel!.images!.length),

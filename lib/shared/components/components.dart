@@ -155,7 +155,6 @@ Widget myAppBar({
                       ?const Icon(Icons.arrow_back_ios,size: 14,color: defaultColor,)
                       :Image.asset(BuyerImages.arrow,height: 12,width: 12,),
                 ),
-
               ),
             ),
           Text(

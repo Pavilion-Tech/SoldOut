@@ -50,6 +50,7 @@ class VendorOrderScreen extends StatelessWidget {
                         ),
                         if(cubit.vendorOrderModel!.data!.isNotEmpty)
                         ListView.separated(
+                          physics: NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           itemBuilder: (context, index) => OrderItem(
                             model:cubit.searchModel!= null

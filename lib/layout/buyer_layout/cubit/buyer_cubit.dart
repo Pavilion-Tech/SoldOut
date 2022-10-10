@@ -16,6 +16,7 @@ import '../../../models/buyer_model/list_products_model.dart';
 import '../../../models/buyer_model/product_model/product_model.dart';
 import '../../../models/notification_model.dart';
 import '../../../modules/buyer/screens/home/home_screen.dart';
+import '../../../modules/buyer/widgets/items_shared/flying_cart.dart';
 import '../../../shared/components/constants.dart';
 import '../../../shared/firebase_helper/dynamic_links.dart';
 import 'buyer_states.dart';
@@ -24,6 +25,8 @@ class BuyerCubit extends Cubit<BuyerStates> {
   BuyerCubit() : super(InitState());
 
   static BuyerCubit get(context) => BlocProvider.of(context);
+
+  FlyingCart? flyingCart = null;
 
   int currentIndex = 0;
 
@@ -165,28 +168,6 @@ class BuyerCubit extends Cubit<BuyerStates> {
     });
   }
 
-  void isPagination(ListProductModel? model,value,bool isPage)
-  {
-    if (value.statusCode == 200 && value.data['status']) {
-      if (isPage) {
-        model!.data!.lastPage = value.data['data']['last_page'];
-        model.data!.currentPage = value.data['data']['current_page'];
-        for (Map<String, dynamic> product in value.data['data']['products']) {
-          model.data!.products!.add(ProductModel.fromJson(product));
-          emit(SearchSuccessState());
-        }
-        takeFav(model.data!.products!);
-        emit(SearchSuccessState());
-      } else {
-        searchModel = ListProductModel.fromJson(value.data);
-        takeFav(searchModel!.data!.products!);
-        emit(SearchSuccessState());
-      }
-    } else if (value.data != null && !value.data['status']) {
-      showToast(msg: value.data['errors'].toString(), toastState: true);
-      emit(SearchWrongState());
-    }
-  }
 
   void getListProductsForSearch({
     String text = '',
@@ -201,8 +182,25 @@ class BuyerCubit extends Cubit<BuyerStates> {
       token: 'Bearer $token',
       lang: myLocale,
     ).then((value) {
-      isPagination(searchModel,value,isPage);
-      emit(SearchSuccessState());
+      if (value.statusCode == 200 && value.data['status']) {
+        if (isPage) {
+          searchModel!.data!.lastPage = value.data['data']['last_page'];
+          searchModel!.data!.currentPage = value.data['data']['current_page'];
+          for (Map<String, dynamic> product in value.data['data']['products']) {
+            searchModel!.data!.products!.add(ProductModel.fromJson(product));
+            emit(SearchSuccessState());
+          }
+          takeFav(searchModel!.data!.products!);
+          emit(SearchSuccessState());
+        } else {
+          searchModel = ListProductModel.fromJson(value.data);
+          takeFav(searchModel!.data!.products!);
+          emit(SearchSuccessState());
+        }
+      } else if (value.data != null && !value.data['status']) {
+        showToast(msg: value.data['errors'].toString(), toastState: true);
+        emit(SearchWrongState());
+      }
     }).catchError((e) {
       showToast(msg: tr('wrong'), toastState: false);
       emit(SearchErrorState());
@@ -222,8 +220,25 @@ class BuyerCubit extends Cubit<BuyerStates> {
       token: 'Bearer $token',
       lang: myLocale,
     ).then((value) {
-      isPagination(categoryModel,value,isPage);
-      emit(SearchSuccessState());
+      if (value.statusCode == 200 && value.data['status']) {
+        if (isPage) {
+          categoryModel!.data!.lastPage = value.data['data']['last_page'];
+          categoryModel!.data!.currentPage = value.data['data']['current_page'];
+          for (Map<String, dynamic> product in value.data['data']['products']) {
+            categoryModel!.data!.products!.add(ProductModel.fromJson(product));
+            emit(SearchSuccessState());
+          }
+          takeFav(categoryModel!.data!.products!);
+          emit(SearchSuccessState());
+        } else {
+          categoryModel = ListProductModel.fromJson(value.data);
+          takeFav(categoryModel!.data!.products!);
+          emit(SearchSuccessState());
+        }
+      } else if (value.data != null && !value.data['status']) {
+        showToast(msg: value.data['errors'].toString(), toastState: true);
+        emit(SearchWrongState());
+      }
     }).catchError((e) {
       showToast(msg: tr('wrong'), toastState: false);
       emit(SearchErrorState());
@@ -243,8 +258,25 @@ class BuyerCubit extends Cubit<BuyerStates> {
       token: 'Bearer $token',
       lang: myLocale,
     ).then((value) {
-      isPagination(storeModel,value,isPage);
-      emit(SearchSuccessState());
+      if (value.statusCode == 200 && value.data['status']) {
+        if (isPage) {
+          storeModel!.data!.lastPage = value.data['data']['last_page'];
+          storeModel!.data!.currentPage = value.data['data']['current_page'];
+          for (Map<String, dynamic> product in value.data['data']['products']) {
+            storeModel!.data!.products!.add(ProductModel.fromJson(product));
+            emit(SearchSuccessState());
+          }
+          takeFav(storeModel!.data!.products!);
+          emit(SearchSuccessState());
+        } else {
+          storeModel = ListProductModel.fromJson(value.data);
+          takeFav(storeModel!.data!.products!);
+          emit(SearchSuccessState());
+        }
+      } else if (value.data != null && !value.data['status']) {
+        showToast(msg: value.data['errors'].toString(), toastState: true);
+        emit(SearchWrongState());
+      }
     }).catchError((e) {
       showToast(msg: tr('wrong'), toastState: false);
       emit(SearchErrorState());

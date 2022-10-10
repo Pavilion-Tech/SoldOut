@@ -78,8 +78,12 @@ class SearchScreen extends StatelessWidget {
                                   }
                                 }),
                             if (cubit.searchModel!.data!.products!.isNotEmpty)
-                              GridViewWidget(
-                                products: cubit.searchModel!.data!.products!,)
+                              Stack(
+                                children: [
+                                  GridViewWidget(
+                                    products: cubit.searchModel!.data!.products!,),
+                                ],
+                              )
                             else
                               Column(
                                 children: [
@@ -95,7 +99,12 @@ class SearchScreen extends StatelessWidget {
                         ),
                         noSize: true,
                       );
-                    })
+                    }),
+                Container(
+                  width: size!.width,
+                  height: size!.height,
+                  child: cubit.flyingCart == null ? Container() : cubit.flyingCart,
+                )
               ],
             ),
           );

@@ -7,8 +7,6 @@ bool? onBoarding;
 
 bool? isConnect;
 
-bool? isFirst;
-
 bool? showAuctionHint;
 
 String? fcmToken;

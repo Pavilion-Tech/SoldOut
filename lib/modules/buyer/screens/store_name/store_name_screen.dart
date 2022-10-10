@@ -111,6 +111,11 @@ class StoreNameScreen extends StatelessWidget {
                     );
                   },
                   fallback: (context) => GridViewLoading(),
+                ),
+                Container(
+                  width: size!.width,
+                  height: size!.height,
+                  child: cubit.flyingCart == null ? Container() : cubit.flyingCart,
                 )
               ],
             ),

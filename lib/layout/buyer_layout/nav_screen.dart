@@ -12,7 +12,7 @@ class NavBar extends StatelessWidget {
     var cubit = BuyerCubit.get(context);
     return Container(
       height: 90,
-      color: defaultColorTwo,
+      color:cubit.currentIndex == 0?Colors.transparent:Colors.white,
       // padding: EdgeInsets.all(10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,

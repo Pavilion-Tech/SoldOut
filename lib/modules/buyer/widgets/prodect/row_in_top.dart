@@ -11,10 +11,11 @@ import '../../../../shared/components/constants.dart';
 import '../../../../shared/styles/colors.dart';
 
 class RowInTop extends StatelessWidget {
-  RowInTop({this.isProduct = true, this.id});
+  RowInTop({this.isProduct = true, this.id,this.status});
 
   bool isProduct;
   int? id;
+  String? status;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,12 @@ class RowInTop extends StatelessWidget {
         children: [
           InkWell(
             onTap: (){
-              if(!isProduct)AuctionCubit.get(context).unsubscribePusher(id!);
+              if(!isProduct){
+                if(status == 'processing')
+                {
+                  AuctionCubit.get(context).unsubscribePusher(id!);
+                }
+              }
               BuyerCubit.get(context).getHomeData(context);
               Navigator.pop(context);
             },

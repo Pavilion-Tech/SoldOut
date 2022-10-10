@@ -68,6 +68,23 @@ class CartItem extends StatelessWidget {
                       width: size!.width * .3,
                       child: Image.network(
                         model.firstImage!,
+                        errorBuilder: (c, Object o, s) {
+                          return const Icon(Icons.info);
+                        },
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          }
+                          return Center(
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes !=
+                                  null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                  loadingProgress.expectedTotalBytes!
+                                  : null,
+                            ),
+                          );
+                        },
                       ),
                     ),
                     const SizedBox(

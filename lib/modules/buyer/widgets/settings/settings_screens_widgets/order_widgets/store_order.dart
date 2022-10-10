@@ -102,7 +102,7 @@ class StoreOrderItem extends StatelessWidget {
                       style:const TextStyle(
                           color: defaultColor,
                           height:1.5,
-                          fontSize: 12,
+                          fontSize: 9,
                           fontWeight: FontWeight.bold
                       ),
                     ),

@@ -23,6 +23,7 @@ class BuyerLayout extends StatelessWidget {
       builder: (context, state) {
         var cubit = BuyerCubit.get(context);
         return Scaffold(
+          extendBody: true,
           body: cubit.screens[cubit.currentIndex],
           bottomNavigationBar: NavBar(
             items: [
