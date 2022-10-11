@@ -221,8 +221,6 @@
   "coupon_empty": "Coupon Must Not Be Empty",
   "auction_status": "Auction Status",
   "finished": "Finished",
-  "processing": "Processing",
-  "Item_added": "Item Added To Cart",
-  "Item_removed": "Item Removed To Cart"
+  "processing": "Processing"
 
 }

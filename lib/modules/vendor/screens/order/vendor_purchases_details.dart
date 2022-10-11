@@ -24,7 +24,7 @@ class VPurchasesDetails extends StatelessWidget {
                 isArrowBack: true,
             ),
             MyContainer(
-                VPurchasesDetailsWidget(model:model ),
+                VPurchasesDetailsWidget(model:model),
                 noSize: true),
           ],
         ),

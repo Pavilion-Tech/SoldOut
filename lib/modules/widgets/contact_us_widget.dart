@@ -175,6 +175,7 @@ class ContactUsWidget extends StatelessWidget {
                             scheme: 'tel',
                             path: cubit.settingsModel!.data!.phone!,
                           );
+                          print(launchUri);
                           if (await canLaunch(launchUri.toString())) {
                             await launch(launchUri.toString());
                           } else {

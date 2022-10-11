@@ -4,6 +4,7 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 class DynamicLinksClient {
   static void initDynamicLinks(Function(String?) function) async {
     FirebaseDynamicLinks.instance.onLink.listen((dynamicLink) {
+      print('hi');
       final Uri? deepLink = dynamicLink.link;
       if (deepLink != null) {
         function(deepLink.queryParameters['product']);
@@ -30,6 +31,7 @@ class DynamicLinksClient {
       iosParameters:const IOSParameters(
         bundleId: 'com.example.soldout',
         minimumVersion: '1',
+        appStoreId: '6443680518'
         // appStoreId: '123456789',
       ),
     );

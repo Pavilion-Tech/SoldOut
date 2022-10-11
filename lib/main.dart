@@ -42,15 +42,8 @@ void main() async{
 
   NotificationHelper();
 
-  if(defaultTargetPlatform == TargetPlatform.android)
-  {
-    deviceType = 0;
-  }
-
-  if(defaultTargetPlatform == TargetPlatform.iOS)
-  {
-    deviceType = 1;
-  }
+  if(defaultTargetPlatform == TargetPlatform.android) deviceType = 0;
+  if(defaultTargetPlatform == TargetPlatform.iOS) deviceType = 1;
 
   fcmToken = await  FirebaseMessaging.instance.getToken();
   print(fcmToken);

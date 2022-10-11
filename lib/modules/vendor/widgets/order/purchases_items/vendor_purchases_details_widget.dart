@@ -34,7 +34,6 @@ class VPurchasesDetailsWidget extends StatelessWidget {
             padding: 0
         ),
         const SizedBox(height: 20,),
-        defaultButton(onTap: () {}, text: tr('delivery'))
       ],
     );
   }

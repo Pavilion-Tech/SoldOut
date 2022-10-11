@@ -221,9 +221,6 @@
   "coupon_empty": "يجب ألا تكون القسيمة فارغة",
   "auction_status": "حالة المزاد",
   "finished": "انتهي",
-  "processing": "جاري",
-  "Item_added": "تمت إضافة العنصر إلى عربة التسوق",
-  "Item_removed": "تمت إزاله العنصر إلى عربة التسوق"
-
+  "processing": "جاري"
 
 }
