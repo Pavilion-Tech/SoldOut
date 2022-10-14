@@ -34,6 +34,7 @@ class VendorHomeScreen extends StatelessWidget {
                 },
               ),
               MyContainer(
+                vendorHome: true,
                 ConditionalBuilder(
                   condition: cubit.getStatistics != null,
                   fallback: (context) => const VHomeLoading(),

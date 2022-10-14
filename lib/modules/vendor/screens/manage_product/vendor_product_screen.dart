@@ -6,6 +6,7 @@ import 'package:soldout/shared/components/components.dart';
 import '../../../../layout/vendor_layout/cubit/vendor_cubit.dart';
 import '../../../../layout/vendor_layout/cubit/vendor_states.dart';
 import '../../../../models/buyer_model/product_model/product_model.dart';
+import '../../../../shared/components/constants.dart';
 import '../../widgets/product_screen_widgets/vendor_indicator.dart';
 import '../../widgets/product_screen_widgets/vendor_page_veiw.dart';
 import '../../widgets/product_screen_widgets/vendor_product_details.dart';
@@ -39,7 +40,7 @@ class VProductScreen extends StatelessWidget {
               Align(
                 alignment: AlignmentDirectional.bottomCenter,
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.all(20),
+                  padding:  EdgeInsetsDirectional.all(size!.height > 600 ?20:15),
                   child: Row(
                     children: [
                       defaultButton(

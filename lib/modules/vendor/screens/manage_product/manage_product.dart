@@ -19,6 +19,7 @@ class VendorManageProductList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var currentAspectRatio =  size!.height > 600 ?2.1:1.8;
     suffix = Suffix(apply: () {
       VendorCubit.get(context).getProducts(
           text: VendorCubit.get(context).searchController.text.trim(),
@@ -78,7 +79,7 @@ class VendorManageProductList extends StatelessWidget {
                                     shrinkWrap: true,
                                     physics:
                                         const NeverScrollableScrollPhysics(),
-                                    childAspectRatio: size!.width / (size!.height / 2.1),
+                                    childAspectRatio: size!.width / (size!.height / currentAspectRatio),
                                     mainAxisSpacing: 16,
                                     crossAxisSpacing: 5,
                                     crossAxisCount: 2,

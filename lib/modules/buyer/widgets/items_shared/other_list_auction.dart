@@ -21,6 +21,7 @@ class AuctionsList extends StatelessWidget {
     AuctionCubit.get(context).currentCategory(
         newAuctions, newAuctions[0].categoryId!
     );
+    var currentAspectRatio =  size!.height > 600 ?2.1:1.9;
     return BlocConsumer<AuctionCubit, AuctionStates>(
       listener: (context, state) {},
       builder: (context, state) {
@@ -47,7 +48,7 @@ class AuctionsList extends StatelessWidget {
                   builder: (context) => GridView.count(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    childAspectRatio: size!.width / (size!.height / 2.1),
+                    childAspectRatio: size!.width / (size!.height / currentAspectRatio),
                     mainAxisSpacing: 16,
                     crossAxisSpacing: 5,
                     crossAxisCount: 2,

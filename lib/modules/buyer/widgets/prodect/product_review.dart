@@ -76,7 +76,7 @@ class ProductReview extends StatelessWidget {
   Widget reviewProductItem(Reviews reviews) {
     String time =DateFormat('',myLocale == 'ar'?'ar':'en')
         .add_yMMMMEEEEd()
-        .format(DateTime.fromMillisecondsSinceEpoch(reviews.createdAt!));
+        .format(DateTime.fromMillisecondsSinceEpoch(Duration(seconds: reviews.createdAt!).inMilliseconds));
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

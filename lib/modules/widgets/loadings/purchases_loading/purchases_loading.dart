@@ -9,7 +9,7 @@ class PurchasesDetailsLoading extends StatelessWidget {
     return Column(
       children: [
         Container(
-          height: size!.height * .14,
+          height: size!.height * .16,
           decoration: BoxDecoration(
             borderRadius: BorderRadiusDirectional.circular(10),
             border: Border.all(
@@ -118,7 +118,7 @@ class PurchasesDetailsLoading extends StatelessWidget {
 
   Widget listItemLoading(){
     return SizedBox(
-      height:size!.height*.13,
+      height:size!.height*.14,
       child: Row(
         children: [
           Shimmer.fromColors(

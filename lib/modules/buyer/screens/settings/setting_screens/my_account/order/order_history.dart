@@ -37,7 +37,7 @@ class OrderHistory extends StatelessWidget {
               builder: (context, state) {
                 var cubit = SettingsCubit.get(context);
                 return MyContainer(
-                  noSize: cubit.orderModel!= null,
+                  noSize:true,
                   ConditionalBuilder(
                     condition:cubit.orderModel!= null,
                     fallback: (context) => const AddressAndOrderLoading(),

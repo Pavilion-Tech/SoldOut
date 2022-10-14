@@ -33,7 +33,7 @@ class VProductItem extends StatelessWidget {
             navigateTo(context, VProductScreen(productModel: productModel,));
           },
           child: Container(
-            height: size!.height * .15,
+            height: size!.height * .18,
             width: size!.width * .5,
             clipBehavior: Clip.antiAliasWithSaveLayer,
             decoration: BoxDecoration(
@@ -67,6 +67,7 @@ class VProductItem extends StatelessWidget {
                     },
                   ),
                 ),
+                if(size!.height>600)
                 SizedBox(height: size!.height * .009,),
                 Padding(
                   padding: const EdgeInsets.all(3.0),
@@ -77,13 +78,14 @@ class VProductItem extends StatelessWidget {
                         productModel.name!,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.bold),
+                        style:  TextStyle(
+                            fontSize: size!.height>600 ?14:12,
+                            fontWeight: FontWeight.bold),
                       ),
                       Row(
                         children: [
                           SizedBox(
-                            height: size!.height * .05,
+                            height: size!.height > 600 ? size!.height * .05:size!.height * .06,
                             width: size!.width * .25,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,

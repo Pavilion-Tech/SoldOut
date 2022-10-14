@@ -52,7 +52,7 @@ class CartItem extends StatelessWidget {
                 children: const[],
               ),
               child: Container(
-                height: size!.height * .1,
+                height: size!.height>600? size!.height*.1:size!.height*.15,
                 width: double.infinity,
                 padding: const EdgeInsetsDirectional.all(5),
                 decoration: BoxDecoration(

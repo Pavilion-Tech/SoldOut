@@ -30,6 +30,7 @@ class ContactUsScreen extends StatelessWidget {
             ContactUsWidget(),
             end: 0,
             start: 0,
+            noSize: true,
           ),
         ],
       ),

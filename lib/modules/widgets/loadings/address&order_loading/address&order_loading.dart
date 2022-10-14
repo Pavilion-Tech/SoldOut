@@ -9,7 +9,6 @@ class AddressAndOrderLoading extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-
       children: [
         Shimmer.fromColors(
           baseColor: Colors.grey.shade300,
@@ -62,7 +61,7 @@ class AddressAndOrderLoading extends StatelessWidget {
 
   Widget address() {
     return Container(
-      height: size!.height * .1,
+      height: size!.height > 600 ? size!.height * .1: size!.height * .15,
       decoration: BoxDecoration(
         borderRadius: BorderRadiusDirectional.circular(10),
         border: Border.all(

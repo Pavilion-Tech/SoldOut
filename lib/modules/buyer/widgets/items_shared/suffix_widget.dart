@@ -57,7 +57,7 @@ class _SuffixWidgetState extends State<SuffixWidget> {
 
   Widget sortSheet(setState) {
     return Container(
-      height: size!.height * .29,
+      height: size!.height > 600 ? size!.height * .29:size!.height * .45,
       decoration: const BoxDecoration(
         borderRadius: BorderRadiusDirectional.only(
           topStart: Radius.circular(10),
@@ -84,7 +84,7 @@ class _SuffixWidgetState extends State<SuffixWidget> {
             },
             activeColor: defaultColor,
             title: Text(
-              tr('progress'),
+              tr('processing2'),
               style:const TextStyle(fontWeight: FontWeight.bold),),
           ),
           RadioListTile(
@@ -102,7 +102,7 @@ class _SuffixWidgetState extends State<SuffixWidget> {
               style:const TextStyle(fontWeight: FontWeight.bold),),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding:  EdgeInsets.symmetric(horizontal: size!.height > 600 ? 20:15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [

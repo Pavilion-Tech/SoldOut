@@ -15,14 +15,14 @@ class VChangeLangBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: size!.height * .24,
+      height: size!.height > 600 ? size!.height * .24:size!.height * .4,
       decoration: const BoxDecoration(
         borderRadius: BorderRadiusDirectional.only(
           topStart: Radius.circular(10),
           topEnd: Radius.circular(10),
         ),
       ),
-      padding: const EdgeInsetsDirectional.all(20),
+      padding:  EdgeInsetsDirectional.all(size!.height > 600 ?20:15),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

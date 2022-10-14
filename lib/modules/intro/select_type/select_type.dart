@@ -26,7 +26,7 @@ class SelectType extends StatelessWidget {
       body: Container(
         alignment: AlignmentDirectional.bottomCenter,
         child: Container(
-          height: size!.height*.16,
+          height: size!.height*.19,
           color: defaultColorTwo,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,

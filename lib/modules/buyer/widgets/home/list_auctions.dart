@@ -17,7 +17,7 @@ class ListAuctions extends StatelessWidget {
       builder: (context, state) {
         var cubit = BuyerCubit.get(context);
         return Container(
-            height: size!.height * .20,
+            height:size!.height>600 ? size!.height * .20:size!.height * .23,
             alignment: AlignmentDirectional.centerStart,
             padding: EdgeInsetsDirectional.only(start: size!.width * .050),
             child: ConditionalBuilder(

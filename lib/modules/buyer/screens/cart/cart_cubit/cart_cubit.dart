@@ -50,7 +50,7 @@ class CartCubit extends Cubit<CartStates> {
       'uuid': token != null ?null:uuid,
     }).then((value) {
       if (value.statusCode == 200 && value.data['status']) {
-        showToast(msg: tr('Item_added'));
+        showToast(msg: tr('item_added'));
         getCart();
       } else {
         showToast(msg: tr('wrong'), toastState: false);

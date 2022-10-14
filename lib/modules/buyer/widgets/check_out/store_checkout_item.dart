@@ -40,7 +40,7 @@ class StoreCheckOutItem extends StatelessWidget {
 
   Widget listItem (context,Products product){
     return SizedBox(
-      height:size!.height*.09,
+      height:size!.height>600? size!.height*.09:size!.height*.12,
       child: Row(
         children: [
           SizedBox(

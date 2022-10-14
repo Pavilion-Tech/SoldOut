@@ -14,7 +14,7 @@ class VPurchasesProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: size!.height*.1 ,
+      height: size!.height > 600 ?size!.height*.1:size!.height*.12 ,
       child: Row(
         children: [
           SizedBox(

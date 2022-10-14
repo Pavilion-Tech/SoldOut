@@ -94,7 +94,7 @@ class VSignInWidget extends StatelessWidget {
                 children: [
                   Text(
                     tr('dont_have_account'),
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 12,fontWeight: FontWeight.bold),
                   ),
                   TextButton(
                     onPressed: () {
@@ -103,6 +103,7 @@ class VSignInWidget extends StatelessWidget {
                     child: Text(
                       tr('sign_up'),
                       style: const TextStyle(
+                        fontSize: 12,
                           decoration: TextDecoration.underline,
                           fontWeight: FontWeight.bold
                       ),

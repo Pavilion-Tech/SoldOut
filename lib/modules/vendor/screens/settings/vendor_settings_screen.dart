@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:soldout/modules/widgets/my_container.dart';
 import 'package:soldout/shared/components/components.dart';
 
+import '../../../../shared/components/constants.dart';
 import '../../widgets/vendor_settings_widgets/vendor_settings_wiget.dart';
 
 class VendorSettingsScreen extends StatelessWidget {
@@ -14,9 +15,10 @@ class VendorSettingsScreen extends StatelessWidget {
       children: [
         myAppBar(context: context, title: tr('settings')),
         SingleChildScrollView(
-          physics:const NeverScrollableScrollPhysics(),
+          physics:size!.height > 600 ? NeverScrollableScrollPhysics():null,
           child: MyContainer(
               const VSettingsWidget(),
+            noSize: size!.height > 600 ?false:true,
           ),
         ),
       ],

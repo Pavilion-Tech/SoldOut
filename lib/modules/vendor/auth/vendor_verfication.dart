@@ -139,7 +139,8 @@ class _State extends State<VVerificationScreen> {
                     SizedBox(height: size!.height * .05,),
                     otpForm(),
                     SizedBox(height: size!.height * .01,),
-                    state is! ActiveAccountLoadingState ?defaultButton(
+                    state is! ActiveAccountLoadingState
+                        ||state is! CreateResetLoadingState?defaultButton(
                         onTap: ()=>submit(context),
                         text: tr('verify')
                     ):const CircularProgressIndicator(),

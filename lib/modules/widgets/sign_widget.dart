@@ -13,7 +13,7 @@ class SignWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height:isVSignUp ? null: size!.height*.7,
+      height:isVSignUp ? size!.height*.9: size!.height*.7,
       width: isVerify ? double.infinity: size!.width*.9,
       alignment:  AlignmentDirectional.topCenter,
       padding: const EdgeInsetsDirectional.only(top: 40,start: 10,end: 10),
@@ -21,16 +21,18 @@ class SignWidget extends StatelessWidget {
         color: Theme.of(context).scaffoldBackgroundColor,
         borderRadius: BorderRadiusDirectional.circular(10)
       ),
-      child: Column(
-        children: [
-          if(!isVerify)
-            Image.asset(
-            BuyerImages.logo,
-            width: size!.width*.4,
-            height: size!.height*.1,
-          ),
-          column
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            if(!isVerify)
+              Image.asset(
+              BuyerImages.logo,
+              width: size!.width*.4,
+              height: size!.height*.1,
+            ),
+            column
+          ],
+        ),
       ),
     );
   }

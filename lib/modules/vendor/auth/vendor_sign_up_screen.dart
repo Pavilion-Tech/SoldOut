@@ -12,7 +12,7 @@ class VSignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        alignment: AlignmentDirectional.center,
+        alignment: AlignmentDirectional.bottomCenter,
         children: [
           Align(
             alignment: AlignmentDirectional.topStart,
@@ -22,11 +22,9 @@ class VSignUpScreen extends StatelessWidget {
               isArrowBack: true,
             ),
           ),
-          SingleChildScrollView(
-            child: SignWidget(
-              isVSignUp: true,
-              column: VSignUpWidget(),
-            ),
+          SignWidget(
+            isVSignUp: true,
+            column: VSignUpWidget(),
           ),
         ],
       ),

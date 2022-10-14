@@ -132,7 +132,7 @@ class _AddAddressWidgetState extends State<AddAddressWidget> {
     return Stack(
       children: [
         Container(
-          height: size!.height * .06,
+          height: size!.height > 600 ?  size!.height * .06:size!.height * .1,
           width: double.infinity,
           decoration: BoxDecoration(
             color: defaultColorTwo,

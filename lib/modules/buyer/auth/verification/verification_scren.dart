@@ -177,7 +177,7 @@ class _State extends State<VerificationScreen> {
   Widget otpField(TextEditingController controller) {
     return SizedBox(
       height: 50,
-      width: 50,
+      width: size!.width*.135,
       child: TextFormField(
         controller: controller,
         keyboardType: TextInputType.number,

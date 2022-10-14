@@ -159,9 +159,9 @@ Widget myAppBar({
             ),
           Text(
             title.toUpperCase(),
-            style: const TextStyle(
+            style: TextStyle(
               color: defaultColorTwo,
-              fontSize: 18
+              fontSize: size!.height >600 ? 18 : 14,
             ),
           ),
           const Spacer(),

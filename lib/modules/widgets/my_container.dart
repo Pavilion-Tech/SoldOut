@@ -8,7 +8,7 @@ class MyContainer extends StatelessWidget {
 
   MyContainer(
   this.widget,{
-    this.start, this.end, this.noSize  = false,
+    this.start, this.end, this.noSize  = false,this.vendorHome = false
   });
 
 
@@ -16,6 +16,7 @@ class MyContainer extends StatelessWidget {
   double? start;
   double? end;
   bool noSize;
+  bool vendorHome;
 
 
   @override
@@ -23,7 +24,7 @@ class MyContainer extends StatelessWidget {
     return Padding(
       padding: EdgeInsetsDirectional.only(
           top: size!.height*.125,
-          bottom: size!.height*.125
+          bottom: vendorHome?0:size!.height*.125
       ),
       child: Container(
         decoration:  BoxDecoration(

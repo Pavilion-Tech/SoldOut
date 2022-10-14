@@ -132,7 +132,7 @@ class AddOrEditProductWidget extends StatelessWidget {
                 const SizedBox(height: 15,),
                 Stack(children: [
                   Container(
-                    height: size!.height * .06,
+                    height: size!.height > 600 ?size!.height*.06:size!.height*.1,
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: defaultColorTwo,
@@ -238,7 +238,7 @@ class AddOrEditProductWidget extends StatelessWidget {
                 InkWell(
                   onTap: ()=>cubit.selectImages(),
                   child: Container(
-                    height: size!.height * .06,
+                    height: size!.height > 600 ?size!.height*.06:size!.height*.1,
                     decoration: BoxDecoration(
                       color: defaultColorTwo,
                       borderRadius: BorderRadiusDirectional.circular(15),

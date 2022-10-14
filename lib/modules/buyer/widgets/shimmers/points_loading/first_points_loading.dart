@@ -11,7 +11,7 @@ class PointsLoading extends StatelessWidget {
     return Container(
       alignment: AlignmentDirectional.center,
       child: Container(
-        height: size!.height*.13,
+        height:size!.height > 600?size!.height*.13:size!.height*.17,
         width: double.infinity,
         padding: const EdgeInsetsDirectional.all(20),
         decoration: BoxDecoration(

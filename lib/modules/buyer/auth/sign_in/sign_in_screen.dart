@@ -81,7 +81,7 @@ class SignInScreen extends StatelessWidget {
                         children: [
                           Text(
                             tr('dont_have_account'),
-                            style: const TextStyle(fontWeight: FontWeight.bold),
+                            style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 12),
                           ),
                           TextButton(
                             onPressed: () => navigateTo(context, SignUpScreen()),
@@ -89,7 +89,8 @@ class SignInScreen extends StatelessWidget {
                               tr('sign_up'),
                               style: const TextStyle(
                                   decoration: TextDecoration.underline,
-                                  fontWeight: FontWeight.bold
+                                  fontWeight: FontWeight.bold,
+                                fontSize: 12
                               ),
                             ),
                           ),

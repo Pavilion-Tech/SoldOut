@@ -149,7 +149,7 @@ class ContactUsWidget extends StatelessWidget {
                 height: 60,
                 width: double.infinity,
                 color: defaultColorTwo,
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

@@ -95,9 +95,8 @@ class ProductItem extends StatelessWidget {
                             ))),
                   ],
                 ),
-                SizedBox(
-                  height: size!.height * .009,
-                ),
+                if(size!.height > 600)
+                SizedBox(height: size!.height * .009,),
                 Padding(
                   padding: const EdgeInsets.all(3.0),
                   child: Column(
@@ -113,7 +112,7 @@ class ProductItem extends StatelessWidget {
                       Row(
                         children: [
                           SizedBox(
-                            height: size!.height * .05,
+                            height:size!.height > 600 ? size!.height * .05:size!.height * .06,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -127,8 +126,8 @@ class ProductItem extends StatelessWidget {
                                   allowHalfRating: true,
                                   unratedColor: HexColor('#FFE000'),
                                   itemPadding: const EdgeInsets.symmetric(
-                                      horizontal: 1.0),
-                                  itemBuilder: (context, index) {
+                                      horizontal:1.0),
+                                  itemBuilder:(context, index) {
                                     if (product!.rate! > index) {
                                       return Image.asset(BuyerImages.fullStar);
                                     } else {
@@ -191,8 +190,8 @@ class ProductItem extends StatelessWidget {
                             },
                             onTap: null,
                             child: SizedBox(
-                              height: 45,
-                              width: 45,
+                              height: size!.width*.109,
+                              width: size!.width*.109,
                               child: Image.asset(BuyerImages.cart),
                             ),
                           )

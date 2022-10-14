@@ -12,7 +12,6 @@ import '../../../../layout/buyer_layout/cubit/buyer_states.dart';
 import '../../../../shared/components/constants.dart';
 import '../../widgets/home/carousel_slider.dart';
 import '../../widgets/home/category_list_view.dart';
-import '../../widgets/items_shared/flying_cart.dart';
 import '../auction/auction_cubit/auction_cubit.dart';
 import '../auction/auction_cubit/auction_states.dart';
 import '../auction/auction_list_screen.dart';

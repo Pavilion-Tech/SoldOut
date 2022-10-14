@@ -9,6 +9,8 @@ class GridViewLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var currentAspectRatio =  size!.height > 600 ?2.1:1.9;
+
     return MyContainer(
         Column(
           children: [
@@ -28,7 +30,7 @@ class GridViewLoading extends StatelessWidget {
             GridView.count(
               shrinkWrap: true,
               physics:const NeverScrollableScrollPhysics(),
-              childAspectRatio: size!.width / (size!.height / 2.1),
+              childAspectRatio: size!.width / (size!.height / currentAspectRatio),
               mainAxisSpacing: 16,
               crossAxisSpacing: 5,
               crossAxisCount: 2,
@@ -95,6 +97,7 @@ class GridViewLoading extends StatelessWidget {
                             color: Colors.grey.shade300,
                           ),
                         ),
+                        if(size!.height > 600)
                         const SizedBox(height: 10,),
                         Shimmer.fromColors(
                           baseColor: Colors.grey.shade300,

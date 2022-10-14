@@ -15,7 +15,7 @@ class ListAuctionsLoading extends StatelessWidget {
       itemBuilder: (context,index){
         return Container(
           height: size!.height*.20,
-          width: size!.width*.45,
+          width: size!.width*.9,
           clipBehavior: Clip.antiAliasWithSaveLayer,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -28,7 +28,7 @@ class ListAuctionsLoading extends StatelessWidget {
                 highlightColor: Colors.white,
                 child: Container(
                     height: size!.height*.12,
-                    width: size!.width*.45,
+                    width: size!.width,
                   color: Colors.grey.shade300,
                 ),
               ),
@@ -46,6 +46,7 @@ class ListAuctionsLoading extends StatelessWidget {
                         color: Colors.grey.shade300,
                       ),
                     ),
+                    if(size!.height > 600 )
                     const SizedBox(height: 20,),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,

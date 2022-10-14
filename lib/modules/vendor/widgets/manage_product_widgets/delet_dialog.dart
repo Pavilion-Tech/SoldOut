@@ -21,7 +21,7 @@ class DeletDialog extends StatelessWidget {
         borderRadius: BorderRadiusDirectional.circular(20),
       ),
       content: Container(
-        height: size!.height * .3,
+        height: size!.height > 600 ? size!.height * .3:size!.height * .4,
         alignment: AlignmentDirectional.center,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,

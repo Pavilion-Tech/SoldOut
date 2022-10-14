@@ -11,11 +11,11 @@ class GridViewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    var currentAspectRatio =  size!.height > 600 ?2.1:1.9;
     return GridView.count(
       shrinkWrap: true,
       physics:const NeverScrollableScrollPhysics(),
-      childAspectRatio: size!.width / (size!.height / 2.1),
+      childAspectRatio: size!.width / (size!.height / currentAspectRatio),
       mainAxisSpacing: 16,
       crossAxisSpacing: 5,
       crossAxisCount: 2,
