@@ -37,10 +37,10 @@ dependencies:
   path_provider: ^2.0.11
   webview_flutter: ^3.0.4
   pusher_channels_flutter: ^2.0.1
-  firebase_core: ^1.22.0
-  firebase_messaging: ^13.0.2
+  firebase_core: ^2.9.0
+  firebase_messaging: ^14.0.1
   flutter_local_notifications: ^11.0.0
-  firebase_dynamic_links: ^4.3.7
+  firebase_dynamic_links: ^5.0.1
   share_plus: ^4.2.0
   timeago: ^3.3.0
   flutter_launcher_icons: ^0.10.0

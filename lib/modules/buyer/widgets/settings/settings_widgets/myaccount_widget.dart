@@ -52,10 +52,10 @@ class MyAccountWidget extends StatelessWidget {
               BuyerCubit.get(context).getFav();
               navigateTo(context, Favorites());
             }),
-            accountItem(tr('my_order_history'),(){
-              SettingsCubit.get(context).getOrder();
-              navigateTo(context,const OrderHistory());
-            }),
+            // accountItem(tr('my_order_history'),(){
+            //   SettingsCubit.get(context).getOrder();
+            //   navigateTo(context,const OrderHistory());
+            // }),
             accountItem(tr('my_auctions'),(){
               AuctionCubit.get(context).myAuctions();
               navigateTo(context,const MyAuctions());
