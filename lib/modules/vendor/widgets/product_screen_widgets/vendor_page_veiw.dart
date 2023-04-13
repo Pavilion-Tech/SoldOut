@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:soldout/shared/components/constants.dart';
 
 import '../../../../models/buyer_model/product_model/images_model.dart';
+import '../../../widgets/image_net.dart';
 
 class VPageView extends StatelessWidget
 {
@@ -16,34 +17,12 @@ class VPageView extends StatelessWidget
       height: size!.height * .385,
       width: double.infinity,
       child: PageView.builder(
-        itemBuilder: (context, index) => pageViewItem(images[index].image!),
+        itemBuilder: (context, index) => ImageNet(image:images[index].image!),
         itemCount: images.length,
         onPageChanged: (int index) {},
         controller: pageController,
       ),
     );
   }
-
-  Widget pageViewItem(String url) {
-    return Image.network(
-      url,
-      fit: BoxFit.cover,
-      errorBuilder: (c,o,s)=>const Icon(Icons.info),
-      loadingBuilder: (context, child, loadingProgress) {
-        if (loadingProgress == null) {
-          return child;
-        }
-        return Center(
-          child: CircularProgressIndicator(
-            value: loadingProgress.expectedTotalBytes != null
-                ? loadingProgress.cumulativeBytesLoaded /
-                loadingProgress.expectedTotalBytes!
-                : null,
-          ),
-        );
-      },
-    );
-  }
-
 
 }

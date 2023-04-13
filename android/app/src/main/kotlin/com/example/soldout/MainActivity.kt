@@ -1,4 +1,4 @@
-package com.example.soldout
+package com.soldout
 
 import io.flutter.embedding.android.FlutterActivity
 

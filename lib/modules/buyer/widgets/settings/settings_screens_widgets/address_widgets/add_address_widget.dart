@@ -49,10 +49,6 @@ class _AddAddressWidgetState extends State<AddAddressWidget> {
             defaultTextField(
               controller: addressTitleController,
               hint: tr('address_title'),
-              inputFormatters: [
-                LengthLimitingTextInputFormatter(16),
-                FilteringTextInputFormatter.digitsOnly,
-              ],
               validator: (value) {
                 if(value!.isEmpty){
                   return tr('address_title_empty');
@@ -65,10 +61,6 @@ class _AddAddressWidgetState extends State<AddAddressWidget> {
             defaultTextField(
               controller: addressController,
               hint: tr('address'),
-              inputFormatters: [
-                LengthLimitingTextInputFormatter(72),
-                FilteringTextInputFormatter.digitsOnly,
-              ],
               validator: (value) {
                 if(value!.isEmpty){
                   return tr('address_empty');
@@ -132,7 +124,7 @@ class _AddAddressWidgetState extends State<AddAddressWidget> {
     return Stack(
       children: [
         Container(
-          height: size!.height > 600 ?  size!.height * .06:size!.height * .1,
+          height: size!.height > 670 ?  size!.height * .06:size!.height * .1,
           width: double.infinity,
           decoration: BoxDecoration(
             color: defaultColorTwo,

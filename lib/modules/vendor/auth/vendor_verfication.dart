@@ -69,16 +69,12 @@ class _State extends State<VVerificationScreen> {
 
   void submit(BuildContext context){
     if(checkOTP()){
-      if(checkCode()){
           if(widget.isStepTwo){
             VAuthCubit.get(context).createReset(context: context);
           }else
             {
               VAuthCubit.get(context).activeVAccount(context: context);
             }
-      }else{
-        showToast(msg: tr('otp_invalid'),toastState: true);
-      }
     }else{
       showToast(msg: tr('code_empty'),toastState: true);
     }
@@ -139,8 +135,7 @@ class _State extends State<VVerificationScreen> {
                     SizedBox(height: size!.height * .05,),
                     otpForm(),
                     SizedBox(height: size!.height * .01,),
-                    state is! ActiveAccountLoadingState
-                        ||state is! CreateResetLoadingState?defaultButton(
+                    state is! ActiveAccountLoadingState?defaultButton(
                         onTap: ()=>submit(context),
                         text: tr('verify')
                     ):const CircularProgressIndicator(),
@@ -181,17 +176,25 @@ class _State extends State<VVerificationScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        otpField(otpController1),
+        otpField(otpController1,   onFinished: () {
+          if (checkOTP() && myLocale != 'en') {
+            submit(context);
+          }
+        },),
         otpField(otpController2),
         otpField(otpController3),
         otpField(otpController4),
         otpField(otpController5),
-        otpField(otpController6),
+        otpField(otpController6,   onFinished: () {
+          if (checkOTP() && myLocale != 'ar') {
+            submit(context);
+          }
+        },),
       ],
     );
   }
 
-  Widget otpField(TextEditingController controller) {
+  Widget otpField(TextEditingController controller,{VoidCallback? onFinished}) {
     return SizedBox(
       height: 50,
       width: 50,
@@ -215,8 +218,17 @@ class _State extends State<VVerificationScreen> {
           ),
         ),
         onChanged: (value) {
-          FocusManager.instance.primaryFocus!.nextFocus();
-        },
+          if(value.isNotEmpty){
+            myLocale =='ar'
+                ? FocusManager.instance.primaryFocus!.previousFocus()
+                :FocusManager.instance.primaryFocus!.nextFocus();
+            if(onFinished!=null)onFinished!();
+          }else{
+            myLocale =='ar'
+                ? FocusManager.instance.primaryFocus!.nextFocus()
+                :FocusManager.instance.primaryFocus!.previousFocus();
+          }
+          },
         inputFormatters: [
           LengthLimitingTextInputFormatter(1),
           FilteringTextInputFormatter.digitsOnly,

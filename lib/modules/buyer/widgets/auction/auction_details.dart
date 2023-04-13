@@ -41,13 +41,13 @@ class AuctionDetails extends StatelessWidget {
               SizedBox(height: size!.height * .03,),
               detailsItem(
                  Text(
-                   model.productDesc!,
+                   model.productDesc??'',
                   maxLines: 5,
                   style:const TextStyle(height: 1.9),
                 ),
               ),
               SizedBox(height: size!.height * .03,),
-              UserBids(model.bids!),
+              UserBids(model.bids??[]),
               SizedBox(height: size!.height*.02,),
             ],
           ),
@@ -75,7 +75,7 @@ class AuctionDetails extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          model.productName!,
+          model.productName??"",
           maxLines: 2,
           style:const TextStyle(height: 2,fontWeight: FontWeight.bold),
           overflow: TextOverflow.ellipsis,
@@ -86,12 +86,12 @@ class AuctionDetails extends StatelessWidget {
         Row(
           children: [
             Text(
-              '${model.auctionOpeningPrice!} ${tr('sar')}',
+              '${model.auctionOpeningPrice??''} ${tr('sar')}',
               style:const TextStyle(fontWeight: FontWeight.bold),
             ),
             const Spacer(),
             Text(
-              '${tr('${model.status!}')} | ',
+              '${tr('${model.status??''}')} | ',
               style:const TextStyle(
               color: defaultColor,fontSize: 14,fontWeight: FontWeight.bold),
             ),

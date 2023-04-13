@@ -21,6 +21,7 @@ class SettingsData {
   String? whatsapp;
   String? twitter;
   String? phone;
+  bool? maintenance;
   List<Cities>? cities;
   List<Categories>? categories;
 
@@ -28,6 +29,7 @@ class SettingsData {
   SettingsData.fromJson(Map<String, dynamic> json) {
     aboutUs = json['about_us'];
     terms = json['terms'];
+    maintenance = json['maintenance'];
     email = json['email'];
     instagram = json['instagram'];
     facebook = json['facebook'];

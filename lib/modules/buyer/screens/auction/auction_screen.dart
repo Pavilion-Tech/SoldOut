@@ -23,7 +23,7 @@ class AuctionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AuctionCubit.get(context).isUserJoined =
-        AuctionCubit.get(context).auctionModel!.isUserJoined!;
+        AuctionCubit.get(context).auctionModel!.isUserJoined??false;
     return Scaffold(
       body: BlocConsumer<AuctionCubit, AuctionStates>(
         listener: (context, state) {},
@@ -48,12 +48,13 @@ class AuctionScreen extends StatelessWidget {
                   children: [
                     MPageView(
                         pageController: pageController,
-                        images: cubit.auctionModel!.images!),
+                        images: cubit.auctionModel!.images??[]),
                     RowInTop(
                       isProduct: false,
                       id: cubit.auctionModel!.id,
                       status: cubit.auctionModel!.status,
                     ),
+                    if(cubit.auctionModel!.images!=null)
                     MIndicator(
                         pageController: pageController,
                         lengthPageView: cubit.auctionModel!.images!.length),
@@ -62,14 +63,20 @@ class AuctionScreen extends StatelessWidget {
                       const HintWidget(),
                     if (!cubit.isUserJoined &&
                         cubit.auctionModel!.status == 'processing')
-                      JoinAuction(
-                        id: cubit.auctionModel!.id!,
-                        coins: cubit.auctionModel!.auctionJoiningCoins!,
-                        state: state,
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 40.0),
+                        child: JoinAuction(
+                          id: cubit.auctionModel!.id!,
+                          coins: cubit.auctionModel!.auctionJoiningCoins!,
+                          state: state,
+                        ),
                       ),
                     if (cubit.isUserJoined &&
                         cubit.auctionModel!.status == 'processing')
-                      AddCoins(cubit.auctionModel!.id!),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 40.0),
+                        child: AddCoins(cubit.auctionModel!.id!),
+                      ),
                   ],
                 );
               });

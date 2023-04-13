@@ -21,7 +21,7 @@ class AuctionsList extends StatelessWidget {
     AuctionCubit.get(context).currentCategory(
         newAuctions, newAuctions[0].categoryId!
     );
-    var currentAspectRatio =  size!.height > 600 ?2.1:1.9;
+    var currentAspectRatio =  size!.height > 670 ?2.1:1.9;
     return BlocConsumer<AuctionCubit, AuctionStates>(
       listener: (context, state) {},
       builder: (context, state) {

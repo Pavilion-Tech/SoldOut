@@ -6,6 +6,8 @@ import 'package:soldout/modules/buyer/screens/cart/cart_cubit/cart_cubit.dart';
 import 'package:soldout/modules/buyer/screens/cart/cart_cubit/cart_states.dart';
 import 'package:soldout/shared/images/images.dart';
 import 'package:soldout/shared/styles/colors.dart';
+import '../../modules/buyer/screens/settings/settings_cubit/settings_cubit.dart';
+import '../../modules/widgets/wrong_screens/maintance_screen.dart';
 import '../../shared/components/components.dart';
 import '../../shared/components/constants.dart';
 import 'cubit/buyer_cubit.dart';
@@ -16,9 +18,18 @@ class BuyerLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future.delayed(Duration.zero,(){
+      BuyerCubit.get(context).dynamicLink();
+      BuyerCubit.get(context).checkUpdate(context);
+    });
     return BlocConsumer<BuyerCubit, BuyerStates>(
       listener: (context, state) {
         if(isConnect!=null)checkNet(context);
+        if(SettingsCubit.get(context).settingsModel!=null){
+          if(SettingsCubit.get(context).settingsModel!.data!.maintenance!){
+            navigateAndFinish(context, MaintanceScreen());
+          }
+        }
       },
       builder: (context, state) {
         var cubit = BuyerCubit.get(context);

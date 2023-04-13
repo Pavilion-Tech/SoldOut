@@ -2,6 +2,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:soldout/modules/buyer/screens/cart/cart_cubit/cart_cubit.dart';
 import 'package:soldout/modules/buyer/screens/cart/cart_cubit/cart_states.dart';
 import 'package:soldout/modules/buyer/screens/settings/setting_screens/my_account/addresses/address_cubit/cubit.dart';
@@ -13,6 +14,7 @@ import 'package:soldout/shared/components/components.dart';
 import '../../widgets/check_out/list_store.dart';
 import '../../widgets/check_out/radio.dart';
 import '../../../widgets/my_container.dart';
+import '../settings/setting_screens/my_account/addresses/add_address.dart';
 import '../settings/setting_screens/my_account/addresses/address_cubit/state.dart';
 
 class CheckOutScreen extends StatelessWidget {
@@ -55,18 +57,33 @@ class CheckOutScreen extends StatelessWidget {
                               addressCubit.getAddressModel != null,
                           fallback: (context) => PurchasesDetailsLoading(),
                           builder: (context) {
-                            deliveryAddress = DeliveryAddress(
-                              getAddressModel: addressCubit.getAddressModel,
-                              addressId:
-                                  addressCubit.getAddressModel!.data![0].id,
-                            );
+                            if(addressCubit.getAddressModel!.data!.isNotEmpty){
+                              deliveryAddress = DeliveryAddress(
+                                getAddressModel: addressCubit.getAddressModel,
+                                addressId:
+                                addressCubit.getAddressModel!.data![0].id,
+                              );
+                            }
                             return Column(
                               children: [
                                 ListStore(),
                                 select(tr('select_payment_method')),
                                 customRadio,
                                 select(tr('select_delivery_address')),
-                                deliveryAddress,
+                                ConditionalBuilder(
+                                  condition: addressCubit.getAddressModel!.data!.isNotEmpty,
+                                    fallback: (c)=> Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 20.0),
+                                      child: defaultButton(
+                                          onTap: () {
+                                            navigateTo(context, AddAddress());
+                                          },
+                                          text: tr('add_new_address'),
+                                          buttonColor: HexColor('#A0AEC0'),
+                                          radiusColor: HexColor('#A0AEC0')),
+                                    ),
+                                    builder: (c)=>  deliveryAddress
+                                ),
                                 select(tr('have_discount')),
                                 state is! CheckCouponLoadingState
                                     ? discountWidget

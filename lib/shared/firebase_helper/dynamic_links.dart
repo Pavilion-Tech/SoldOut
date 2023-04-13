@@ -25,11 +25,11 @@ class DynamicLinksClient {
       uriPrefix: 'https://soldoutapp.page.link',
       link: Uri.parse(uri),
       androidParameters:const AndroidParameters(
-        packageName: 'com.example.soldout',
+        packageName: 'com.soldout',
         minimumVersion: 1,
       ),
       iosParameters:const IOSParameters(
-        bundleId: 'com.example.soldout',
+        bundleId: 'co.soldout.app',
         minimumVersion: '1',
         appStoreId: '6443680518'
         // appStoreId: '123456789',

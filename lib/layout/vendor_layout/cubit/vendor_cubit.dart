@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:flutter_native_image/flutter_native_image.dart';
+import 'package:new_version_plus/new_version_plus.dart';
 import 'package:path/path.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -20,6 +22,7 @@ import '../../../models/vendor_model/vendor_order_model.dart';
 import '../../../modules/vendor/screens/home/home_screen.dart';
 import '../../../modules/vendor/screens/order/vendor_order_screen.dart';
 import '../../../modules/vendor/screens/settings/vendor_settings_screen.dart';
+import '../../../modules/widgets/wrong_screens/update_screen.dart';
 import '../../../shared/firebase_helper/dynamic_links.dart';
 import '../../../shared/network/remote/dio.dart';
 import '../../../shared/network/remote/end_point.dart';
@@ -132,13 +135,27 @@ class VendorCubit extends Cubit<VendorStates>{
 
   void selectImages() async {
     var images = await imagePicker.pickMultiImage();
-    if (images!.isNotEmpty) {
+    if (images.isNotEmpty) {
       for(var image in images)
       {
-        imageFileList.add(File(image.path));
-        listImage.add(File(image.path));
+        File file = await FlutterNativeImage.compressImage(image.path,quality:50);
+        imageFileList.add(file);
+        listImage.add(file);
       }
       emit(ImagesPickedState());
+    }
+  }
+
+
+  void checkUpdate(context) async{
+    final newVersion =await NewVersionPlus().getVersionStatus();
+    if(newVersion !=null){
+      if(newVersion.canUpdate){
+        navigateAndFinish(context, UpdateScreen(
+            url:newVersion.appStoreLink,
+            releaseNote:newVersion.releaseNotes??tr('update_note')
+        ));
+      }
     }
   }
 

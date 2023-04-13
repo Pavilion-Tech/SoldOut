@@ -18,6 +18,7 @@ class HomeModel {
 }
 
 class HomeData {
+  bool? showAuctions;
   List<AdsModel>? ads;
   List<CategoryModel>? categories;
   List<ProductModel>? newProducts;
@@ -25,6 +26,7 @@ class HomeData {
 
 
   HomeData.fromJson(Map<String, dynamic> json) {
+    showAuctions = json['show_auctions'];
     if (json['ads'] != null) {
       ads = <AdsModel>[];
       json['ads'].forEach((v) {

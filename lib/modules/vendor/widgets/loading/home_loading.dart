@@ -65,7 +65,7 @@ class VHomeLoading extends StatelessWidget {
           child: ListView.separated(
               itemBuilder: (context,index){
                 return Container(
-                  height: size!.height > 600 ?size!.height*.12:size!.height*.18,
+                  height: size!.height > 670 ?size!.height*.12:size!.height*.18,
                   width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadiusDirectional.circular(10),

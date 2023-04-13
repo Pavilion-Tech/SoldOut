@@ -22,8 +22,6 @@ class AuthCubit extends Cubit<AuthStates> {
 
   GetProfileModel? getProfileModel;
   TextEditingController phoneController = TextEditingController();
-  bool timerFinished = false;
-  Timer? timer;
 
   checkInterNet() async {
     InternetConnectionChecker().onStatusChange.listen((event) {
@@ -42,24 +40,25 @@ class AuthCubit extends Cubit<AuthStates> {
   Future logIn(context, bool isNoty) async {
     bool? haveCart = checkUUID(context);
     emit(LoginLoadingState());
-    return await DioHelper.postData(url: login, data: {
+    return await DioHelper.postData(
+        url: login, data: {
       'phone': phoneController.text.trim(),
       'code': code,
       'device_type': deviceType,
-      'firebase_token': fcmToken,
+      'firebase_token': fcmToken??'fcm',
       'uuid': haveCart != null ? haveCart ? uuid.toString() : null : null,
     }).then((value) {
-      if (value.statusCode == 200 && value.data['status']) {
+      if (value.data['status'] == true) {
         showToast(msg: tr('verification_success'));
         CacheHelper.saveData(key: 'token', value: token);
-        timer!.cancel();
-        timerFinished = true;
         if(BuyerCubit.get(context).homeModel!=null){
           CartCubit.get(context).getCart();
         }
-        navigateAndFinish(context, BuyerLayout());
         emit(LoginSuccessState());
-      } else {
+      } else if (value.data['errors'] !=null){
+        showToast(msg: value.data['errors'].toString(), toastState: true);
+        emit(LoginWrongState());
+      }else {
         showToast(msg: tr('wrong'), toastState: true);
         emit(LoginWrongState());
       }
@@ -122,7 +121,7 @@ class AuthCubit extends Cubit<AuthStates> {
     await DioHelper.postData(url: editProfile, token: 'Bearer $token', data: {
       'name': name,
       'device_type': deviceType,
-      'firebase_token': fcmToken,
+      'firebase_token': fcmToken??'',
     }).then((value) {
       if (value.statusCode == 200&&value.data['status']) {
         CacheHelper.removeData('token');

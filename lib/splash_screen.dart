@@ -60,6 +60,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
+    print(size);
     return Scaffold(
       backgroundColor: defaultColorTwo,
       body: BlocConsumer<SettingsCubit, SettingsStates>(

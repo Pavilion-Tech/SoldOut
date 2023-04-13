@@ -14,7 +14,7 @@ class NotificationListLoading extends StatelessWidget {
       physics:const NeverScrollableScrollPhysics(),
       itemBuilder: (context,index){
         return Container(
-          height: size!.height>600? size!.height*.18:size!.height*.3,
+          height: size!.height>670? size!.height*.18:size!.height*.3,
           padding: const EdgeInsetsDirectional.only(
             top: 8,
             start: 8,

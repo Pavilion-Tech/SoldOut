@@ -64,7 +64,12 @@ class VendorOrderScreen extends StatelessWidget {
                               : cubit.vendorOrderModel!.data!.length,
                         ),
                         if(cubit.vendorOrderModel!.data!.isEmpty)
-                          Center(child: Text(tr(tr('no_order'))),)
+                          Center(child: Column(
+                            children: [
+                              Text(tr(tr('no_order'))),
+                              const SizedBox(height: 150,),
+                            ],
+                          ),)
                       ],
                     ),
                   ));

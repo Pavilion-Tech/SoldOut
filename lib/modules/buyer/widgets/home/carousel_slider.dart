@@ -5,6 +5,7 @@ import 'package:soldout/modules/buyer/screens/store_name/store_name_screen.dart'
 import 'package:soldout/shared/components/components.dart';
 import '../../../../shared/components/constants.dart';
 import '../../../../shared/images/images.dart';
+import '../../../widgets/image_net.dart';
 
 class CarouselSliderWidget extends StatefulWidget {
 
@@ -55,7 +56,7 @@ class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
                     }
 
                   },
-                  child: image(e.image!)
+                  child: ImageNet(image:e.image!)
               );
             }).toList(),
             options: CarouselOptions(
@@ -100,27 +101,5 @@ class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
       Image.asset(BuyerImages.indicatorOn,height: 20,width: 20,);
   Widget customIndicatorOff() =>
       Image.asset(BuyerImages.indicatorOff,height: 20,width: 20,);
-
-  Widget image(String url){
-    return Image.network(
-      url,
-      width: size!.width * .9,
-      fit: BoxFit.cover,
-      errorBuilder: (c,o,s)=>const Icon(Icons.info),
-      loadingBuilder: (context, child, loadingProgress) {
-        if (loadingProgress == null) {
-          return child;
-        }
-        return Center(
-          child: CircularProgressIndicator(
-            value: loadingProgress.expectedTotalBytes != null
-                ? loadingProgress.cumulativeBytesLoaded /
-                loadingProgress.expectedTotalBytes!
-                : null,
-          ),
-        );
-      },
-    );
-  }
 
 }

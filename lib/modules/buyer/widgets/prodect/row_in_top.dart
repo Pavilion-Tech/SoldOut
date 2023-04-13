@@ -60,9 +60,11 @@ class RowInTop extends StatelessWidget {
                 children: [
                   InkWell(
                     onTap: () async {
-                      String uri = 'https://soldoutapp/?product=$id';
-                      Uri sharableLink = await DynamicLinksClient.createUri(uri);
-                      Share.share(sharableLink.toString());
+                      String shortLink =
+                          'https://www.google.com/?product=$id';
+                      Uri link = await DynamicLinksClient.createUri(
+                          shortLink.toString());
+                      Share.share(link.toString());
                     },
                     child: const CircleAvatar(
                       backgroundColor: defaultColorTwo,

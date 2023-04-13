@@ -9,7 +9,7 @@ class GridViewLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var currentAspectRatio =  size!.height > 600 ?2.1:1.9;
+    var currentAspectRatio =  size!.height > 670 ?2.1:1.9;
 
     return MyContainer(
         Column(
@@ -97,7 +97,7 @@ class GridViewLoading extends StatelessWidget {
                             color: Colors.grey.shade300,
                           ),
                         ),
-                        if(size!.height > 600)
+                        if(size!.height > 670)
                         const SizedBox(height: 10,),
                         Shimmer.fromColors(
                           baseColor: Colors.grey.shade300,

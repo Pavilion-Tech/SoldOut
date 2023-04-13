@@ -49,9 +49,13 @@ class StoreNameScreen extends StatelessWidget {
                 myAppBar(
                   context: context,
                   isArrowBack: true,
-                  title: title ??
-                      cubit.storeModel?.data?.products?[0].store?.name ??
-                      tr('store_name'),
+                  title: title !=null
+                      ? title!
+                      : cubit.storeModel!=null
+                      ?cubit.storeModel!.data!.products!.isNotEmpty
+                      ?cubit.storeModel!.data!.products![0].store!.name!
+                      :tr('store_name')
+                      : tr('store_name'),
                   isLastIcon: true,
                   lastIcon: Icons.shopping_cart,
                   lastButtonTap: () {

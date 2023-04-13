@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:soldout/modules/buyer/screens/settings/settings_cubit/settings_cubit.dart';
 import 'package:soldout/modules/buyer/screens/settings/settings_cubit/settings_states.dart';
+import 'package:soldout/modules/vendor/screens/settings/vendor_setting_cubit/vendor_setting_cubit.dart';
 import 'package:soldout/shared/components/components.dart';
 import 'package:soldout/shared/images/images.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../shared/components/constants.dart';
 import '../../shared/styles/colors.dart';
+import '../buyer/auth/auth_cubit/auth_cubit.dart';
 
 class ContactUsWidget extends StatelessWidget {
 
@@ -20,17 +22,19 @@ class ContactUsWidget extends StatelessWidget {
   TextEditingController messageC = TextEditingController();
   var formKey = GlobalKey<FormState>();
 
-  Future<void> openUrl(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
+
 
   @override
   Widget build(BuildContext context)
   {
+    if(VSettingCubit.get(context).nameC.text.isNotEmpty){
+      nameC.text = VSettingCubit.get(context).nameC.text;
+      emilC.text = VSettingCubit.get(context).emailC.text;
+      phoneC.text = VSettingCubit.get(context).phoneC.text;
+    }else if (AuthCubit.get(context).getProfileModel!=null){
+      nameC.text = AuthCubit.get(context).getProfileModel!.data!.name??'';
+      phoneC.text = AuthCubit.get(context).getProfileModel!.data!.phone??'';
+    }
     return BlocConsumer<SettingsCubit, SettingsStates>(
       listener: (context, state) {},
       builder: (context, state) {

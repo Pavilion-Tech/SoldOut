@@ -185,10 +185,12 @@ class AuctionCubit extends Cubit<AuctionStates>
     try{
       Map<String,dynamic> valueMap = json.decode(event.data);
       print(valueMap);
-      auctionModel = AuctionModel.fromJson(valueMap);
-      duration = Duration(milliseconds: auctionModel!.remainingTime!);
-      isUserJoined = auctionModel!.isUserJoined!;
-      emit(AuctionUpdated());
+      if(valueMap.isNotEmpty){
+        auctionModel = AuctionModel.fromJson(valueMap);
+        duration = Duration(milliseconds: auctionModel!.remainingTime!);
+        isUserJoined = auctionModel!.isUserJoined!;
+        emit(AuctionUpdated());
+      }
     }catch(e){
       print(e.toString());
       showToast(msg: tr('wrong'),toastState: true);

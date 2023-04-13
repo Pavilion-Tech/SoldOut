@@ -12,6 +12,7 @@ import 'package:soldout/shared/images/images.dart';
 import '../../../../models/buyer_model/product_model/product_model.dart';
 import '../../../../shared/components/constants.dart';
 import '../../../../shared/styles/colors.dart';
+import '../../../widgets/image_net.dart';
 import '../../auth/sign_in/sign_in_screen.dart';
 import '../../screens/cart/cart_cubit/cart_cubit.dart';
 
@@ -51,27 +52,8 @@ class ProductItem extends StatelessWidget {
                     SizedBox(
                         height: isGrid ? size!.height * .11 : size!.height * .1,
                         width: isGrid ? size!.width * .5 : size!.width * .36,
-                        child: Image.network(
-                          product!.images![0].image!,
-                          fit: BoxFit.cover,
-                          errorBuilder: (c, Object o, s) {
-                            return const Icon(Icons.info);
-                          },
-                          loadingBuilder: (context, child, loadingProgress) {
-                            if (loadingProgress == null) {
-                              return child;
-                            }
-                            return Center(
-                              child: CircularProgressIndicator(
-                                value: loadingProgress.expectedTotalBytes !=
-                                        null
-                                    ? loadingProgress.cumulativeBytesLoaded /
-                                        loadingProgress.expectedTotalBytes!
-                                    : null,
-                              ),
-                            );
-                          },
-                        )),
+                        child: ImageNet(image: product!.images![0].image!,)
+                    ),
                     Positioned(
                         top: -size!.height * .010,
                         right: -size!.width * .03,

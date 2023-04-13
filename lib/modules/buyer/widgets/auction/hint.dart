@@ -17,7 +17,7 @@ class HintWidget extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         return Positioned(
-          top: myLocale == 'ar' ? size!.height * .82 : size!.height >600 ?size!.height * .775:size!.height * .65,
+          top: myLocale == 'ar' ? size!.height * .82 : size!.height >670 ?size!.height * .775:size!.height * .65,
           left: myLocale == 'ar' ? size!.width * .05 : size!.width * .34,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -42,7 +42,7 @@ class HintWidget extends StatelessWidget {
                           tr('press+'),
                           style:  TextStyle(
                               color: defaultColorTwo,
-                              fontSize: size!.height>600?10:7),
+                              fontSize: size!.height>670?10:7),
                         ),
                         const Spacer(),
                         InkWell(

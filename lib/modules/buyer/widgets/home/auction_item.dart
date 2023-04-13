@@ -5,6 +5,7 @@ import 'package:soldout/modules/buyer/widgets/auction/count_down.dart';
 import 'package:soldout/shared/components/components.dart';
 import '../../../../models/buyer_model/home_model/new_auctions_model.dart';
 import '../../../../shared/components/constants.dart';
+import '../../../widgets/image_net.dart';
 import '../../auth/sign_in/sign_in_screen.dart';
 import '../../screens/auction/auction_screen.dart';
 
@@ -57,24 +58,7 @@ class AuctionItem extends StatelessWidget {
             SizedBox(
                 height: size!.height*.12,
                 width:isHome ? size!.width*.9: size!.width*.45,
-                child: Image.network(
-                  model.images![0].image!,
-                  fit: BoxFit.cover,
-                  errorBuilder: (c,o,s)=>const Icon(Icons.info),
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) {
-                      return child;
-                    }
-                    return Center(
-                      child: CircularProgressIndicator(
-                        value: loadingProgress.expectedTotalBytes != null
-                            ? loadingProgress.cumulativeBytesLoaded /
-                            loadingProgress.expectedTotalBytes!
-                            : null,
-                      ),
-                    );
-                  },
-                )
+                child: ImageNet(image: model.images![0].image!,)
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 5),
@@ -111,9 +95,4 @@ class AuctionItem extends StatelessWidget {
       ),
     );
   }
-
-
-
-
 }
-

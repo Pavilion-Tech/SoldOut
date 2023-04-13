@@ -6,6 +6,14 @@ import '../../../splash_screen.dart';
 
 class UpdateScreen extends StatelessWidget {
 
+  UpdateScreen({
+    required this.url,
+    required this.releaseNote,
+});
+
+  String url;
+  String releaseNote;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +54,7 @@ class UpdateScreen extends StatelessWidget {
               ),
               defaultButton(
                 onTap: (){
-                  navigateAndFinish(context,const SplashScreen());
+                  openUrl(url);
                 },
                 text: tr('update_now'),
                 width: double.infinity,

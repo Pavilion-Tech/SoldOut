@@ -31,7 +31,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
       apiKey: 'AIzaSyCEj2YbqrAlF0NDMYkdS8e5_UcKvjruIZM',
-      appId: '1:575890868187:android:e65631a843d5c65685c9fe',
+      appId: '1:575890868187:android:44d638da5fe6958b85c9fe',
       messagingSenderId: '575890868187',
       projectId: 'soldout-de9d4',
       storageBucket: 'soldout-de9d4.appspot.com',
@@ -41,12 +41,12 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
       apiKey: 'AIzaSyALNXHPs-UvXhKJNVnuRrIj_Azr6h3wj0M',
-      appId: '1:575890868187:ios:acafcc5d2c25498585c9fe',
+      appId: '1:575890868187:ios:aa937ab9f3444ef785c9fe',
       messagingSenderId: '575890868187',
       projectId: 'soldout-de9d4',
       storageBucket: 'soldout-de9d4.appspot.com',
-      iosClientId: '575890868187-18rq2ns41sh350qpstodahlvce1kobcn.apps.googleusercontent.com',
-      iosBundleId: 'com.example.soldout',
+      iosClientId: '575890868187-e6ceemcvs1vvp4hj16tdv6qpasqlt39r.apps.googleusercontent.com',
+      iosBundleId: 'co.soldout.app',
       deepLinkURLScheme: 'https://soldoutapp.page.link/'
   );
 

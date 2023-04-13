@@ -4,6 +4,8 @@ import 'package:soldout/modules/buyer/widgets/prodect/image.dart';
 import 'package:soldout/shared/components/components.dart';
 import 'package:soldout/shared/components/constants.dart';
 
+import '../../../widgets/image_net.dart';
+
 class MPageView extends StatelessWidget
 {
 
@@ -27,24 +29,7 @@ class MPageView extends StatelessWidget
   Widget pageViewItem(String url,context) {
     return InkWell(
       onTap: ()=>navigateTo(context, ShowImage(images)),
-      child: Image.network(
-        url,
-        fit: BoxFit.cover,
-        errorBuilder: (c,o,s)=>const Icon(Icons.info),
-        loadingBuilder: (context, child, loadingProgress) {
-          if (loadingProgress == null) {
-            return child;
-          }
-          return Center(
-            child: CircularProgressIndicator(
-              value: loadingProgress.expectedTotalBytes != null
-                  ? loadingProgress.cumulativeBytesLoaded /
-                  loadingProgress.expectedTotalBytes!
-                  : null,
-            ),
-          );
-        },
-      ),
+      child: ImageNet(image: url),
     );
   }
 

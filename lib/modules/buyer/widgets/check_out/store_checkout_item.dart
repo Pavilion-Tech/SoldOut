@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:soldout/models/buyer_model/cart_model/get_checkout_model.dart';
 import '../../../../shared/components/constants.dart';
+import '../../../widgets/image_net.dart';
 
 class StoreCheckOutItem extends StatelessWidget {
 
@@ -40,12 +41,12 @@ class StoreCheckOutItem extends StatelessWidget {
 
   Widget listItem (context,Products product){
     return SizedBox(
-      height:size!.height>600? size!.height*.09:size!.height*.12,
+      height:size!.height>670? size!.height*.09:size!.height*.12,
       child: Row(
         children: [
           SizedBox(
               height: size!.height*.07, width: size!.width*.25,
-              child: Image.network(product.firstImage!,)
+              child: ImageNet(image:product.firstImage!,)
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),

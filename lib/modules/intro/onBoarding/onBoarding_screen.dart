@@ -14,8 +14,12 @@ class OnBoardingScreen extends StatefulWidget {
 
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
-  String introTitle = "Lorem Ipsum Is Simply Dummy Text Of The Printing And Typesetting Industry. Ipsum Has Been The Industry'slorem Ipsum Is Simply Dummy Text Of The Printing And Typesetting Industry. Ipsum Has Been The Industry's";
 
+  List<String> descs = [
+    "Welcome, join the Savvy Save community and get exceptional customer service and high-quality products",
+    "Enjoy a unique shopping experience with an easy-to-use app and the largest collection of products.",
+    "Shop with us now and get the best exclusive deals and offers on your favourite products.",
+  ];
 
   var pageController = PageController();
   int _index = 0;
@@ -43,7 +47,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           children: [
             Expanded(
               child: PageView.builder(
-                itemBuilder: (context, index) => buildItem(),
+                itemBuilder: (context, index) => buildItem(descs[index]),
                 itemCount: 3,
                 onPageChanged: (int index)
                 {
@@ -81,14 +85,14 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
 
 
-  Widget buildItem() => Column(
+  Widget buildItem(String desc) => Column(
     mainAxisAlignment: MainAxisAlignment.start,
     children: [
       const Expanded(
         child: SizedBox(),
       ),
       Text(
-        introTitle,
+        desc,
         textAlign: TextAlign.center,
         style: const TextStyle(
             fontWeight: FontWeight.w800,

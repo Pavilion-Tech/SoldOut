@@ -21,7 +21,7 @@ class _SortState extends State<Sort> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: size!.height > 600 ? size!.height * .28:size!.height * .45,
+      height: size!.height > 670 ? size!.height * .28:size!.height * .45,
       decoration: const BoxDecoration(
         borderRadius: BorderRadiusDirectional.only(
           topStart: Radius.circular(10),
@@ -64,7 +64,7 @@ class _SortState extends State<Sort> {
           ),
           const Spacer(),
           Padding(
-            padding:  EdgeInsets.symmetric(horizontal: size!.height > 600 ? 20:15),
+            padding:  EdgeInsets.symmetric(horizontal: size!.height > 670 ? 20:15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [

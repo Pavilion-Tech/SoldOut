@@ -40,7 +40,7 @@ class AddressItem extends StatelessWidget {
         children: [],
       ),
       child: Container(
-        height:size!.height > 600 ? size!.height * .1: size!.height * .13,
+        height:size!.height > 670 ? size!.height * .1: size!.height * .13,
         decoration: BoxDecoration(
           borderRadius: BorderRadiusDirectional.circular(10),
           border: Border.all(
@@ -80,7 +80,7 @@ class AddressItem extends StatelessWidget {
                 const Icon(Icons.location_on_outlined, color: Colors.blue),
                 const SizedBox(width: 10,),
                 SizedBox(
-                    width: size!.height > 600 ?size!.width * .75:size!.width*.65,
+                    width: size!.height > 670 ?size!.width * .75:size!.width*.65,
                     height: size!.height * .015,
                     child: Text(
                       model.fullAddress!,

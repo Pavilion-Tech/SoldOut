@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:soldout/modules/vendor/screens/settings/vendor_setting_cubit/vendor_setting_states.dart';
@@ -76,13 +79,15 @@ class VSettingCubit extends Cubit<VSettingStates>
 
   void updateProfile ()async
   {
+    File? _file;
+    if(file!=null) _file = await FlutterNativeImage.compressImage(file!.path,quality:1);
     emit(UpdateProfileLoadingState());
     FormData formData = FormData.fromMap({
       'name':nameC.text,
       'device_type':deviceType,
-      'firebase_token':fcmToken,
+      'firebase_token':fcmToken??'',
       'commercial_register':file != null
-          ? await MultipartFile.fromFile(file!.path, filename:file!.path.split('/').last)
+          ? await MultipartFile.fromFile(_file!.path, filename:_file.path.split('/').last)
       :await MultipartFile.fromFile(image!, filename:image!.split('/').last),
     });
     await DioHelper.postData2(

@@ -69,11 +69,13 @@ class HomeScreen extends StatelessWidget {
                             navigateTo(context, ListArrivals());
                           }),
                         const ListProducts(),
+                        if(cubit.homeModel!.data!.showAuctions!)
                         if(cubit.homeModel!.data!.newAuctions!.isNotEmpty)
                           seeMore(tr('new_auctions'), () {
                             navigateTo(context, AuctionsListScreen());
                           }),
-                        BlocConsumer<AuctionCubit, AuctionStates>(
+                        if(cubit.homeModel!.data!.showAuctions!)
+                          BlocConsumer<AuctionCubit, AuctionStates>(
                           listener: (context, state) {},
                           builder: (context, state) {
                             return const ListAuctions();

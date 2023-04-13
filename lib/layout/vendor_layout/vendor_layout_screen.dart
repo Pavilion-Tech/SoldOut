@@ -4,6 +4,8 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:soldout/layout/vendor_layout/vendor_nav_screen.dart';
 import 'package:soldout/shared/images/images.dart';
 import 'package:soldout/shared/styles/colors.dart';
+import '../../modules/buyer/screens/settings/settings_cubit/settings_cubit.dart';
+import '../../modules/widgets/wrong_screens/maintance_screen.dart';
 import '../../shared/components/components.dart';
 import '../../shared/components/constants.dart';
 import 'cubit/vendor_cubit.dart';
@@ -14,9 +16,18 @@ class VendorLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future.delayed(Duration.zero,(){
+      VendorCubit.get(context).dynamicLink(context);
+      VendorCubit.get(context).checkUpdate(context);
+    });
     return BlocConsumer<VendorCubit, VendorStates>(
       listener: (context, state) {
         if(isConnect!=null)checkNet(context);
+        if(SettingsCubit.get(context).settingsModel!=null){
+          if(SettingsCubit.get(context).settingsModel!.data!.maintenance!){
+            navigateAndFinish(context, MaintanceScreen());
+          }
+        }
 
       },
       builder: (context, state) {

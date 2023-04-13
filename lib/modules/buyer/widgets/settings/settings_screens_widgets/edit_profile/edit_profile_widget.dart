@@ -21,8 +21,8 @@ class EditProfileWidget extends StatelessWidget {
       },
       builder: (context, state) {
         var cubit = AuthCubit.get(context);
-        nameController.text = cubit.getProfileModel!.data!.name!;
-        phoneController.text = cubit.getProfileModel!.data!.phone!;
+        nameController.text = cubit.getProfileModel!.data!.name??'';
+        phoneController.text = cubit.getProfileModel!.data!.phone??'';
         return Form(
           key: formKey,
           child: SingleChildScrollView(
@@ -39,10 +39,6 @@ class EditProfileWidget extends StatelessWidget {
                 defaultTextField(
                     controller: nameController,
                     hint: tr('full_name_two'),
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(16),
-                      FilteringTextInputFormatter.digitsOnly,
-                    ],
                     validator: (String? value) {
                       if (value!.isEmpty) {
                         return tr('name_empty');
@@ -54,7 +50,9 @@ class EditProfileWidget extends StatelessWidget {
                     controller: phoneController,
                     hint: tr('phone_sign_in'),
                     color: Colors.grey.shade200,
-                    readOnly: true
+                    readOnly: true,
+                  digitsOnly: true,
+                  textLength: 10,
                 ),
                 const SizedBox(height: 15,),
                 defaultButton(

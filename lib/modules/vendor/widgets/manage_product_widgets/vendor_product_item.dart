@@ -10,6 +10,7 @@ import 'package:soldout/shared/images/images.dart';
 import '../../../../models/buyer_model/product_model/product_model.dart';
 import '../../../../shared/components/constants.dart';
 import '../../../../shared/styles/colors.dart';
+import '../../../widgets/image_net.dart';
 import '../../screens/manage_product/edit_product.dart';
 import '../../screens/manage_product/vendor_product_screen.dart';
 
@@ -48,26 +49,9 @@ class VProductItem extends StatelessWidget {
                 SizedBox(
                   height: size!.height * .11,
                   width: size!.width * .5,
-                  child: Image.network(
-                    productModel.images![0].image!,
-                    fit: BoxFit.cover,
-                    errorBuilder: (c,o,s)=>const Icon(Icons.info),
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) {
-                        return child;
-                      }
-                      return Center(
-                        child: CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes!
-                              : null,
-                        ),
-                      );
-                    },
-                  ),
+                  child: ImageNet(image: productModel.images![0].image!,),
                 ),
-                if(size!.height>600)
+                if(size!.height>670)
                 SizedBox(height: size!.height * .009,),
                 Padding(
                   padding: const EdgeInsets.all(3.0),
@@ -79,13 +63,13 @@ class VProductItem extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style:  TextStyle(
-                            fontSize: size!.height>600 ?14:12,
+                            fontSize: size!.height>670 ?14:12,
                             fontWeight: FontWeight.bold),
                       ),
                       Row(
                         children: [
                           SizedBox(
-                            height: size!.height > 600 ? size!.height * .05:size!.height * .06,
+                            height: size!.height > 670 ? size!.height * .05:size!.height * .06,
                             width: size!.width * .25,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,

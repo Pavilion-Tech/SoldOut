@@ -61,7 +61,7 @@ class AddressAndOrderLoading extends StatelessWidget {
 
   Widget address() {
     return Container(
-      height: size!.height > 600 ? size!.height * .1: size!.height * .15,
+      height: size!.height > 670 ? size!.height * .1: size!.height * .15,
       decoration: BoxDecoration(
         borderRadius: BorderRadiusDirectional.circular(10),
         border: Border.all(

@@ -133,7 +133,7 @@ class VEditProfile extends StatelessWidget {
                       ),
                     ),
                   ),
-                  noSize: size!.height > 600 ?false:true,
+                  noSize: size!.height > 670 ?false:true,
                 );
               },
             ),

@@ -81,7 +81,7 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
         });
       },
       child: Container(
-        height: size!.height > 600?size!.height*.09:size!.height*.13,
+        height: size!.height > 670?size!.height*.09:size!.height*.13,
         decoration: BoxDecoration(
           borderRadius: BorderRadiusDirectional.circular(10),
           border: Border.all(
@@ -118,7 +118,7 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
                   width: 10,
                 ),
                 SizedBox(
-                    width: size!.height > 600?size!.width*.75:size!.width*.65,
+                    width: size!.height > 670?size!.width*.75:size!.width*.65,
                     height: size!.height * .015,
                     child: Text(
                       model.fullAddress!,
@@ -214,7 +214,7 @@ class _DeliveryAddressState extends State<DeliveryAddress> {
     return Stack(
       children: [
         Container(
-          height: size!.height > 600?size!.height*.06:size!.height*.09,
+          height: size!.height > 670?size!.height*.06:size!.height*.09,
           width: double.infinity,
           decoration: BoxDecoration(
             color: defaultColorTwo,

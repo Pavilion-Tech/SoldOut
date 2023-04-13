@@ -68,7 +68,7 @@ class OrderHistoryWidget extends StatelessWidget {
         navigateTo(context, PurchasesDetails(model: model,));
       },
       child: Container(
-        height: size!.height > 600 ?size!.height * .09:size!.height * .135,
+        height: size!.height > 670 ?size!.height * .09:size!.height * .135,
         decoration: BoxDecoration(
           borderRadius: BorderRadiusDirectional.circular(10),
           border: Border.all(

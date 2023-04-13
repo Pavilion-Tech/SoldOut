@@ -10,7 +10,7 @@ class SecondPointsLoading extends StatelessWidget {
     return Container(
       alignment: AlignmentDirectional.topCenter,
       child: Container(
-        height:size!.height>600? size!.height*.2:size!.height*.3,
+        height:size!.height>670? size!.height*.2:size!.height*.3,
         width: size!.width*.75,
         padding: const EdgeInsetsDirectional.all(20),
         decoration: BoxDecoration(

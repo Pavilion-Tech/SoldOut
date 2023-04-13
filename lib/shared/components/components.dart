@@ -3,11 +3,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:soldout/layout/buyer_layout/buy_layout_screen.dart';
 import 'package:soldout/modules/widgets/wrong_screens/no_connect.dart';
 import 'package:soldout/shared/images/images.dart';
 import 'package:soldout/shared/styles/colors.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'constants.dart';
+
+Future<XFile?> checkImageSize (XFile? image)async{
+  if(image!=null) {
+    final bytes = (await image.readAsBytes()).lengthInBytes;
+    final kb = bytes / 1024;
+    final mb = kb / 1024;
+    if(mb<5.0){
+      return image;
+    }else {
+      showToast(msg: tr('image_size'));
+      return null;
+    }
+  }
+}
 
 void navigateTo(context, widget) {
   Navigator.push(
@@ -69,7 +85,8 @@ Widget defaultTextField({
   FormFieldValidator<String>? validator,
   bool readOnly = false,
   VoidCallback? onTap,
-  List<TextInputFormatter>? inputFormatters,
+  bool? digitsOnly,
+  int? textLength,
   Function(String)? onChanged,
   bool isPassword = false,
 }){
@@ -102,7 +119,10 @@ Widget defaultTextField({
             suffixIcon: suffix,
             labelStyle: TextStyle(color: HexColor('#A0AEC0'),fontSize: 12),
           ),
-          inputFormatters: inputFormatters,
+          inputFormatters: [
+            LengthLimitingTextInputFormatter(textLength),
+            if(digitsOnly!=null)FilteringTextInputFormatter.digitsOnly,
+          ],
         ),
       ),
     ],
@@ -161,7 +181,7 @@ Widget myAppBar({
             title.toUpperCase(),
             style: TextStyle(
               color: defaultColorTwo,
-              fontSize: size!.height >600 ? 18 : 14,
+              fontSize: size!.height >670 ? 18 : 14,
             ),
           ),
           const Spacer(),
@@ -201,5 +221,13 @@ Future showToast ({required String msg , bool? toastState})
 checkNet(context) {
   if (!isConnect!) {
     navigateAndFinish(context,const NoConnect(),);
+  }
+}
+
+Future<void> openUrl(String url) async {
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
   }
 }

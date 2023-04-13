@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -8,7 +10,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:soldout/layout/buyer_layout/cubit/buyer_cubit.dart';
 import 'package:soldout/modules/buyer/screens/product/product_screen.dart';
 import 'package:soldout/modules/vendor/auth/auth_cubit/auth_cubit.dart';
+import 'package:soldout/modules/widgets/wrong_screens/maintance_screen.dart';
 import 'package:soldout/shared/bloc_observer.dart';
+import 'package:soldout/shared/components/components.dart';
 import 'package:soldout/shared/components/constants.dart';
 import 'package:soldout/shared/firebase_helper/firebase_options.dart';
 import 'package:soldout/shared/firebase_helper/notification_helper.dart';
@@ -22,30 +26,38 @@ import 'modules/buyer/screens/auction/auction_cubit/auction_cubit.dart';
 import 'modules/buyer/screens/cart/cart_cubit/cart_cubit.dart';
 import 'modules/buyer/screens/settings/setting_screens/my_account/addresses/address_cubit/cubit.dart';
 import 'modules/buyer/screens/settings/settings_cubit/settings_cubit.dart';
+import 'modules/buyer/screens/settings/settings_cubit/settings_states.dart';
 import 'modules/vendor/screens/settings/vendor_setting_cubit/vendor_setting_cubit.dart';
 //🌎
-void main() async{
+void main() async {
 //🌎
 
 
   WidgetsFlutterBinding.ensureInitialized();
+  try{
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    NotificationHelper();
+    fcmToken = await FirebaseMessaging.instance.getToken();
+  }catch(e){
+    print(e);
+  }
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
 
   await EasyLocalization.ensureInitialized();
+
+  HttpOverrides.global = MyHttpOverrides();
+
 
   await CacheHelper.init();
 
   DioHelper.init1();
 
-  NotificationHelper();
 
-  if(defaultTargetPlatform == TargetPlatform.android) deviceType = 0;
-  if(defaultTargetPlatform == TargetPlatform.iOS) deviceType = 1;
+  if (defaultTargetPlatform == TargetPlatform.android) deviceType = 0;
+  if (defaultTargetPlatform == TargetPlatform.iOS) deviceType = 1;
 
-  fcmToken = await  FirebaseMessaging.instance.getToken();
   print(fcmToken);
 
   onBoarding = CacheHelper.getData(key: 'onBoarding');
@@ -65,20 +77,28 @@ void main() async{
 
   BlocOverrides.runZoned(
         () {
-          runApp(
-            EasyLocalization(
-              supportedLocales:  const [Locale('en'), Locale('ar')],
-              useOnlyLangCode: true,
-              path: 'assets/langs',
-              fallbackLocale: const Locale('en'),
-              startLocale: Locale(myLocale??'en'),
-              child: const SoldOut(),
-            ),
-          );
-          },
+      runApp(
+        EasyLocalization(
+          supportedLocales: const [Locale('en'), Locale('ar')],
+          useOnlyLangCode: true,
+          path: 'assets/langs',
+          fallbackLocale: const Locale('en'),
+          startLocale: Locale(myLocale ?? 'en'),
+          child: const SoldOut(),
+        ),
+      );
+    },
     blocObserver: MyBlocObserver(),
   );
+}
 
+class MyHttpOverrides extends HttpOverrides{
+
+  @override
+  HttpClient createHttpClient(SecurityContext? context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+  }
 }
 
 class SoldOut extends StatelessWidget {
@@ -88,11 +108,9 @@ class SoldOut extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context)=> BuyerCubit()..checkInterNet()
-          ..dynamicLink(),
+        BlocProvider(create: (context)=> BuyerCubit()..checkInterNet(),
         ),
-        BlocProvider(create: (context)=> VendorCubit()..checkInterNet()
-          ..dynamicLink(context),
+        BlocProvider(create: (context)=> VendorCubit()..checkInterNet(),
         ),
         BlocProvider(create: (context)=> AuctionCubit()..checkInterNet()
           ..initPusher()
@@ -113,7 +131,10 @@ class SoldOut extends StatelessWidget {
           ..getProfile()
         ),
       ],
-      child: MaterialApp(
+      child: BlocConsumer<SettingsCubit, SettingsStates>(
+  listener: (context, state) {},
+  builder: (context, state) {
+    return MaterialApp(
         title: 'Sold Out',
         debugShowCheckedModeBanner: false,
         localizationsDelegates: context.localizationDelegates,
@@ -131,7 +152,9 @@ class SoldOut extends StatelessWidget {
           fontFamily: 'Cairo',
         ),
         home: const SplashScreen(),
-      ),
+      );
+  },
+),
     );
   }
 }

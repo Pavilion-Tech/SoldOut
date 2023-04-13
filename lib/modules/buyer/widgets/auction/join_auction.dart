@@ -23,8 +23,8 @@ class JoinAuction extends StatelessWidget {
           AuctionCubit.get(context).joinAuctions(id, context);
         },
         child: Container(
-          height: size!.height >600 ?size!.height * .06:size!.height * .08,
-          width: size!.height >600 ?size!.width * .7:size!.width * .8,
+          height: size!.height >670 ?size!.height * .06:size!.height * .08,
+          width: size!.height >670 ?size!.width * .7:size!.width * .8,
           decoration: BoxDecoration(
             color: defaultColor,
             borderRadius: BorderRadiusDirectional.circular(10),

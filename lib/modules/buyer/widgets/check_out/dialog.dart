@@ -49,7 +49,7 @@ class _CheckOutDialogState extends State<CheckOutDialog> with SingleTickerProvid
         borderRadius: BorderRadiusDirectional.circular(20),
       ),
       content: Container(
-        height: size!.height>600? size!.height*.3:size!.height*.4,
+        height: size!.height>670? size!.height*.3:size!.height*.4,
         alignment: AlignmentDirectional.center,
         child: Column(
           children:  [
@@ -82,7 +82,7 @@ class _CheckOutDialogState extends State<CheckOutDialog> with SingleTickerProvid
               BuyerCubit.get(context).currentIndex = 0;
               navigateAndFinish(context, BuyerLayout());
             }, text: tr('continue_shopping'),
-              width: size!.height>600? null :size!.width
+              width: size!.height>670? null :size!.width
             ),
           ],
         ),

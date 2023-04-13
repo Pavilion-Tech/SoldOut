@@ -15,7 +15,7 @@ class VPurchasesDetailsItem extends StatelessWidget {
         .add_yMMMMEEEEd()
         .format(DateTime.fromMillisecondsSinceEpoch(model.createdAt!));
     return Container(
-      height: size!.height > 600 ?size!.height*.21:size!.height*.35,
+      height: size!.height > 670 ?size!.height*.21:size!.height*.35,
       decoration: BoxDecoration(
         borderRadius: BorderRadiusDirectional.circular(10),
         border: Border.all(

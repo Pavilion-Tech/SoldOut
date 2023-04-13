@@ -23,7 +23,7 @@ class OrderItem extends StatelessWidget {
         navigateTo(context, VPurchasesDetails(model: model,));
       },
       child: Container(
-        height: size!.height > 600 ?size!.height*.09:size!.height*.14,
+        height: size!.height > 670 ?size!.height*.09:size!.height*.14,
         decoration: BoxDecoration(
           borderRadius: BorderRadiusDirectional.circular(10),
           border: Border.all(

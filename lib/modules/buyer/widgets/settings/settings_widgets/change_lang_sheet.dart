@@ -15,7 +15,7 @@ class ChangeLangBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: size!.height>600? size!.height*.24:size!.height*.4,
+      height: size!.height>670? size!.height*.24:size!.height*.4,
       decoration: const BoxDecoration(
         borderRadius: BorderRadiusDirectional.only(
           topStart: Radius.circular(10),

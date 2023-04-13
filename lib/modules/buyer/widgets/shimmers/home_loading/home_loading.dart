@@ -31,7 +31,7 @@ class HomeLoading extends StatelessWidget
           children: [
             seeMore,
             Container(
-                height: size!.height >600 ? size!.height * .197:size!.height * .225,
+                height: size!.height >670 ? size!.height * .197:size!.height * .225,
                 alignment: AlignmentDirectional.centerStart,
                 padding:
                 EdgeInsetsDirectional.only(start: size!.width * .050),
@@ -39,7 +39,7 @@ class HomeLoading extends StatelessWidget
             ),
             seeMore,
             Container(
-                height: size!.height >600 ? size!.height * .197:size!.height * .225,
+                height: size!.height >670 ? size!.height * .197:size!.height * .225,
                 alignment: AlignmentDirectional.centerStart,
                 padding:
                 EdgeInsetsDirectional.only(start: size!.width * .050),

@@ -35,10 +35,8 @@ class VSignInWidget extends StatelessWidget {
                   hint: tr('phone_sign_in'),
                   controller: phoneController,
                   type: TextInputType.phone,
-                inputFormatters: [
-                  LengthLimitingTextInputFormatter(10),
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
+                digitsOnly: true,
+                textLength: 10,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return tr('phone_empty');

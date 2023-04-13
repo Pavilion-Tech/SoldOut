@@ -221,6 +221,6 @@
   "coupon_empty": "Coupon Must Not Be Empty",
   "auction_status": "Auction Status",
   "finished": "Finished",
-  "processing": "Processing"
-
+  "processing": "Processing",
+  "image_size": "Image Size Should Lower than 5 MB"
 }

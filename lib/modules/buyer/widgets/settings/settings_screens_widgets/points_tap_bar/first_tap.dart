@@ -23,7 +23,7 @@ class FirstTap extends StatelessWidget {
       child: Container(
         alignment: AlignmentDirectional.center,
         child: Container(
-          height: size!.height>600? size!.height*.13:size!.height*.2,
+          height: size!.height>670? size!.height*.13:size!.height*.2,
           width: double.infinity,
           padding: const EdgeInsetsDirectional.all(20),
           decoration: BoxDecoration(

@@ -19,7 +19,7 @@ class MyAuctionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var currentAspectRatio =  size!.height > 600 ?2.1:1.9;
+    var currentAspectRatio =  size!.height > 670 ?2.1:1.9;
     return BlocConsumer<AuctionCubit, AuctionStates>(
       listener: (context, state) {},
       builder: (context, state) {
@@ -46,7 +46,7 @@ class MyAuctionList extends StatelessWidget {
                   }
                 ),
                 ConditionalBuilder(
-                  condition: cubit.myAuction!.data!.isNotEmpty||cubit.searchModel!.isNotEmpty,
+                  condition: cubit.myAuction!.data!.isNotEmpty,
                   fallback: (context) => Center(
                       child: Column(
                         children: [

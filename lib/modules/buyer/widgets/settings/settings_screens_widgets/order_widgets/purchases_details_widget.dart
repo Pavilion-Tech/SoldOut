@@ -22,7 +22,7 @@ class PurchasesDetailsWidget extends StatelessWidget {
     return Column(
       children: [
         Container(
-          height: size!.height > 600 ?size!.height * .14:size!.height * .21,
+          height: size!.height > 736.0 ?size!.height * .14:size!.height * .21,
           decoration: BoxDecoration(
             borderRadius: BorderRadiusDirectional.circular(10),
             border: Border.all(

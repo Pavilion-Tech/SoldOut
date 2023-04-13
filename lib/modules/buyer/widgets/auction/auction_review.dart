@@ -77,7 +77,7 @@ class UserBids extends StatelessWidget {
       child: Row(
         children: [
           Text(
-            bids.userName!,
+            bids.userName??'',
             maxLines: 1,
             style:const TextStyle(fontWeight: FontWeight.bold),
             overflow: TextOverflow.ellipsis,

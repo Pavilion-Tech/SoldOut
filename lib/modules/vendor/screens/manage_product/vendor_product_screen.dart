@@ -40,7 +40,7 @@ class VProductScreen extends StatelessWidget {
               Align(
                 alignment: AlignmentDirectional.bottomCenter,
                 child: Padding(
-                  padding:  EdgeInsetsDirectional.all(size!.height > 600 ?20:15),
+                  padding:  EdgeInsetsDirectional.all(size!.height > 670 ?20:15),
                   child: Row(
                     children: [
                       defaultButton(

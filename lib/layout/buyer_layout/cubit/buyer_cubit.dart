@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:new_version_plus/new_version_plus.dart';
 import 'package:soldout/modules/buyer/screens/cart/cart_screen.dart';
 import 'package:soldout/modules/buyer/screens/notification/notification_screen.dart';
 import 'package:soldout/modules/buyer/screens/settings/setting_screen.dart';
@@ -17,6 +18,7 @@ import '../../../models/buyer_model/product_model/product_model.dart';
 import '../../../models/notification_model.dart';
 import '../../../modules/buyer/screens/home/home_screen.dart';
 import '../../../modules/buyer/widgets/items_shared/flying_cart.dart';
+import '../../../modules/widgets/wrong_screens/update_screen.dart';
 import '../../../shared/components/constants.dart';
 import '../../../shared/firebase_helper/dynamic_links.dart';
 import 'buyer_states.dart';
@@ -97,6 +99,18 @@ class BuyerCubit extends Cubit<BuyerStates> {
     }
   }
 
+  void checkUpdate(context) async{
+    final newVersion =await NewVersionPlus().getVersionStatus();
+    if(newVersion !=null){
+      if(newVersion.canUpdate){
+        navigateAndFinish(context, UpdateScreen(
+            url:newVersion.appStoreLink,
+            releaseNote:newVersion.releaseNotes??tr('update_note')
+        ));
+      }
+    }
+  }
+
   void getHomeData(context) async {
     if (!isConnect!) checkNet(context);
     emit(GetHomeDataLoadingState());
@@ -105,6 +119,7 @@ class BuyerCubit extends Cubit<BuyerStates> {
         lang: myLocale,
         token: 'Bearer $token'
     ).then((value) {
+      print(value.data);
       if (value.statusCode == 200 && value.data['status']) {
         homeModel = HomeModel.fromJson(value.data);
         takeFav(homeModel!.data!.newProducts!);
@@ -284,9 +299,11 @@ class BuyerCubit extends Cubit<BuyerStates> {
   }
 
   void getProduct({required int id}) async {
+    print('/users/home/getProductDetails?product_id=$id');
     emit(GetProductLoadingState());
     await DioHelper.getData(url: '/users/home/getProductDetails?product_id=$id')
         .then((value) {
+          print(value.data);
       if (value.statusCode == 200 && value.data['status']) {
         productDetailsModel = ProductModel.fromJson(value.data['data']);
         favorites.addAll({

@@ -19,7 +19,7 @@ class VendorManageProductList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var currentAspectRatio =  size!.height > 600 ?2.1:1.8;
+    var currentAspectRatio =  size!.height > 670 ?2.1:1.8;
     suffix = Suffix(apply: () {
       VendorCubit.get(context).getProducts(
           text: VendorCubit.get(context).searchController.text.trim(),

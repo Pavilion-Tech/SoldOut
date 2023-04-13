@@ -14,7 +14,7 @@ class VOurAppWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: Container(
-        height: size!.height > 600 ?size!.height*.15:size!.height*.2,
+        height: size!.height > 670 ?size!.height*.15:size!.height*.2,
         padding: const EdgeInsetsDirectional.all(5),
         decoration: BoxDecoration(
             color: Colors.blue.shade100.withOpacity(.1),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:soldout/modules/widgets/image_net.dart';
 
 import '../../../../shared/components/constants.dart';
 
@@ -15,28 +16,12 @@ class AuctionCheckOutItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height:size!.height > 600?size!.height*.09:size!.height*.12,
+      height:size!.height > 670?size!.height*.09:size!.height*.12,
       child: Row(
         children: [
           SizedBox(
               height: size!.height*.07, width: size!.width*.25,
-              child: Image.network(
-                firstImage,
-                errorBuilder: (c,o,s)=>const Icon(Icons.info),
-                loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress == null) {
-                    return child;
-                  }
-                  return Center(
-                    child: CircularProgressIndicator(
-                      value: loadingProgress.expectedTotalBytes != null
-                          ? loadingProgress.cumulativeBytesLoaded /
-                          loadingProgress.expectedTotalBytes!
-                          : null,
-                    ),
-                  );
-                },
-              )
+              child: ImageNet(image: firstImage,)
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),

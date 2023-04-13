@@ -6,6 +6,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:soldout/models/buyer_model/cart_model/get_cart_model.dart';
 import 'package:soldout/modules/buyer/screens/cart/cart_cubit/cart_cubit.dart';
 import 'package:soldout/modules/buyer/screens/cart/cart_cubit/cart_states.dart';
+import 'package:soldout/modules/widgets/image_net.dart';
 import 'package:soldout/shared/components/components.dart';
 import 'package:soldout/shared/styles/colors.dart';
 import '../../../../shared/components/constants.dart';
@@ -52,7 +53,7 @@ class CartItem extends StatelessWidget {
                 children: const[],
               ),
               child: Container(
-                height: size!.height>600? size!.height*.1:size!.height*.15,
+                height: size!.height>670? size!.height*.1:size!.height*.15,
                 width: double.infinity,
                 padding: const EdgeInsetsDirectional.all(5),
                 decoration: BoxDecoration(
@@ -66,26 +67,7 @@ class CartItem extends StatelessWidget {
                     SizedBox(
                       height: size!.height * .15,
                       width: size!.width * .3,
-                      child: Image.network(
-                        model.firstImage!,
-                        errorBuilder: (c, Object o, s) {
-                          return const Icon(Icons.info);
-                        },
-                        loadingBuilder: (context, child, loadingProgress) {
-                          if (loadingProgress == null) {
-                            return child;
-                          }
-                          return Center(
-                            child: CircularProgressIndicator(
-                              value: loadingProgress.expectedTotalBytes !=
-                                  null
-                                  ? loadingProgress.cumulativeBytesLoaded /
-                                  loadingProgress.expectedTotalBytes!
-                                  : null,
-                            ),
-                          );
-                        },
-                      ),
+                      child: ImageNet(image: model.firstImage??'',),
                     ),
                     const SizedBox(
                       width: 5,

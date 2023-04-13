@@ -221,6 +221,6 @@
   "coupon_empty": "يجب ألا تكون القسيمة فارغة",
   "auction_status": "حالة المزاد",
   "finished": "انتهي",
-  "processing": "جاري"
-
+  "processing": "جاري",
+  "image_size": "يجب أن يقل حجم الصورة عن 5 ميجا بايت"
 }

@@ -7,6 +7,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:soldout/modules/buyer/auth/auth_cubit/auth_cubit.dart';
 import 'package:soldout/modules/buyer/auth/auth_cubit/auth_state.dart';
 import 'package:soldout/shared/styles/colors.dart';
+import '../../../../layout/buyer_layout/buy_layout_screen.dart';
 import '../../../../shared/components/components.dart';
 import '../../../../shared/components/constants.dart';
 import '../../../widgets/sign_widget.dart';
@@ -23,16 +24,19 @@ class _State extends State<VerificationScreen> {
 
   int _start = 60;
 
+  bool timerFinished = false;
+
+  Timer? timer;
+
   void startTimer() {
-    var cubit = AuthCubit.get(context);
     const oneSec = Duration(seconds: 1);
-    cubit.timer = Timer.periodic(
+    timer = Timer.periodic(
       oneSec,
           (Timer timer) {
         if (_start == 0) {
           setState(() {
             timer.cancel();
-            cubit.timerFinished = true;
+            timerFinished = true;
           });
         } else {
           setState(() {
@@ -44,11 +48,17 @@ class _State extends State<VerificationScreen> {
   }
 
   bool checkCode() {
-   String codeFromOtp =
-   otpController1.text + otpController2.text+
-   otpController3.text+otpController4.text+
-   otpController5.text+otpController6.text;
-   return int.parse(codeFromOtp) == code;
+    String codeFromOtp = otpController1.text +
+        otpController2.text +
+        otpController3.text +
+        otpController4.text +
+        otpController5.text +
+        otpController6.text;
+    print(codeFromOtp);
+    return int.parse(myLocale == 'en'
+        ? codeFromOtp
+        : String.fromCharCodes(codeFromOtp.runes.toList().reversed)) ==
+        code;
   }
 
   bool checkOTP() {
@@ -65,13 +75,7 @@ class _State extends State<VerificationScreen> {
 
   void submit(BuildContext context){
     if(checkOTP()){
-      if(checkCode()){
-        setState(() {
           AuthCubit.get(context).logIn(context,widget.isNoty);
-        });
-      }else{
-        showToast(msg: tr('otp_invalid'),toastState: true);
-      }
     }else{
       showToast(msg: tr('code_empty'),toastState: true);
     }
@@ -84,7 +88,11 @@ class _State extends State<VerificationScreen> {
     super.initState();
   }
 
-
+  @override
+  void dispose() {
+    timer!.cancel();
+    super.dispose();
+  }
   TextEditingController phoneController = TextEditingController();
   TextEditingController otpController1 = TextEditingController();
   TextEditingController otpController2 = TextEditingController();
@@ -98,9 +106,10 @@ class _State extends State<VerificationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocConsumer<AuthCubit, AuthStates>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if(state is LoginSuccessState)navigateAndFinish(context, BuyerLayout());
+        },
         builder: (context, state) {
-          var cubit = AuthCubit.get(context);
           return Stack(
             alignment: AlignmentDirectional.center,
             children: [
@@ -111,11 +120,7 @@ class _State extends State<VerificationScreen> {
                     title: tr('verification_code'),
                     isArrowBack: true,
                     arrowTap: () {
-                      setState(() {
-                        cubit.timer!.cancel();
-                        cubit.timerFinished = true;
-                        Navigator.pop(context);
-                      });
+                      Navigator.pop(context);
                     }
                 ),
               ),
@@ -132,19 +137,20 @@ class _State extends State<VerificationScreen> {
                         text: tr('verify')
                     ):const CircularProgressIndicator(),
                     SizedBox(height: size!.height * .02,),
-                    if(!cubit.timerFinished)
+                    if(!timerFinished)
                       Text(
                         '00:$_start',
                         style: const TextStyle(color: defaultColor),),
-                    if(cubit.timerFinished)
+                    if(timerFinished)
                       TextButton(
                         onPressed: () {
-                          cubit.timer;
-                          _start = 60;
-                          cubit.timerFinished = false;
-                          startTimer();
                           AuthCubit.get(context).getCode();
-                        },
+                          timer;
+                          _start = 60;
+                          timerFinished = false;
+                          startTimer();
+                          showToast(msg: '${tr('code_is')} $code');
+                          },
                         child: Text(
                           tr('reset'),
                           style: const TextStyle(color: defaultColor),
@@ -164,17 +170,25 @@ class _State extends State<VerificationScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        otpField(otpController1),
+        otpField(otpController1,    onFinished: () {
+          if (checkOTP() && myLocale != 'en') {
+            submit(context);
+          }
+        },),
         otpField(otpController2),
         otpField(otpController3),
         otpField(otpController4),
         otpField(otpController5),
-        otpField(otpController6),
+        otpField(otpController6,    onFinished: () {
+          if (checkOTP() && myLocale != 'ar') {
+            submit(context);
+          }
+        },),
       ],
     );
   }
 
-  Widget otpField(TextEditingController controller) {
+  Widget otpField(TextEditingController controller,{VoidCallback? onFinished}) {
     return SizedBox(
       height: 50,
       width: size!.width*.135,
@@ -198,8 +212,17 @@ class _State extends State<VerificationScreen> {
           ),
         ),
         onChanged: (value) {
-          FocusManager.instance.primaryFocus!.nextFocus();
-        },
+          if(value.isNotEmpty){
+            myLocale =='ar'
+                ? FocusManager.instance.primaryFocus!.previousFocus()
+                :FocusManager.instance.primaryFocus!.nextFocus();
+            if(onFinished!=null)onFinished!();
+          }else{
+            myLocale =='ar'
+                ? FocusManager.instance.primaryFocus!.nextFocus()
+                :FocusManager.instance.primaryFocus!.previousFocus();
+          }
+          },
         inputFormatters: [
           LengthLimitingTextInputFormatter(1),
           FilteringTextInputFormatter.digitsOnly,

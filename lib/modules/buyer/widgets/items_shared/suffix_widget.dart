@@ -57,7 +57,7 @@ class _SuffixWidgetState extends State<SuffixWidget> {
 
   Widget sortSheet(setState) {
     return Container(
-      height: size!.height > 600 ? size!.height * .29:size!.height * .45,
+      height: size!.height > 670 ? size!.height * .29:size!.height * .45,
       decoration: const BoxDecoration(
         borderRadius: BorderRadiusDirectional.only(
           topStart: Radius.circular(10),
@@ -102,7 +102,7 @@ class _SuffixWidgetState extends State<SuffixWidget> {
               style:const TextStyle(fontWeight: FontWeight.bold),),
           ),
           Padding(
-            padding:  EdgeInsets.symmetric(horizontal: size!.height > 600 ? 20:15),
+            padding:  EdgeInsets.symmetric(horizontal: size!.height > 670 ? 20:15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [

@@ -49,10 +49,8 @@ class ForgetPassword extends StatelessWidget {
                       defaultTextField(
                           type: TextInputType.phone,
                           controller: VAuthCubit.get(context).phoneC,
-                          inputFormatters: [
-                            LengthLimitingTextInputFormatter(10),
-                            FilteringTextInputFormatter.digitsOnly,
-                          ],
+                          digitsOnly: true,
+                          textLength: 10,
                           hint: tr('phone_sign_in'),
                           validator: (value) {
                             if (value!.isEmpty) {

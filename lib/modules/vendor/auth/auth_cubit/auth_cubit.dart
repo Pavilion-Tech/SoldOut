@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:soldout/layout/vendor_layout/vendor_layout_screen.dart';
@@ -93,6 +95,7 @@ class VAuthCubit extends Cubit<VAuthStates>
   required BuildContext context,
 }) async
   {
+    File file = await FlutterNativeImage.compressImage(image!.path,quality:1);
     showToast(msg: tr('wait'));
     emit(RegisterLoadingState());
     FormData formData = FormData.fromMap({
@@ -100,7 +103,7 @@ class VAuthCubit extends Cubit<VAuthStates>
       'email':email,
       'phone':phone,
       'password':password,
-      'commercial_register': await MultipartFile.fromFile(image!.path, filename:image!.path.split('/').last),
+      'commercial_register': await MultipartFile.fromFile(file.path, filename:file.path.split('/').last),
     });
     await DioHelper.postData2(
         url: vRegister,
@@ -135,7 +138,7 @@ class VAuthCubit extends Cubit<VAuthStates>
         data: {
           'code':code,
           'device_type':deviceType,
-          'firebase_token':fcmToken,
+          'firebase_token':fcmToken??'fcm',
         }
     ).then((value) {
       if(value.statusCode == 200 &&value.data['status']){
@@ -201,7 +204,7 @@ class VAuthCubit extends Cubit<VAuthStates>
           'phone':phone,
           'password':password,
           'device_type':deviceType,
-          'firebase_token':fcmToken
+          'firebase_token':fcmToken??'fcm'
         }
         ).then((value) {
       if(value.statusCode == 200 &&value.data['status']){

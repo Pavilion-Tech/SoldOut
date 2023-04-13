@@ -15,10 +15,10 @@ class VendorSettingsScreen extends StatelessWidget {
       children: [
         myAppBar(context: context, title: tr('settings')),
         SingleChildScrollView(
-          physics:size!.height > 600 ? NeverScrollableScrollPhysics():null,
+          physics:size!.height > 670 ? NeverScrollableScrollPhysics():null,
           child: MyContainer(
               const VSettingsWidget(),
-            noSize: size!.height > 600 ?false:true,
+            noSize: size!.height > 670 ?false:true,
           ),
         ),
       ],
