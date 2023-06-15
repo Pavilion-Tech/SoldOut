@@ -8,6 +8,7 @@ import 'package:soldout/modules/vendor/screens/settings/vendor_setting_cubit/ven
 import 'package:soldout/modules/vendor/screens/settings/vendor_setting_cubit/vendor_setting_states.dart';
 import 'package:soldout/shared/components/components.dart';
 import 'package:soldout/shared/components/constants.dart';
+import '../../../widgets/image_net.dart';
 import '../../../widgets/my_container.dart';
 
 class VEditProfile extends StatelessWidget {
@@ -19,125 +20,110 @@ class VEditProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            myAppBar(
-              context: context,
-              title: tr('edit_profile'),
-              isArrowBack: true,
+        child: InkWell(
+          onTap: ()=>FocusManager.instance.primaryFocus?.unfocus(),
+          overlayColor: MaterialStateProperty.all(Colors.transparent),
+          child: Stack(
+            children: [
+              myAppBar(
+                context: context,
+                title: tr('edit_profile'),
+                isArrowBack: true,
 
-            ),
-            BlocConsumer<VSettingCubit, VSettingStates>(
-              listener: (context, state) {
-                if(isConnect!=null)checkNet(context);
-                if(state is UpdateProfileSuccessState)Navigator.pop(context);
-              },
-              builder: (context, state) {
-                var cubit = VSettingCubit.get(context);
-                return MyContainer(
-                  ConditionalBuilder(
-                    condition: state is! GetProfileLoadingState,
-                    fallback: (context)=>Column(
-                      children: [
-                        SizedBox(height: size!.height*.4,),
-                        const CircularProgressIndicator(),
-                      ],
-                    ),
-                    builder: (context)=> Form(
-                      key: formKey,
-                      child: Column(
+              ),
+              BlocConsumer<VSettingCubit, VSettingStates>(
+                listener: (context, state) {
+                  if(isConnect!=null)checkNet(context);
+                  if(state is UpdateProfileSuccessState)Navigator.pop(context);
+                },
+                builder: (context, state) {
+                  var cubit = VSettingCubit.get(context);
+                  return MyContainer(
+                    ConditionalBuilder(
+                      condition: state is! GetProfileLoadingState,
+                      fallback: (context)=>Column(
                         children: [
-                          defaultTextField(
-                            controller: cubit.nameC,
-                            hint: tr('store_name'),
-                            validator: (value){
-                              if(value!.isEmpty){
-                                return tr('store_empty');
-                              }
-                            }
-                          ),
-                          const SizedBox(height: 15,),
-                          defaultTextField(
-                              controller: cubit.phoneC,
-                              hint: tr('phone'),
-                              type: TextInputType.phone,
-                              readOnly: true
-                          ),
-                          const SizedBox(height: 15,),
-                          defaultTextField(
-                              controller:cubit.emailC,
-                              hint: tr('email_address_two'),
-                              readOnly: true
-                          ),
-                          const SizedBox(height: 15,),
-                          defaultTextField(
-                              controller: cubit.attachC,
-                              hint: tr('attach_register'),
-                              readOnly: true,
-                              onTap: () {
-                                cubit.selectFile();
-                              }
-                          ),
-                          if(cubit.file!=null)
-                            SizedBox(
-                              height: size!.height * .01,
-                            ),
-                          if(cubit.file!=null)
-                            SizedBox(
-                              height: 200,
-                              width: double.infinity,
-                              child: Image.file(
-                                File(cubit.file!.path),
-                                height: 200,
-                                width: double.infinity,
-                                fit: BoxFit.cover,
-                                errorBuilder: (c,o,s)=>const Icon(Icons.info),
-                              ),
-                            ),
-                          if(cubit.file==null)
-                            SizedBox(
-                              height: 200,
-                              width: double.infinity,
-                              child: Image.network(
-                                cubit.image!,
-                                height: 200,
-                                width: double.infinity,
-                                fit: BoxFit.cover,
-                                errorBuilder: (c,o,s)=>const Icon(Icons.info),
-                                loadingBuilder: (context, child, loadingProgress) {
-                                  if (loadingProgress == null) {
-                                    return child;
-                                  }
-                                  return Center(
-                                    child: CircularProgressIndicator(
-                                      value: loadingProgress.expectedTotalBytes != null
-                                          ? loadingProgress.cumulativeBytesLoaded /
-                                          loadingProgress.expectedTotalBytes!
-                                          : null,
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          const SizedBox(height: 15,),
-                          state is! UpdateProfileLoadingState
-                          ?defaultButton(
-                              onTap: () {
-                                if(formKey.currentState!.validate()){
-                                  cubit.updateProfile();
-                                }
-                              },
-                              text: tr('save')
-                          ):const CircularProgressIndicator(),
+                          SizedBox(height: size!.height*.4,),
+                          const CircularProgressIndicator(),
                         ],
                       ),
+                      builder: (context)=> Form(
+                        key: formKey,
+                        child: Column(
+                          children: [
+                            defaultTextField(
+                              controller: cubit.nameC,
+                              hint: tr('store_name'),
+                              validator: (value){
+                                if(value!.isEmpty){
+                                  return tr('store_empty');
+                                }
+                              }
+                            ),
+                            const SizedBox(height: 15,),
+                            defaultTextField(
+                                controller: cubit.phoneC,
+                                hint: tr('phone'),
+                                type: TextInputType.phone,
+                                readOnly: true
+                            ),
+                            const SizedBox(height: 15,),
+                            defaultTextField(
+                                controller:cubit.emailC,
+                                hint: tr('email_address_two'),
+                                readOnly: true
+                            ),
+                            const SizedBox(height: 15,),
+                            defaultTextField(
+                                controller: cubit.attachC,
+                                hint: tr('attach_register'),
+                                readOnly: true,
+                                onTap: () {
+                                  cubit.selectFile();
+                                }
+                            ),
+                            if(cubit.file!=null)
+                              SizedBox(
+                                height: size!.height * .01,
+                              ),
+                            if(cubit.file!=null)
+                              SizedBox(
+                                height: 200,
+                                width: double.infinity,
+                                child: Image.file(
+                                  File(cubit.file!.path),
+                                  height: 200,
+                                  width: double.infinity,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (c,o,s)=>const Icon(Icons.info),
+                                ),
+                              ),
+                            if(cubit.file==null)
+                              SizedBox(
+                                height: 200,
+                                width: double.infinity,
+                                child: ImageNet(image:cubit.image??''),
+                              ),
+                            const SizedBox(height: 15,),
+                            state is! UpdateProfileLoadingState
+                            ?defaultButton(
+                                onTap: () {
+                                  if(formKey.currentState!.validate()){
+                                    cubit.updateProfile();
+                                  }
+                                },
+                                text: tr('save')
+                            ):const CircularProgressIndicator(),
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
-                  noSize: size!.height > 670 ?false:true,
-                );
-              },
-            ),
-          ],
+                    noSize: size!.height > 670 ?false:true,
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

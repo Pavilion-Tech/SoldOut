@@ -58,7 +58,7 @@ class AuctionItem extends StatelessWidget {
             SizedBox(
                 height: size!.height*.12,
                 width:isHome ? size!.width*.9: size!.width*.45,
-                child: ImageNet(image: model.images![0].image!,)
+                child: ImageNet(image:model.images!.isNotEmpty? model.images![0].image!:'',)
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 5),

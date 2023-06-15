@@ -47,12 +47,21 @@ class _State extends State<VVerificationScreen> {
     );
   }
 
+
   bool checkCode() {
-    String codeFromOtp =
-        otpController1.text + otpController2.text+
-            otpController3.text+otpController4.text+
-            otpController5.text+otpController6.text;
-    return int.parse(codeFromOtp) == code;
+    print(code);
+    print(myLocale);
+    String codeFromOtp = otpController1.text +
+        otpController2.text +
+        otpController3.text +
+        otpController4.text +
+        otpController5.text +
+        otpController6.text;
+    print(codeFromOtp);
+    return int.parse(myLocale == 'en'
+        ? codeFromOtp
+        : String.fromCharCodes(codeFromOtp.runes.toList().reversed)) ==
+        code;
   }
 
   bool checkOTP() {
@@ -68,15 +77,18 @@ class _State extends State<VVerificationScreen> {
   }
 
   void submit(BuildContext context){
-    if(checkOTP()){
-          if(widget.isStepTwo){
-            VAuthCubit.get(context).createReset(context: context);
-          }else
-            {
-              VAuthCubit.get(context).activeVAccount(context: context);
-            }
-    }else{
-      showToast(msg: tr('code_empty'),toastState: true);
+    if (checkOTP()) {
+      if (checkCode()) {
+        if(widget.isStepTwo){
+          VAuthCubit.get(context).createReset(context: context);
+        }else
+        {
+          VAuthCubit.get(context).activeVAccount(context: context);
+        }      } else {
+        showToast(msg: tr('code_invalid'), toastState: true);
+      }
+    } else {
+      showToast(msg: tr('code_empty'), toastState: true);
     }
   }
 
@@ -104,68 +116,72 @@ class _State extends State<VVerificationScreen> {
         listener: (context, state) {},
         builder: (context, state) {
           var cubit = VAuthCubit.get(context);
-          return Stack(
-            alignment: AlignmentDirectional.center,
-            children: [
-              Align(
-                alignment: AlignmentDirectional.topStart,
-                child: myAppBar(
-                    context: context,
-                    title: tr('verification_code'),
-                    isArrowBack: true,
-                    arrowTap: () {
-                      setState(() {
-                        cubit.timer!.cancel();
-                        cubit.timerFinished = true;
-                        Navigator.pop(context);
-                      });
-                    }
+          return InkWell(
+            onTap: ()=>FocusManager.instance.primaryFocus?.unfocus(),
+            overlayColor: MaterialStateProperty.all(Colors.transparent),
+            child: Stack(
+              alignment: AlignmentDirectional.center,
+              children: [
+                Align(
+                  alignment: AlignmentDirectional.topStart,
+                  child: myAppBar(
+                      context: context,
+                      title: tr('verification_code'),
+                      isArrowBack: true,
+                      arrowTap: () {
+                        setState(() {
+                          cubit.timer!.cancel();
+                          cubit.timerFinished = true;
+                          Navigator.pop(context);
+                        });
+                      }
+                  ),
                 ),
-              ),
-              SignWidget(
-                isVerify: widget.isStepTwo,
-                column: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    if(widget.isStepTwo)
-                      StepWidget(
-                      title: tr('step_two_of_three'),
-                      description:tr('enter_code'),
-                    ),
-                    SizedBox(height: size!.height * .05,),
-                    otpForm(),
-                    SizedBox(height: size!.height * .01,),
-                    state is! ActiveAccountLoadingState?defaultButton(
-                        onTap: ()=>submit(context),
-                        text: tr('verify')
-                    ):const CircularProgressIndicator(),
-                    SizedBox(height: size!.height * .02,),
-                    if(!cubit.timerFinished)
-                      Text(
-                        '00:$_start',
-                        style: const TextStyle(color: defaultColor),),
-                    if(cubit.timerFinished)
-                      TextButton(
-                        onPressed: () {
-                          cubit.timer;
-                          _start = 60;
-                          cubit.timerFinished = false;
-                          startTimer();
-                          if(widget.isStepTwo){
-                            VAuthCubit.get(context).requestReset();
-                          }else{
-                            VAuthCubit.get(context).resendVActivationCode();
-                          }
-                        },
-                        child: Text(
-                          tr('reset'),
-                          style: const TextStyle(color: defaultColor),
-                        ),
+                SignWidget(
+                  isVerify: widget.isStepTwo,
+                  column: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      if(widget.isStepTwo)
+                        StepWidget(
+                        title: tr('step_two_of_three'),
+                        description:tr('enter_code'),
                       ),
-                  ],
+                      SizedBox(height: size!.height * .05,),
+                      otpForm(),
+                      SizedBox(height: size!.height * .01,),
+                      state is! ActiveAccountLoadingState?defaultButton(
+                          onTap: ()=>submit(context),
+                          text: tr('verify')
+                      ):const CircularProgressIndicator(),
+                      SizedBox(height: size!.height * .02,),
+                      if(!cubit.timerFinished)
+                        Text(
+                          '00:$_start',
+                          style: const TextStyle(color: defaultColor),),
+                      if(cubit.timerFinished)
+                        TextButton(
+                          onPressed: () {
+                            cubit.timer;
+                            _start = 60;
+                            cubit.timerFinished = false;
+                            startTimer();
+                            if(widget.isStepTwo){
+                              VAuthCubit.get(context).requestReset();
+                            }else{
+                              VAuthCubit.get(context).resendVActivationCode();
+                            }
+                          },
+                          child: Text(
+                            tr('reset'),
+                            style: const TextStyle(color: defaultColor),
+                          ),
+                        ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         },
       ),

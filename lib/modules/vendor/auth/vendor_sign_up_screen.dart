@@ -11,22 +11,26 @@ class VSignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        alignment: AlignmentDirectional.bottomCenter,
-        children: [
-          Align(
-            alignment: AlignmentDirectional.topStart,
-            child: myAppBar(
-              context:context,
-              title:tr('sign_up'),
-              isArrowBack: true,
+      body: InkWell(
+        onTap: ()=>FocusManager.instance.primaryFocus?.unfocus(),
+        overlayColor: MaterialStateProperty.all(Colors.transparent),
+        child: Stack(
+          alignment: AlignmentDirectional.bottomCenter,
+          children: [
+            Align(
+              alignment: AlignmentDirectional.topStart,
+              child: myAppBar(
+                context:context,
+                title:tr('sign_up'),
+                isArrowBack: true,
+              ),
             ),
-          ),
-          SignWidget(
-            isVSignUp: true,
-            column: VSignUpWidget(),
-          ),
-        ],
+            SignWidget(
+              isVSignUp: true,
+              column: VSignUpWidget(),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -13,20 +13,24 @@ class VContactUsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            myAppBar(
-                context: context,
-                title: tr('contact_us'),
-                isArrowBack: true,
-            ),
-            MyContainer(
-              noSize: true,
-              ContactUsWidget(),
-              end: 0,
-              start: 0,
-            ),
-          ],
+        child: InkWell(
+          onTap: ()=>FocusManager.instance.primaryFocus?.unfocus(),
+          overlayColor: MaterialStateProperty.all(Colors.transparent),
+          child: Stack(
+            children: [
+              myAppBar(
+                  context: context,
+                  title: tr('contact_us'),
+                  isArrowBack: true,
+              ),
+              MyContainer(
+                noSize: true,
+                ContactUsWidget(),
+                end: 0,
+                start: 0,
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -36,7 +36,12 @@ class ContactUsWidget extends StatelessWidget {
       phoneC.text = AuthCubit.get(context).getProfileModel!.data!.phone??'';
     }
     return BlocConsumer<SettingsCubit, SettingsStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if(state is ContactUsSuccessState){
+          messageC.text = '';
+          subjectC.text = '';
+        }
+      },
       builder: (context, state) {
         var cubit = SettingsCubit.get(context);
         return Form(

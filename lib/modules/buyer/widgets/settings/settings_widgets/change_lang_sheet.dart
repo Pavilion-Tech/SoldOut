@@ -46,23 +46,23 @@ class ChangeLangBottomSheet extends StatelessWidget {
               ),
               defaultButton( onTap: ()
               {
-                navigateAndFinish(context, BuyerLayout());
                 if(context.locale.languageCode == 'ar')
                 {
                   context.setLocale(const Locale('en'));
-                  BuyerCubit.get(context).changeIndex(3);
+                  BuyerCubit.get(context).changeIndex(0);
                   CacheHelper.saveData(key: 'locale', value: context.locale.languageCode);
                   myLocale = context.locale.languageCode;
-                  SettingsCubit.get(context).updateLang(myLocale!);
+                  SettingsCubit.get(context).updateLang(myLocale);
                 }
                 else
                 {
                   context.setLocale(const Locale('ar'));
-                  BuyerCubit.get(context).changeIndex(3);
+                  BuyerCubit.get(context).changeIndex(0);
                   CacheHelper.saveData(key: 'locale', value: context.locale.languageCode);
                   myLocale = context.locale.languageCode;
-                  SettingsCubit.get(context).updateLang(myLocale!);
+                  SettingsCubit.get(context).updateLang(myLocale);
                 }
+                navigateAndFinish(context, BuyerLayout());
               }, text: tr('apply')),
             ],
           )

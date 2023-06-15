@@ -40,14 +40,14 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-      apiKey: 'AIzaSyALNXHPs-UvXhKJNVnuRrIj_Azr6h3wj0M',
-      appId: '1:575890868187:ios:aa937ab9f3444ef785c9fe',
-      messagingSenderId: '575890868187',
-      projectId: 'soldout-de9d4',
-      storageBucket: 'soldout-de9d4.appspot.com',
-      iosClientId: '575890868187-e6ceemcvs1vvp4hj16tdv6qpasqlt39r.apps.googleusercontent.com',
-      iosBundleId: 'co.soldout.app',
-      deepLinkURLScheme: 'https://soldoutapp.page.link/'
+      apiKey: 'AIzaSyC3LrR7ssgKQd2i1pbfpWNKlFiwOsJ7uuQ',
+      appId: '1:441146186016:ios:1de3815d2bcebcd2cb5f45',
+      messagingSenderId: '441146186016',
+      projectId: 'soldout-99b4c',
+      storageBucket: 'soldout-99b4c.appspot.com',
+      iosClientId: '441146186016-qnm32s25oeffmadmqrhkg92oo21aflv1.apps.googleusercontent.com',
+      iosBundleId: 'com.soldout.sa',
+      deepLinkURLScheme: 'https://soldou.page.link/'
   );
 
 }

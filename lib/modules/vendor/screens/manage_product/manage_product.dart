@@ -37,81 +37,85 @@ class VendorManageProductList extends StatelessWidget {
           var cubit = VendorCubit.get(context);
           return SingleChildScrollView(
             controller: cubit.scrollController,
-            child: Stack(
-              children: [
-                myAppBar(
-                    context: context,
-                    title: tr('manage_products'),
-                    isArrowBack: true,
-                  arrowTap: (){
-                      cubit.pageProduct = 1;
-                      cubit.scrollController.removeListener(() {});
-                      Navigator.pop(context);
-                  }
-                ),
-                ConditionalBuilder(
-                  condition: cubit.listProductModel != null,
-                  fallback: (context) => GridViewLoading(),
-                  builder: (context) {
-                    cubit.getMoreForProducts();
-                    return MyContainer(
-                        noSize: true,
-                             Column(
-                                children: [
-                                  defaultTextField(
-                                      controller: cubit.searchController,
-                                      hint: tr('search_by_product'),
-                                      suffix:suffix,
-                                      onChanged: (String? value) {
-                                        if (value!.length > 1) {
-                                          cubit.pageProduct = 1;
-                                          cubit.getProducts(text: value,);
+            child: InkWell(
+              onTap: ()=>FocusManager.instance.primaryFocus?.unfocus(),
+              overlayColor: MaterialStateProperty.all(Colors.transparent),
+              child: Stack(
+                children: [
+                  myAppBar(
+                      context: context,
+                      title: tr('manage_products'),
+                      isArrowBack: true,
+                    arrowTap: (){
+                        cubit.pageProduct = 1;
+                        cubit.scrollController.removeListener(() {});
+                        Navigator.pop(context);
+                    }
+                  ),
+                  ConditionalBuilder(
+                    condition: cubit.listProductModel != null,
+                    fallback: (context) => GridViewLoading(),
+                    builder: (context) {
+                      cubit.getMoreForProducts();
+                      return MyContainer(
+                          noSize: true,
+                               Column(
+                                  children: [
+                                    defaultTextField(
+                                        controller: cubit.searchController,
+                                        hint: tr('search_by_product'),
+                                        suffix:suffix,
+                                        onChanged: (String? value) {
+                                          if (value!.length > 1) {
+                                            cubit.pageProduct = 1;
+                                            cubit.getProducts(text: value,);
+                                          }
+                                          if(value.length < 2)
+                                          {
+                                            cubit.pageProduct = 1;
+                                            cubit.getProducts();
+                                          }
                                         }
-                                        if(value.length < 2)
-                                        {
-                                          cubit.pageProduct = 1;
-                                          cubit.getProducts();
-                                        }
-                                      }
-                                  ),
-                                  cubit.listProductModel!.data!.products!.isNotEmpty?
-                                  GridView.count(
-                                    shrinkWrap: true,
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    childAspectRatio: size!.width / (size!.height / currentAspectRatio),
-                                    mainAxisSpacing: 16,
-                                    crossAxisSpacing: 5,
-                                    crossAxisCount: 2,
-                                    children: List.generate(
-                                      cubit.listProductModel!.data!.products!.length,
-                                      (index) => VProductItem(
-                                        productModel: cubit.listProductModel!.data!.products![index],
-                                      ),
                                     ),
-                                  ): Column(
-                                    children: [
-                                      SizedBox(
-                                        height: size!.height * .3,
+                                    cubit.listProductModel!.data!.products!.isNotEmpty?
+                                    GridView.count(
+                                      shrinkWrap: true,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      childAspectRatio: size!.width / (size!.height / currentAspectRatio),
+                                      mainAxisSpacing: 16,
+                                      crossAxisSpacing: 5,
+                                      crossAxisCount: 2,
+                                      children: List.generate(
+                                        cubit.listProductModel!.data!.products!.length,
+                                        (index) => VProductItem(
+                                          productModel: cubit.listProductModel!.data!.products![index],
+                                        ),
                                       ),
-                                      Text(tr('no_items_yet')),
-                                    ],
-                                  ),
-                                  if(state is GetProductLoadingState)
-                                    const CircularProgressIndicator(),
-                                  const SizedBox(height: 40,),
-                                  defaultButton(
-                                      onTap: () {
-                                        Navigator.pop(context);
-                                        VendorCubit.get(context).changeIndex(2);
-                                      },
-                                      text: tr('add_new'))
-                                ],
-                              )
-                            );
-                  },
-                ),
-              ],
+                                    ): Column(
+                                      children: [
+                                        SizedBox(
+                                          height: size!.height * .3,
+                                        ),
+                                        Text(tr('no_items_yet')),
+                                      ],
+                                    ),
+                                    if(state is GetProductLoadingState)
+                                      const CircularProgressIndicator(),
+                                    const SizedBox(height: 40,),
+                                    defaultButton(
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                          VendorCubit.get(context).changeIndex(2);
+                                        },
+                                        text: tr('add_new'))
+                                  ],
+                                )
+                              );
+                    },
+                  ),
+                ],
+              ),
             ),
           );
         },

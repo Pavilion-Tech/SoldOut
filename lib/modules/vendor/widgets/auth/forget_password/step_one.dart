@@ -17,62 +17,66 @@ class ForgetPassword extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        alignment: AlignmentDirectional.center,
-        children: [
-          Align(
-            alignment: AlignmentDirectional.topStart,
-            child: myAppBar(
-              context: context,
-              title: tr('forget_password'),
-              isArrowBack: true,
+      body: InkWell(
+        onTap: ()=>FocusManager.instance.primaryFocus?.unfocus(),
+        overlayColor: MaterialStateProperty.all(Colors.transparent),
+        child: Stack(
+          alignment: AlignmentDirectional.center,
+          children: [
+            Align(
+              alignment: AlignmentDirectional.topStart,
+              child: myAppBar(
+                context: context,
+                title: tr('forget_password'),
+                isArrowBack: true,
+              ),
             ),
-          ),
-          BlocConsumer<VAuthCubit, VAuthStates>(
-            listener: (context, state) {
-              if(state is RequestResetSuccessState)
-              {
-                navigateTo(context, VVerificationScreen(isStepTwo: true,));
-              }
-            },
-            builder: (context, state) {
-              return MyContainer(
-                SingleChildScrollView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  child: Column(
-                    children: [
-                      StepWidget(
-                        title: tr('step_one_of_three'),
-                        description: tr('enter_phone'),
-                      ),
-                      const SizedBox(height: 30,),
-                      defaultTextField(
-                          type: TextInputType.phone,
-                          controller: VAuthCubit.get(context).phoneC,
-                          digitsOnly: true,
-                          textLength: 10,
-                          hint: tr('phone_sign_in'),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return tr('phone_empty');
+            BlocConsumer<VAuthCubit, VAuthStates>(
+              listener: (context, state) {
+                if(state is RequestResetSuccessState)
+                {
+                  navigateTo(context, VVerificationScreen(isStepTwo: true,));
+                }
+              },
+              builder: (context, state) {
+                return MyContainer(
+                  SingleChildScrollView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    child: Column(
+                      children: [
+                        StepWidget(
+                          title: tr('step_one_of_three'),
+                          description: tr('enter_phone'),
+                        ),
+                        const SizedBox(height: 30,),
+                        defaultTextField(
+                            type: TextInputType.phone,
+                            controller: VAuthCubit.get(context).phoneC,
+                            digitsOnly: true,
+                            textLength: 10,
+                            hint: tr('phone_sign_in'),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return tr('phone_empty');
+                              }
                             }
-                          }
-                      ),
-                      const SizedBox(height: 30,),
-                      state is! RequestResetLoadingState
-                      ?defaultButton(
-                          onTap: () {
-                            VAuthCubit.get(context).requestReset();
-                          },
-                          text: tr('next')
-                      ):const CircularProgressIndicator(),
-                    ],
+                        ),
+                        const SizedBox(height: 30,),
+                        state is! RequestResetLoadingState
+                        ?defaultButton(
+                            onTap: () {
+                              VAuthCubit.get(context).requestReset();
+                            },
+                            text: tr('next')
+                        ):const CircularProgressIndicator(),
+                      ],
+                    ),
                   ),
-                ),
-              );
-            },
-          ),
-        ],
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

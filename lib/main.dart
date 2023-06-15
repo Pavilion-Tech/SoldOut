@@ -54,6 +54,9 @@ void main() async {
 
   DioHelper.init1();
 
+  String? loca = CacheHelper.getData(key: 'locale');
+  if(loca !=null) myLocale = loca;
+
 
   if (defaultTargetPlatform == TargetPlatform.android) deviceType = 0;
   if (defaultTargetPlatform == TargetPlatform.iOS) deviceType = 1;
@@ -61,8 +64,6 @@ void main() async {
   print(fcmToken);
 
   onBoarding = CacheHelper.getData(key: 'onBoarding');
-
-  myLocale = CacheHelper.getData(key: 'locale');
 
   token = CacheHelper.getData(key: 'token');
   print(token);
@@ -83,7 +84,7 @@ void main() async {
           useOnlyLangCode: true,
           path: 'assets/langs',
           fallbackLocale: const Locale('en'),
-          startLocale: Locale(myLocale ?? 'en'),
+          startLocale: Locale(myLocale),
           child: const SoldOut(),
         ),
       );

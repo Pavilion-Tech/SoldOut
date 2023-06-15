@@ -21,5 +21,6 @@ class BuyerImages{
   static const cart = 'assets/images/cart.png';
   static const ops = 'assets/images/ops.png';
   static const update = 'assets/images/update.png';
+  static const auction = 'assets/images/auction.png';
   static const holder = 'assets/images/holder.webp';
 }

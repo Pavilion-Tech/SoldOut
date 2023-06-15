@@ -70,9 +70,12 @@ class UserBids extends StatelessWidget {
 
 
   Widget reviewAuctionItem(Bids bids) {
-   final time =DateTime.fromMillisecondsSinceEpoch(bids.createdAt!);
+   //final time =DateTime.fromMillisecondsSinceEpoch(bids.createdAt!);
+   var time = DateTime.fromMillisecondsSinceEpoch(bids.createdAt! * 1000);
+   print(bids.createdAt);
    String ago = timeago.format(time, locale: 'en_short');
-    return Padding(
+   print(ago);
+   return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: Row(
         children: [

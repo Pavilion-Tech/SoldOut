@@ -11,7 +11,7 @@ bool? showAuctionHint;
 
 String? fcmToken;
 
-String? myLocale;
+String myLocale = 'en';
 
 String? token;
 

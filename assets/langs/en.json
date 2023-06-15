@@ -16,8 +16,8 @@
   "result": "Result",
   "search_by_product": "Search By Product",
   "sorting_by": "Sorting By",
-  "price_high_to_low": "Price : High To Low",
-  "price_low_to_high": "Price : Low To High",
+  "price_high_to_low": "From the highest price to the lowest price",
+  "price_low_to_high": "From the lowest price to the highest price",
   "discard": "DISCARD",
   "apply": "APPLY",
   "add_to_cart": "ADD TO CART",
@@ -222,5 +222,7 @@
   "auction_status": "Auction Status",
   "finished": "Finished",
   "processing": "Processing",
-  "image_size": "Image Size Should Lower than 5 MB"
+  "image_size": "Image Size Should Lower than 5 MB",
+  "code_invalid": "Code Invalid"
+
 }

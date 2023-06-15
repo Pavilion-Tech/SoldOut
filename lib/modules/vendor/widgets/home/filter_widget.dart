@@ -68,7 +68,8 @@ class FilterWidget extends StatelessWidget {
                               .toString();
                           String startDate = changeFormat(fromDateController);
                           String lastDate = changeFormat(toDateController);
-
+                          print(startDate);
+                          print(lastDate);
                           VendorCubit.get(context).getStatistic(
                             startDate: startDate,
                             lastDate: lastDate,

@@ -12,7 +12,7 @@ class ListProducts extends StatelessWidget {
   Widget build(BuildContext context) {
     var cubit = BuyerCubit.get(context);
     return Container(
-      height:size!.height >736.0 ? size!.height * .2:size!.height * .225,
+      height:size!.height >736.0 ? size!.height * .21:size!.height * .225,
       alignment: AlignmentDirectional.centerStart,
       padding: EdgeInsetsDirectional.only(start: size!.width * .050),
       child: ConditionalBuilder(

@@ -29,7 +29,7 @@ class PurchasesDetailsWidget extends StatelessWidget {
               color: Colors.grey.shade300.withOpacity(.5),
             ),
           ),
-          padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 10),
+          padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

@@ -23,52 +23,56 @@ class VendorHomeScreen extends StatelessWidget {
         listener: (context, state) {},
         builder: (context, state) {
           var cubit = VendorCubit.get(context);
-          return Stack(
-            children: [
-              BlocConsumer<VSettingCubit, VSettingStates>(
-                listener: (context, state) {},
-                builder: (context, state) {
-                  return myAppBar(
-                      context: context,
-                      title: VSettingCubit.get(context).nameC.text);
-                },
-              ),
-              MyContainer(
-                vendorHome: true,
-                ConditionalBuilder(
-                  condition: cubit.getStatistics != null,
-                  fallback: (context) => const VHomeLoading(),
-                  builder: (context) => SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        filterWidget,
-                        const SizedBox(height: 20,),
-                        HomeItemWidget(
-                          title: tr('product_count'),
-                          count:
-                              '${cubit.getStatistics!.data!.productsCount} ${tr('product')}',
-                          circleColor: defaultColor,
-                        ),
-                        const SizedBox(height: 20,),
-                        HomeItemWidget(
-                          title: tr('order_count'),
-                          count:
-                              '${cubit.getStatistics!.data!.ordersCount} ${tr('order')}',
-                          circleColor: Colors.indigoAccent,
-                        ),
-                        const SizedBox(height: 20,),
-                        HomeItemWidget(
-                          title: tr('total_revenue'),
-                          count:
-                              '${cubit.getStatistics!.data!.totalRevenue} ${tr('sar')}',
-                          circleColor: Colors.lightBlueAccent,
-                        ),
-                      ],
+          return InkWell(
+            onTap: ()=>FocusManager.instance.primaryFocus?.unfocus(),
+            overlayColor: MaterialStateProperty.all(Colors.transparent),
+            child: Stack(
+              children: [
+                BlocConsumer<VSettingCubit, VSettingStates>(
+                  listener: (context, state) {},
+                  builder: (context, state) {
+                    return myAppBar(
+                        context: context,
+                        title: VSettingCubit.get(context).nameC.text);
+                  },
+                ),
+                MyContainer(
+                  vendorHome: true,
+                  ConditionalBuilder(
+                    condition: cubit.getStatistics != null,
+                    fallback: (context) => const VHomeLoading(),
+                    builder: (context) => SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          filterWidget,
+                          const SizedBox(height: 20,),
+                          HomeItemWidget(
+                            title: tr('product_count'),
+                            count:
+                                '${cubit.getStatistics!.data!.productsCount} ${tr('product')}',
+                            circleColor: defaultColor,
+                          ),
+                          const SizedBox(height: 20,),
+                          HomeItemWidget(
+                            title: tr('order_count'),
+                            count:
+                                '${cubit.getStatistics!.data!.ordersCount} ${tr('order')}',
+                            circleColor: Colors.indigoAccent,
+                          ),
+                          const SizedBox(height: 20,),
+                          HomeItemWidget(
+                            title: tr('total_revenue'),
+                            count:
+                                '${cubit.getStatistics!.data!.totalRevenue} ${tr('sar')}',
+                            circleColor: Colors.lightBlueAccent,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           );
         });
   }

@@ -7,6 +7,7 @@ import 'package:soldout/modules/buyer/widgets/home/list_auctions.dart';
 import 'package:soldout/modules/buyer/widgets/home/list_proucts.dart';
 import 'package:soldout/modules/buyer/widgets/shimmers/home_loading/home_loading.dart';
 import 'package:soldout/shared/components/components.dart';
+import 'package:soldout/shared/images/images.dart';
 import '../../../../layout/buyer_layout/cubit/buyer_cubit.dart';
 import '../../../../layout/buyer_layout/cubit/buyer_states.dart';
 import '../../../../shared/components/constants.dart';
@@ -73,7 +74,9 @@ class HomeScreen extends StatelessWidget {
                         if(cubit.homeModel!.data!.newAuctions!.isNotEmpty)
                           seeMore(tr('new_auctions'), () {
                             navigateTo(context, AuctionsListScreen());
-                          }),
+                          },
+                            auction: Image.asset(BuyerImages.auction,width: 40,),
+                          ),
                         if(cubit.homeModel!.data!.showAuctions!)
                           BlocConsumer<AuctionCubit, AuctionStates>(
                           listener: (context, state) {},
@@ -99,13 +102,14 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget seeMore(String text, VoidCallback callback) {
+  Widget seeMore(String text, VoidCallback callback,{Widget? auction}) {
     return Padding(
       padding: EdgeInsets.symmetric(
           horizontal: size!.width * .05,
           vertical: size!.height * .005),
       child: Row(
         children: [
+          if(auction!=null)auction,
           Text(
             text,
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),

@@ -17,17 +17,21 @@ class VendorAddProductScreen extends StatelessWidget {
       listener: (context,state){},
       builder: (context,state){
         return  SingleChildScrollView(
-          child: Stack(
-            children: [
-              myAppBar(
-                context: context,
-                title: tr('add_product'),
-              ),
-              MyContainer(
-                noSize: true,
-                AddOrEditProductWidget(isEdit: false),
-              ),
-            ],
+          child: InkWell(
+            onTap: ()=>FocusManager.instance.primaryFocus?.unfocus(),
+            overlayColor: MaterialStateProperty.all(Colors.transparent),
+            child: Stack(
+              children: [
+                myAppBar(
+                  context: context,
+                  title: tr('add_product'),
+                ),
+                MyContainer(
+                  noSize: true,
+                  AddOrEditProductWidget(isEdit: false),
+                ),
+              ],
+            ),
           ),
         );
       },

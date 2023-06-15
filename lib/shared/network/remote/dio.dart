@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:dio/dio.dart';
+import 'package:soldout/shared/components/constants.dart';
 
 class DioHelper {
   static late Dio dio;
@@ -28,7 +29,7 @@ class DioHelper {
 
     dio.options.headers =
     {
-      'lang' : lang,
+      'lang' : lang??myLocale,
       'Authorization':token ,
       'Content-Type': 'application/json'
     };
@@ -49,6 +50,7 @@ class DioHelper {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization':token ,
+      'lang' : myLocale,
 
     };
 
@@ -70,6 +72,7 @@ class DioHelper {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization':token ,
+      'lang' : myLocale,
 
     };
 
@@ -87,7 +90,7 @@ class DioHelper {
   }) async {
     dio.options.headers =
     {
-      'lang' : lang,
+      'lang' : myLocale,
       'Authorization':token ,
       'Content-Type': 'application/json'
     };

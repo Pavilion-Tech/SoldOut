@@ -35,6 +35,7 @@ class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
             items: cubit.homeModel!.data!.ads!.map((e) {
               return InkWell(
                   onTap: (){
+                    print(e.type);
                     if(e.type == 'external')
                     {
                       cubit.openUrl(e.link!);
@@ -43,15 +44,15 @@ class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
                     {
                       cubit.currentStorePage = 1;
                       cubit.getListProductsForStore(
-                          id:  e.id!,
+                          id:  e.modelId!,
                           text: ''
                       );
-                      navigateTo(context, StoreNameScreen(id: e.id!,));
+                      navigateTo(context, StoreNameScreen(id: e.modelId!,));
                     }
                     if(e.type == 'product')
                     {
                       cubit.getProduct(
-                        id: e.id!,
+                        id: e.modelId!,
                       );
                     }
 

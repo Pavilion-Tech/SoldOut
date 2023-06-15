@@ -22,16 +22,16 @@ class DynamicLinksClient {
 
   static Future<Uri> createUri(String uri) async {
     final DynamicLinkParameters parameters = DynamicLinkParameters(
-      uriPrefix: 'https://soldoutapp.page.link',
+      uriPrefix: 'https://soldou.page.link',
       link: Uri.parse(uri),
       androidParameters:const AndroidParameters(
         packageName: 'com.soldout',
         minimumVersion: 1,
       ),
       iosParameters:const IOSParameters(
-        bundleId: 'co.soldout.app',
+        bundleId: 'com.soldout.sa',
         minimumVersion: '1',
-        appStoreId: '6443680518'
+        appStoreId: '6449216198'
         // appStoreId: '123456789',
       ),
     );

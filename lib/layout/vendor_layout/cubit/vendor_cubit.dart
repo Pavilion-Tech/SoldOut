@@ -171,6 +171,7 @@ class VendorCubit extends Cubit<VendorStates>{
       url: url,
       lang: myLocale,
     ).then((value) {
+      print(value.data);
       if(value.statusCode == 200 && value.data['status'])
       {
         getStatistics = GetStatistics.fromJson(value.data);
@@ -338,7 +339,8 @@ class VendorCubit extends Cubit<VendorStates>{
     emit(GetOrderLoadingState());
     await DioHelper.getData(
         url: vOrder,
-        token: 'Bearer $vToken'
+        token: 'Bearer $vToken',
+      lang: 'en'
     ).then((value){
       if(value.statusCode==200&&value.data['status']){
         vendorOrderModel = VendorOrderModel.fromJson(value.data);

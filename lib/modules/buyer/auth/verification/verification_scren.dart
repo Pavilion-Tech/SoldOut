@@ -22,6 +22,14 @@ class VerificationScreen extends StatefulWidget {
 
 class _State extends State<VerificationScreen> {
 
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController otpController1 = TextEditingController();
+  TextEditingController otpController2 = TextEditingController();
+  TextEditingController otpController3 = TextEditingController();
+  TextEditingController otpController4 = TextEditingController();
+  TextEditingController otpController5 = TextEditingController();
+  TextEditingController otpController6 = TextEditingController();
+
   int _start = 60;
 
   bool timerFinished = false;
@@ -48,6 +56,8 @@ class _State extends State<VerificationScreen> {
   }
 
   bool checkCode() {
+    print(code);
+    print(myLocale);
     String codeFromOtp = otpController1.text +
         otpController2.text +
         otpController3.text +
@@ -74,10 +84,14 @@ class _State extends State<VerificationScreen> {
   }
 
   void submit(BuildContext context){
-    if(checkOTP()){
-          AuthCubit.get(context).logIn(context,widget.isNoty);
-    }else{
-      showToast(msg: tr('code_empty'),toastState: true);
+    if (checkOTP()) {
+      if (checkCode()) {
+        AuthCubit.get(context).logIn(context,widget.isNoty);
+      } else {
+        showToast(msg: tr('code_invalid'), toastState: true);
+      }
+    } else {
+      showToast(msg: tr('code_empty'), toastState: true);
     }
   }
 
@@ -93,13 +107,6 @@ class _State extends State<VerificationScreen> {
     timer!.cancel();
     super.dispose();
   }
-  TextEditingController phoneController = TextEditingController();
-  TextEditingController otpController1 = TextEditingController();
-  TextEditingController otpController2 = TextEditingController();
-  TextEditingController otpController3 = TextEditingController();
-  TextEditingController otpController4 = TextEditingController();
-  TextEditingController otpController5 = TextEditingController();
-  TextEditingController otpController6 = TextEditingController();
 
 
   @override
@@ -110,56 +117,60 @@ class _State extends State<VerificationScreen> {
           if(state is LoginSuccessState)navigateAndFinish(context, BuyerLayout());
         },
         builder: (context, state) {
-          return Stack(
-            alignment: AlignmentDirectional.center,
-            children: [
-              Align(
-                alignment: AlignmentDirectional.topStart,
-                child: myAppBar(
-                    context: context,
-                    title: tr('verification_code'),
-                    isArrowBack: true,
-                    arrowTap: () {
-                      Navigator.pop(context);
-                    }
+          return InkWell(
+            onTap: ()=>FocusManager.instance.primaryFocus?.unfocus(),
+            overlayColor: MaterialStateProperty.all(Colors.transparent),
+            child: Stack(
+              alignment: AlignmentDirectional.center,
+              children: [
+                Align(
+                  alignment: AlignmentDirectional.topStart,
+                  child: myAppBar(
+                      context: context,
+                      title: tr('verification_code'),
+                      isArrowBack: true,
+                      arrowTap: () {
+                        Navigator.pop(context);
+                      }
+                  ),
                 ),
-              ),
-              SignWidget(
-                column: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(height: size!.height * .05,),
-                    otpForm(),
-                    SizedBox(height: size!.height * .01,),
-                    state is! LoginLoadingState
-                        ? defaultButton(
-                        onTap: ()=>submit(context),
-                        text: tr('verify')
-                    ):const CircularProgressIndicator(),
-                    SizedBox(height: size!.height * .02,),
-                    if(!timerFinished)
-                      Text(
-                        '00:$_start',
-                        style: const TextStyle(color: defaultColor),),
-                    if(timerFinished)
-                      TextButton(
-                        onPressed: () {
-                          AuthCubit.get(context).getCode();
-                          timer;
-                          _start = 60;
-                          timerFinished = false;
-                          startTimer();
-                          showToast(msg: '${tr('code_is')} $code');
-                          },
-                        child: Text(
-                          tr('reset'),
-                          style: const TextStyle(color: defaultColor),
+                SignWidget(
+                  column: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(height: size!.height * .05,),
+                      otpForm(),
+                      SizedBox(height: size!.height * .01,),
+                      state is! LoginLoadingState
+                          ? defaultButton(
+                          onTap: ()=>submit(context),
+                          text: tr('verify')
+                      ):const CircularProgressIndicator(),
+                      SizedBox(height: size!.height * .02,),
+                      if(!timerFinished)
+                        Text(
+                          '00:$_start',
+                          style: const TextStyle(color: defaultColor),),
+                      if(timerFinished)
+                        TextButton(
+                          onPressed: () {
+                            AuthCubit.get(context).getCode();
+                            timer;
+                            _start = 60;
+                            timerFinished = false;
+                            startTimer();
+                            showToast(msg: '${tr('code_is')} $code');
+                            },
+                          child: Text(
+                            tr('reset'),
+                            style: const TextStyle(color: defaultColor),
+                          ),
                         ),
-                      ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         },
       ),
@@ -216,7 +227,7 @@ class _State extends State<VerificationScreen> {
             myLocale =='ar'
                 ? FocusManager.instance.primaryFocus!.previousFocus()
                 :FocusManager.instance.primaryFocus!.nextFocus();
-            if(onFinished!=null)onFinished!();
+            if(onFinished!=null)onFinished();
           }else{
             myLocale =='ar'
                 ? FocusManager.instance.primaryFocus!.nextFocus()

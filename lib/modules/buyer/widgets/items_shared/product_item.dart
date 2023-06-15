@@ -77,8 +77,8 @@ class ProductItem extends StatelessWidget {
                             ))),
                   ],
                 ),
-                if(size!.height > 600)
-                SizedBox(height: size!.height * .009,),
+                // if(size!.height > 600)
+                // SizedBox(height: size!.height * .009,),
                 Padding(
                   padding: const EdgeInsets.all(3.0),
                   child: Column(
@@ -89,7 +89,7 @@ class ProductItem extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.bold),
+                            fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                       Row(
                         children: [
@@ -101,7 +101,7 @@ class ProductItem extends StatelessWidget {
                               children: [
                                 RatingBar.builder(
                                   initialRating: product!.rate!.toDouble(),
-                                  itemSize: 10,
+                                  itemSize: 15,
                                   direction: Axis.horizontal,
                                   ignoreGestures: true,
                                   itemCount: 5,
@@ -126,7 +126,7 @@ class ProductItem extends StatelessWidget {
                                       overflow: TextOverflow.ellipsis,
                                       style: const TextStyle(
                                           color: defaultColor,
-                                          fontSize: 10,
+                                          fontSize: 13,
                                           fontWeight: FontWeight.bold),
                                     ),
                                     if (product!.salePrice != null)
@@ -136,7 +136,7 @@ class ProductItem extends StatelessWidget {
                                           '${product!.regularPrice}',
                                           style: const TextStyle(
                                               color: Colors.grey,
-                                              fontSize: 7,
+                                              fontSize: 10,
                                               decoration:
                                                   TextDecoration.lineThrough),
                                         ),

@@ -23,67 +23,71 @@ class SignUpScreen extends StatelessWidget {
       builder: (context, state) {
         var cubit = AuthCubit.get(context);
         return Scaffold(
-          body: Stack(
-            alignment: AlignmentDirectional.center,
-            children: [
-              Align(
-                alignment: AlignmentDirectional.topStart,
-                child: myAppBar(
-                  context: context,
-                  title: tr('sign_up'),
-                  isArrowBack: true,
-                ),
-              ),
-              SignWidget(
-                column: Form(
-                  key: formKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(height: size!.height * .05,),
-                      defaultTextField(
-                        hint: tr('full_name'),
-                        controller: nameController,
-                        validator: (value){
-                          if(value!.isEmpty){
-                            return tr('name_empty');
-                          }
-                        }
-                      ),
-                      SizedBox(height: size!.height * .01,),
-                      defaultTextField(
-                          hint: tr('phone'),
-                          controller: cubit.phoneController,
-                          type: TextInputType.phone,
-                          digitsOnly: true,
-                          textLength: 10,
-                          validator: (value){
-                            if(value!.isEmpty){
-                              return tr('phone_empty');
-                            }
-                          }
-                      ),
-
-                      SizedBox(height: size!.height * .01,),
-                      state is SignLoadingState
-                          ? const CircularProgressIndicator()
-                          : defaultButton(
-                        text: tr('sign_up'),
-                        onTap: () {
-                          FocusManager.instance.primaryFocus!.unfocus();
-                          if(formKey.currentState!.validate())
-                          {
-                            AuthCubit.get(context).sign(
-                                name: nameController.text,
-                            );
-                          }
-                        },
-                      ),
-                    ],
+          body: InkWell(
+            onTap: ()=>FocusManager.instance.primaryFocus?.unfocus(),
+            overlayColor: MaterialStateProperty.all(Colors.transparent),
+            child: Stack(
+              alignment: AlignmentDirectional.center,
+              children: [
+                Align(
+                  alignment: AlignmentDirectional.topStart,
+                  child: myAppBar(
+                    context: context,
+                    title: tr('sign_up'),
+                    isArrowBack: true,
                   ),
                 ),
-              ),
-            ],
+                SignWidget(
+                  column: Form(
+                    key: formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(height: size!.height * .05,),
+                        defaultTextField(
+                          hint: tr('full_name'),
+                          controller: nameController,
+                          validator: (value){
+                            if(value!.isEmpty){
+                              return tr('name_empty');
+                            }
+                          }
+                        ),
+                        SizedBox(height: size!.height * .01,),
+                        defaultTextField(
+                            hint: tr('phone'),
+                            controller: cubit.phoneController,
+                            type: TextInputType.phone,
+                            digitsOnly: true,
+                            textLength: 10,
+                            validator: (value){
+                              if(value!.isEmpty){
+                                return tr('phone_empty');
+                              }
+                            }
+                        ),
+
+                        SizedBox(height: size!.height * .01,),
+                        state is SignLoadingState
+                            ? const CircularProgressIndicator()
+                            : defaultButton(
+                          text: tr('sign_up'),
+                          onTap: () {
+                            FocusManager.instance.primaryFocus!.unfocus();
+                            if(formKey.currentState!.validate())
+                            {
+                              AuthCubit.get(context).sign(
+                                  name: nameController.text,
+                              );
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },

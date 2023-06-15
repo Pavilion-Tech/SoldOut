@@ -22,90 +22,94 @@ class VChangePassword extends StatelessWidget {
           },
           builder: (context, state) {
             var cubit = VSettingCubit.get(context);
-            return Stack(
-              children: [
-                myAppBar(
-                  context: context,
-                  title: tr('change_password'),
-                  isArrowBack: true,
-                ),
-                MyContainer(
-                  Form(
-                    key: formKey,
-                    child: Column(
-                      children: [
-                        defaultTextField(
-                            controller: oldPassword,
-                            hint: tr('old_password'),
-                            isPassword: cubit.oldPassword,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return tr('oPassword_empty');
-                              }
-                            },
-                            suffix: IconButton(
-                                onPressed: () {
-                                  cubit.changeOldVisibility();
-                                },
-                                icon: Icon(cubit.oldPassword
-                                    ? Icons.visibility
-                                    : Icons.visibility_off))
-                        ),
-                        const SizedBox(height: 15,),
-                        defaultTextField(
-                            hint: tr('new_password'),
-                            controller: password,
-                            isPassword: cubit.newPassword,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return tr('nPassword_empty');
-                              }
-                            },
-                            suffix: IconButton(
-                                onPressed: () {
-                                  cubit.changeVisibility();
-                                },
-                                icon: Icon(cubit.newPassword
-                                    ? Icons.visibility
-                                    : Icons.visibility_off))
-                        ),
-                        const SizedBox(height: 15,),
-                        defaultTextField(
-                            hint: tr('confirm_new_password'),
-                            controller: passwordC,
-                            isPassword: cubit.cNewPassword,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return tr('cPassword_empty');
-                              }
-                              if (value != password.text) {
-                                return tr('cPassword_not_correct');
-                              }
-                            },
-                            suffix: IconButton(
-                                onPressed: () {
-                                  cubit.changeConfirmVisibility();
-                                },
-                                icon: Icon(cubit.cNewPassword
-                                    ? Icons.visibility
-                                    : Icons.visibility_off))),
-                        const SizedBox(height: 15,),
-                        state is! ChangePasswordLoadingState
-                        ? defaultButton(
-                            onTap: () {
-                              if(formKey.currentState!.validate()){
-                                VSettingCubit.get(context).changePassword(
-                                    oldPassword: oldPassword.text,
-                                    newPassword: passwordC.text);
-                              }
-                            },
-                            text: tr('save')
-                        ):const CircularProgressIndicator()
-                      ],
+            return InkWell(
+              onTap: ()=>FocusManager.instance.primaryFocus?.unfocus(),
+              overlayColor: MaterialStateProperty.all(Colors.transparent),
+              child: Stack(
+                children: [
+                  myAppBar(
+                    context: context,
+                    title: tr('change_password'),
+                    isArrowBack: true,
+                  ),
+                  MyContainer(
+                    Form(
+                      key: formKey,
+                      child: Column(
+                        children: [
+                          defaultTextField(
+                              controller: oldPassword,
+                              hint: tr('old_password'),
+                              isPassword: cubit.oldPassword,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return tr('oPassword_empty');
+                                }
+                              },
+                              suffix: IconButton(
+                                  onPressed: () {
+                                    cubit.changeOldVisibility();
+                                  },
+                                  icon: Icon(cubit.oldPassword
+                                      ? Icons.visibility
+                                      : Icons.visibility_off))
+                          ),
+                          const SizedBox(height: 15,),
+                          defaultTextField(
+                              hint: tr('new_password'),
+                              controller: password,
+                              isPassword: cubit.newPassword,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return tr('nPassword_empty');
+                                }
+                              },
+                              suffix: IconButton(
+                                  onPressed: () {
+                                    cubit.changeVisibility();
+                                  },
+                                  icon: Icon(cubit.newPassword
+                                      ? Icons.visibility
+                                      : Icons.visibility_off))
+                          ),
+                          const SizedBox(height: 15,),
+                          defaultTextField(
+                              hint: tr('confirm_new_password'),
+                              controller: passwordC,
+                              isPassword: cubit.cNewPassword,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return tr('cPassword_empty');
+                                }
+                                if (value != password.text) {
+                                  return tr('cPassword_not_correct');
+                                }
+                              },
+                              suffix: IconButton(
+                                  onPressed: () {
+                                    cubit.changeConfirmVisibility();
+                                  },
+                                  icon: Icon(cubit.cNewPassword
+                                      ? Icons.visibility
+                                      : Icons.visibility_off))),
+                          const SizedBox(height: 15,),
+                          state is! ChangePasswordLoadingState
+                          ? defaultButton(
+                              onTap: () {
+                                if(formKey.currentState!.validate()){
+                                  VSettingCubit.get(context).changePassword(
+                                      oldPassword: oldPassword.text,
+                                      newPassword: passwordC.text);
+                                }
+                              },
+                              text: tr('save')
+                          ):const CircularProgressIndicator()
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             );
           },
         ),
