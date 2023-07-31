@@ -19,34 +19,38 @@ class OrderHistory extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            myAppBar(
-                context: context,
-                title: tr('my_order_history'),
-                isArrowBack: true,
-                isLastIcon: true,
-                lastIcon: Icons.shopping_cart,
-                lastButtonTap: () {
-                  BuyerCubit.get(context).changeIndex(2);
-                  navigateAndFinish(context, BuyerLayout());
-                }
-            ),
-            BlocConsumer<SettingsCubit, SettingsStates>(
-              listener: (context, state) {},
-              builder: (context, state) {
-                var cubit = SettingsCubit.get(context);
-                return MyContainer(
-                  noSize:true,
-                  ConditionalBuilder(
-                    condition:cubit.orderModel!= null,
-                    fallback: (context) => const AddressAndOrderLoading(),
-                    builder: (context) =>const OrderHistoryWidget(),
-                  ),
-                );
-              },
-            ),
-          ],
+        child: InkWell(
+          onTap: ()=>FocusManager.instance.primaryFocus?.unfocus(),
+          overlayColor: MaterialStateProperty.all(Colors.transparent),
+          child: Stack(
+            children: [
+              myAppBar(
+                  context: context,
+                  title: tr('my_order_history'),
+                  isArrowBack: true,
+                  isLastIcon: true,
+                  lastIcon: Icons.shopping_cart,
+                  lastButtonTap: () {
+                    BuyerCubit.get(context).changeIndex(2);
+                    navigateAndFinish(context, BuyerLayout());
+                  }
+              ),
+              BlocConsumer<SettingsCubit, SettingsStates>(
+                listener: (context, state) {},
+                builder: (context, state) {
+                  var cubit = SettingsCubit.get(context);
+                  return MyContainer(
+                    noSize:true,
+                    ConditionalBuilder(
+                      condition:cubit.orderModel!= null,
+                      fallback: (context) => const AddressAndOrderLoading(),
+                      builder: (context) =>const OrderHistoryWidget(),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -34,79 +34,76 @@ class SearchScreen extends StatelessWidget {
         listener: (context, state) {},
         builder: (context, state) {
           var cubit = BuyerCubit.get(context);
-          return SingleChildScrollView(
-            controller: BuyerCubit.get(context).scrollControllerForSearch,
-            child: Stack(
-              alignment: AlignmentDirectional.topCenter,
-              children: [
-                myAppBar(
-                  context: context,
-                  isArrowBack: true,
-                  title: tr('result'),
-                  isLastIcon: true,
-                  lastIcon: Icons.shopping_cart,
-                  arrowTap: (){
-                    BuyerCubit.get(context).getHomeData(context);
-                    cubit.currentSearchPage = 1;
-                    cubit.scrollControllerForSearch.removeListener((){});
-                    Navigator.pop(context);
-                  },
-                  lastButtonTap: () {
-                    BuyerCubit.get(context).currentIndex = 2;
-                    navigateAndFinish(context, BuyerLayout());
-                  },
-                ),
-                ConditionalBuilder(
-                    condition: cubit.searchModel != null,
-                    fallback: (context) => GridViewLoading(),
-                    builder: (context) {
-                      cubit.getMoreForSearch();
-                      return MyContainer(
-                        Column(
-                          children: [
-                            defaultTextField(
-                                controller: cubit.searchController,
-                                hint: tr('search_by_product'),
-                                suffix: suffix,
-                                onChanged: (String? value) {
-                                  if (value!.length > 1) {
-                                    cubit.currentSearchPage = 1;
-                                      cubit.getListProductsForSearch(
-                                          text: value,
-                                          sort: suffix!.sort!.sortValue
-                                      );
-                                  }
-                                }),
-                            if (cubit.searchModel!.data!.products!.isNotEmpty)
-                              Stack(
-                                children: [
-                                  GridViewWidget(
-                                    products: cubit.searchModel!.data!.products!,),
-                                ],
-                              )
-                            else
-                              Column(
-                                children: [
-                                  SizedBox(
-                                    height: size!.height * .4,
-                                  ),
-                                  Text(tr('no_items_yet'))
-                                ],
+          return Stack(
+            alignment: AlignmentDirectional.topCenter,
+            children: [
+              myAppBar(
+                context: context,
+                isArrowBack: true,
+                title: tr('result'),
+                isLastIcon: true,
+                lastIcon: Icons.shopping_cart,
+                arrowTap: (){
+                  BuyerCubit.get(context).getHomeData(context);
+                  cubit.currentSearchPage = 1;
+                  cubit.scrollControllerForSearch.removeListener((){});
+                  Navigator.pop(context);
+                },
+                lastButtonTap: () {
+                  BuyerCubit.get(context).currentIndex = 2;
+                  navigateAndFinish(context, BuyerLayout());
+                },
+              ),
+              ConditionalBuilder(
+                  condition: cubit.searchModel != null,
+                  fallback: (context) => GridViewLoading(),
+                  builder: (context) {
+                    cubit.getMoreForSearch();
+                    return MyContainer(
+                      Column(
+                        children: [
+                          defaultTextField(
+                              controller: cubit.searchController,
+                              hint: tr('search_by_product'),
+                              suffix: suffix,
+                              onChanged: (String? value) {
+                                if (value!.length > 1) {
+                                  cubit.currentSearchPage = 1;
+                                    cubit.getListProductsForSearch(
+                                        text: value,
+                                        sort: suffix!.sort!.sortValue
+                                    );
+                                }
+                              }),
+                          if (cubit.searchModel!.data!.products!.isNotEmpty)
+                            Expanded(
+                              child: GridViewWidget(
+                                products: cubit.searchModel!.data!.products!,
+                                isScroll: true,
                               ),
-                            if(state is SearchLoadingState)
-                              const CircularProgressIndicator(),
-                          ],
-                        ),
-                        noSize: true,
-                      );
-                    }),
-                Container(
-                  width: size!.width,
-                  height: size!.height,
-                  child: cubit.flyingCart == null ? Container() : cubit.flyingCart,
-                )
-              ],
-            ),
+                            )
+                          else
+                            Column(
+                              children: [
+                                SizedBox(
+                                  height: size!.height * .4,
+                                ),
+                                Text(tr('no_items_yet'))
+                              ],
+                            ),
+                          if(state is SearchLoadingState)
+                            const CircularProgressIndicator(),
+                        ],
+                      ),
+                      noSize: true,
+                    );
+                  }),
+              Container(
+                width: size!.width,
+                height: size!.height,
+                child: cubit.flyingCart == null ? Container() : cubit.flyingCart,
+              )
+            ],
           );
         },
       ),

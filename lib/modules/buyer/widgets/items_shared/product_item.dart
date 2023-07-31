@@ -129,18 +129,12 @@ class ProductItem extends StatelessWidget {
                                           fontSize: 13,
                                           fontWeight: FontWeight.bold),
                                     ),
-                                    if (product!.salePrice != null)
-                                      SizedBox(
-                                        width: 35,
-                                        child: Text(
-                                          '${product!.regularPrice}',
-                                          style: const TextStyle(
-                                              color: Colors.grey,
-                                              fontSize: 10,
-                                              decoration:
-                                                  TextDecoration.lineThrough),
-                                        ),
-                                      ),
+                                    Text(
+                                      tr('sar'),
+                                      style: const TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 10,),
+                                    ),
                                   ],
                                 ),
                               ],

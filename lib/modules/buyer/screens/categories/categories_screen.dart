@@ -40,81 +40,86 @@ class CategoriesScreen extends StatelessWidget {
         listener: (context, state) {},
         builder: (context, state) {
           var cubit = BuyerCubit.get(context);
-          return SingleChildScrollView(
-            controller:cubit.scrollControllerForCategory,
-            child: Stack(
-              alignment: AlignmentDirectional.topCenter,
-              children: [
-                myAppBar(
-                  context: context,
-                  isArrowBack: true,
-                  title: name,
-                  isLastIcon: true,
-                  lastIcon: Icons.shopping_cart,
-                  lastButtonTap: () {
-                   cubit.currentIndex = 2;
-                    navigateAndFinish(context, BuyerLayout());
-                  },
-                  arrowTap: (){
-                    BuyerCubit.get(context).getHomeData(context);
-                    cubit.currentCategoryPage = 1;
-                    cubit.scrollControllerForCategory.removeListener(() {});
-                    Navigator.pop(context);
-                  }
-                ),
-                MyContainer(
-                    noSize: true,
-                    ConditionalBuilder(
-                      condition:products.isNotEmpty,
-                      fallback: (context)=>Column(children: [
-                        SizedBox(height: size!.height*.4,),
-                        Text(tr('no_items_yet')),
-                      ],),
-                      builder: (context)=>Column(
-                        children: [
-                          defaultTextField(
-                              controller: cubit.categoryController,
-                              hint: tr('search_by_product'),
-                              suffix: suffix,
-                              onChanged: (String? value) {
-                                if (value!.length > 1) {
-                                  cubit.currentCategoryPage = 1;
-                                  cubit.getListProductsForCategory(
-                                      text: value,
-                                      id: id,
-                                      sort: suffix!.sort!.sortValue
-                                  );
-                                }
-                                if (value.length < 2) {
-                                  cubit.currentCategoryPage = 1;
-                                  cubit.categoryModel = null;
-                                  cubit.emitState();
-                                }
+          return Stack(
+            alignment: AlignmentDirectional.topCenter,
+            children: [
+              myAppBar(
+                context: context,
+                isArrowBack: true,
+                title: name,
+                isLastIcon: true,
+                lastIcon: Icons.shopping_cart,
+                lastButtonTap: () {
+                 cubit.currentIndex = 2;
+                  navigateAndFinish(context, BuyerLayout());
+                },
+                arrowTap: (){
+                  BuyerCubit.get(context).getHomeData(context);
+                  cubit.currentCategoryPage = 1;
+                  cubit.scrollControllerForCategory.removeListener(() {});
+                  Navigator.pop(context);
+                }
+              ),
+              MyContainer(
+                  noSize: true,
+                  ConditionalBuilder(
+                    condition:products.isNotEmpty,
+                    fallback: (context)=>Column(children: [
+                      SizedBox(height: size!.height*.4,),
+                      Text(tr('no_items_yet')),
+                    ],),
+                    builder: (context)=>Column(
+                      children: [
+                        defaultTextField(
+                            controller: cubit.categoryController,
+                            hint: tr('search_by_product'),
+                            suffix: suffix,
+                            onChanged: (String? value) {
+                              if (value!.length > 1) {
+                                cubit.currentCategoryPage = 1;
+                                cubit.getListProductsForCategory(
+                                    text: value,
+                                    id: id,
+                                    sort: suffix!.sort!.sortValue
+                                );
                               }
-                          ),
-                          if(cubit.categoryModel != null)
-                            Builder(builder:(context)
-                            {
-                              cubit.getMoreForCategory(id);
-                              return GridViewWidget(
-                                  products: cubit.categoryModel!.data!.products!);
+                              if (value.length < 2) {
+                                cubit.currentCategoryPage = 1;
+                                cubit.categoryModel = null;
+                                cubit.emitState();
+                              }
+                            }
+                        ),
+                        if(cubit.categoryModel != null)
+                          Builder(builder:(context)
+                          {
+                            cubit.getMoreForCategory(id);
+                            return Expanded(
+                              child: GridViewWidget(
+                                  products: cubit.categoryModel!.data!.products!,
+                                isScroll: true,
+                              ),
+                            );
 
-                            }),
-                          if(cubit.categoryModel == null)
-                            GridViewWidget(products: products),
-                          if(state is SearchLoadingState)
-                            const CircularProgressIndicator(),
-                        ],
-                      )
+                          }),
+                        if(cubit.categoryModel == null)
+                          Expanded(child: GridViewWidget(
+                              products: products,
+                            isScroll: true,
+
+                          )),
+                        if(state is SearchLoadingState)
+                          const CircularProgressIndicator(),
+                      ],
                     )
-                ),
-                Container(
-                  width: size!.width,
-                  height: size!.height,
-                  child: cubit.flyingCart == null ? Container() : cubit.flyingCart,
-                )
-              ],
-            ),
+                  )
+              ),
+              Container(
+                width: size!.width,
+                height: size!.height,
+                child: cubit.flyingCart == null ? Container() : cubit.flyingCart,
+              )
+            ],
           );
         },
       ),

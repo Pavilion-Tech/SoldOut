@@ -14,68 +14,72 @@ class VendorOrderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Stack(
-        children: [
-          myAppBar(context: context, title: tr('my_orders')),
-          BlocConsumer<VendorCubit, VendorStates>(
-            listener: (context, state) {},
-            builder: (context, state) {
-              var cubit = VendorCubit.get(context);
-              return MyContainer(
-                noSize: cubit.vendorOrderModel!=null,
-                  ConditionalBuilder(
-                    condition: cubit.vendorOrderModel!=null,
-                    fallback: (context) => const AddressAndOrderLoading(),
-                    builder: (context) =>  Column(
-                      children: [
-                        defaultTextField(
-                            controller: cubit.searchController,
-                            hint: tr('search_by_order'),
-                            type: TextInputType.number,
-                            onChanged: (value)
-                            {
-                              if(value.isNotEmpty)
+    return InkWell(
+      onTap: ()=>FocusManager.instance.primaryFocus?.unfocus(),
+      overlayColor: MaterialStateProperty.all(Colors.transparent),
+      child: SingleChildScrollView(
+        child: Stack(
+          children: [
+            myAppBar(context: context, title: tr('my_orders')),
+            BlocConsumer<VendorCubit, VendorStates>(
+              listener: (context, state) {},
+              builder: (context, state) {
+                var cubit = VendorCubit.get(context);
+                return MyContainer(
+                  noSize: cubit.vendorOrderModel!=null,
+                    ConditionalBuilder(
+                      condition: cubit.vendorOrderModel!=null,
+                      fallback: (context) => const AddressAndOrderLoading(),
+                      builder: (context) =>  Column(
+                        children: [
+                          defaultTextField(
+                              controller: cubit.searchController,
+                              hint: tr('search_by_order'),
+                              type: TextInputType.number,
+                              onChanged: (value)
                               {
-                                cubit.searchOrder(int.parse(cubit.searchController.text.trim()));
-                                if(cubit.searchModel== null)
+                                if(value.isNotEmpty)
                                 {
-                                  showToast(msg: tr('order_not_found'));
-                                }
-                              }else
-                                {
-                                  cubit.nullSearch();
-                                }
-                            }
-                        ),
-                        if(cubit.vendorOrderModel!.data!.isNotEmpty)
-                        ListView.separated(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) => OrderItem(
-                            model:cubit.searchModel!= null
-                                ?cubit.searchModel!
-                                : cubit.vendorOrderModel!.data![index],
+                                  cubit.searchOrder(int.parse(cubit.searchController.text.trim()));
+                                  if(cubit.searchModel== null)
+                                  {
+                                    showToast(msg: tr('order_not_found'));
+                                  }
+                                }else
+                                  {
+                                    cubit.nullSearch();
+                                  }
+                              }
                           ),
-                          separatorBuilder: (context, index) =>
-                             const SizedBox(height: 10,),
-                          itemCount:cubit.searchModel!= null
-                              ? 1
-                              : cubit.vendorOrderModel!.data!.length,
-                        ),
-                        if(cubit.vendorOrderModel!.data!.isEmpty)
-                          Center(child: Column(
-                            children: [
-                              Text(tr(tr('no_order'))),
-                              const SizedBox(height: 150,),
-                            ],
-                          ),)
-                      ],
-                    ),
-                  ));
-            },
-          ),
-        ],
+                          if(cubit.vendorOrderModel!.data!.isNotEmpty)
+                          ListView.separated(
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) => OrderItem(
+                              model:cubit.searchModel!= null
+                                  ?cubit.searchModel!
+                                  : cubit.vendorOrderModel!.data![index],
+                            ),
+                            separatorBuilder: (context, index) =>
+                               const SizedBox(height: 10,),
+                            itemCount:cubit.searchModel!= null
+                                ? 1
+                                : cubit.vendorOrderModel!.data!.length,
+                          ),
+                          if(cubit.vendorOrderModel!.data!.isEmpty)
+                            Center(child: Column(
+                              children: [
+                                Text(tr(tr('no_order'))),
+                                const SizedBox(height: 150,),
+                              ],
+                            ),)
+                        ],
+                      ),
+                    ));
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

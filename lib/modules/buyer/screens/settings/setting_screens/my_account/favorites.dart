@@ -17,50 +17,51 @@ class Favorites extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: BlocConsumer<BuyerCubit, BuyerStates>(
-          listener: (context, state) {},
-          builder: (context, state) {
-            var cubit = BuyerCubit.get(context);
-            return Stack(
-              children: [
-                myAppBar(
-                    context: context,
-                    title: tr('my_fav'),
-                    isArrowBack: true,
-                    isLastIcon: true,
-                    lastIcon: Icons.shopping_cart,
-                    lastButtonTap: () {
-                      BuyerCubit.get(context).changeIndex(2);
-                      navigateAndFinish(context, BuyerLayout());
-                    }
-                ),
-                ConditionalBuilder(
-                    condition: cubit.getFavModel != null,
-                    fallback: (context) => GridViewLoading(),
-                    builder: (context) =>
-                        MyContainer(
-                          cubit.getFavModel!.data!.products!.isNotEmpty
-                              ? GridViewWidget(
-                            products: cubit.getFavModel!.data!.products,
-                          ) : Column(
-                            children: [
-                              SizedBox(height: size!.height * .4),
-                              Text(tr('no_fav'))
-                            ],
-                          ),
-                          noSize: true,)
+      body: BlocConsumer<BuyerCubit, BuyerStates>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          var cubit = BuyerCubit.get(context);
+          return Stack(
+            children: [
+              myAppBar(
+                  context: context,
+                  title: tr('my_fav'),
+                  isArrowBack: true,
+                  isLastIcon: true,
+                  lastIcon: Icons.shopping_cart,
+                  lastButtonTap: () {
+                    BuyerCubit.get(context).changeIndex(2);
+                    navigateAndFinish(context, BuyerLayout());
+                  }
+              ),
+              ConditionalBuilder(
+                  condition: cubit.getFavModel != null,
+                  fallback: (context) => GridViewLoading(),
+                  builder: (context) =>
+                      MyContainer(
+                        cubit.getFavModel!.data!.products!.isNotEmpty
+                            ? Expanded(
+                              child: GridViewWidget(
+                          products: cubit.getFavModel!.data!.products,
+                                isScroll: true,
+                              ),
+                            ) : Column(
+                          children: [
+                            SizedBox(height: size!.height * .4),
+                            Text(tr('no_fav'))
+                          ],
+                        ),
+                        noSize: true,)
 
-                ),
-                Container(
-                  width: size!.width,
-                  height: size!.height,
-                  child: cubit.flyingCart == null ? Container() : cubit.flyingCart,
-                )
-              ],
-            );
-          },
-        ),
+              ),
+              Container(
+                width: size!.width,
+                height: size!.height,
+                child: cubit.flyingCart == null ? Container() : cubit.flyingCart,
+              )
+            ],
+          );
+        },
       ),
     );
   }

@@ -28,8 +28,25 @@ Future<XFile?> checkImageSize (XFile? image)async{
 void navigateTo(context, widget) {
   Navigator.push(
     context,
-    MaterialPageRoute(
-      builder: (context) => widget,
+    PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) => widget,
+        transitionDuration: Duration(milliseconds: 500),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          const begin = Offset(1.0, 0.0);
+          const end = Offset.zero;
+          const curve = Curves.fastOutSlowIn;
+
+          final tween = Tween(begin: begin, end: end);
+          final curvedAnimation = CurvedAnimation(
+            parent: animation,
+            curve: curve,
+          );
+
+          return SlideTransition(
+            position: tween.animate(curvedAnimation),
+            child: child,
+          );
+        }
     ),
   );
 }
@@ -37,10 +54,27 @@ void navigateTo(context, widget) {
 void navigateAndFinish(context, widget) {
   Navigator.pushAndRemoveUntil(
     context,
-    MaterialPageRoute(
-      builder: (context) => widget,
+    PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) => widget,
+        transitionDuration: Duration(milliseconds: 500),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          const begin = Offset(1.0, 0.0);
+          const end = Offset.zero;
+          const curve = Curves.fastOutSlowIn;
+
+          final tween = Tween(begin: begin, end: end);
+          final curvedAnimation = CurvedAnimation(
+            parent: animation,
+            curve: curve,
+          );
+
+          return SlideTransition(
+            position: tween.animate(curvedAnimation),
+            child: child,
+          );
+        }
     ),
-    (route) => false,
+        (route) => false,
   );
 }
 
