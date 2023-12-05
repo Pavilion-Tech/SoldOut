@@ -42,6 +42,7 @@
   "order_total": "Order Total",
   "pay_now": "PAY NOW",
   "order_successful": "Congratulations, Your Order Has Been Successfully Paid. Order ID Is ",
+  "payment_successful": "Congratulations, Your Order Has Been Successfully",
   "continue_shopping": "CONTINUE SHOPPING",
   "notification": "NOTIFICATION",
   "my_fav": "My Favorite",
@@ -223,6 +224,8 @@
   "finished": "Finished",
   "processing": "Processing",
   "image_size": "Image Size Should Lower than 5 MB",
-  "code_invalid": "Code Invalid"
+  "code_invalid": "Code Invalid",
+  "go_home": "Go To Home",
+  "ops_payment": "Oops! Your Payment is Failure"
 
 }

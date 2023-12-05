@@ -42,6 +42,7 @@
   "order_total": "الطلب الكلي",
   "pay_now": "ادفع الآن",
   "order_successful": "تهانينا ، لقد تم دفع طلبك بنجاح. الطلب هو ",
+  "payment_successful": "تهانينا ، لقد تم دفع طلبك بنجاح",
   "continue_shopping": "مواصلة التسوق",
   "notification": "إشعار",
   "my_fav": "مفضلتي",
@@ -223,5 +224,9 @@
   "finished": "انتهى",
   "processing": "جاري",
   "image_size": "يجب أن يقل حجم الصورة عن 5 ميجا بايت",
-  "code_invalid": "الكود خطا"
+  "code_invalid": "الكود خطا",
+  "go_home": "اذهب الي الرئيسية",
+  "ops_payment": "نآسف! فشل عملية الدفع"
+
+
 }

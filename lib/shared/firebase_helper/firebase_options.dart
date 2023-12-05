@@ -30,24 +30,24 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-      apiKey: 'AIzaSyCEj2YbqrAlF0NDMYkdS8e5_UcKvjruIZM',
-      appId: '1:575890868187:android:44d638da5fe6958b85c9fe',
-      messagingSenderId: '575890868187',
-      projectId: 'soldout-de9d4',
-      storageBucket: 'soldout-de9d4.appspot.com',
-      androidClientId: '575890868187-5v0ih68h4rojscild8phmcf2n3juejfk.apps.googleusercontent.com',
-      deepLinkURLScheme: 'https://soldoutapp.page.link/'
+      apiKey: 'AIzaSyCT6igr2cmhQgrEQYbQqBwfLtsjbUo5Mz4',
+      appId: '1:824893113729:android:0aad093c40b0ce7b091480',
+      messagingSenderId: '824893113729',
+      projectId: 'soldout-b8dd0',
+      storageBucket: 'soldout-b8dd0.appspot.com',
+      androidClientId: '824893113729-4bnpvpmotuttha286m9q8vngap32i7hk.apps.googleusercontent.com',
+      deepLinkURLScheme: 'https://soldouta.page.link/'
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-      apiKey: 'AIzaSyC3LrR7ssgKQd2i1pbfpWNKlFiwOsJ7uuQ',
-      appId: '1:441146186016:ios:1de3815d2bcebcd2cb5f45',
-      messagingSenderId: '441146186016',
-      projectId: 'soldout-99b4c',
-      storageBucket: 'soldout-99b4c.appspot.com',
-      iosClientId: '441146186016-qnm32s25oeffmadmqrhkg92oo21aflv1.apps.googleusercontent.com',
+      apiKey: 'AIzaSyAeEOWq3FTw-0V0LTfDP0nbGPO0hEG-fJ4',
+      appId: '1:824893113729:ios:c2f5d6bf521e63ec091480',
+      messagingSenderId: '824893113729',
+      projectId: 'soldout-b8dd0',
+      storageBucket: 'soldout-b8dd0.appspot.com',
+      //iosClientId: '441146186016-qnm32s25oeffmadmqrhkg92oo21aflv1.apps.googleusercontent.com',
       iosBundleId: 'com.soldout.sa',
-      deepLinkURLScheme: 'https://soldou.page.link/'
+      deepLinkURLScheme: 'https://soldouta.page.link/'
   );
 
 }

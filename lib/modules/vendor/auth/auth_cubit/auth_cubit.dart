@@ -18,6 +18,8 @@ import '../../../../shared/network/remote/end_point.dart';
 import '../../../../splash_screen.dart';
 import '../../widgets/auth/forget_password/reset_dialog.dart';
 import '../../widgets/auth/forget_password/step_tree.dart';
+import '../../widgets/auth/vendor_signin_widget.dart';
+import '../vendor_sign_in_screen.dart';
 import '../vendor_verfication.dart';
 
 class VAuthCubit extends Cubit<VAuthStates>
@@ -110,9 +112,8 @@ class VAuthCubit extends Cubit<VAuthStates>
         formData: formData
     ).then((value) {
       if(value.statusCode == 200 &&value.data['status']){
-        code = value.data['data']['code'];
-        vToken = value.data['data']['access_token'];
-        navigateTo(context,VVerificationScreen());
+        showToast(msg: value.data['msg']);
+        navigateTo(context,VSignInScreen());
         emit(RegisterSuccessState());
       }else if(value.data!= null && !value.data['status'])
       {

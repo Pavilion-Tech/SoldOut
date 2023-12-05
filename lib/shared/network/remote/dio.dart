@@ -8,10 +8,10 @@ class DioHelper {
 
   static void init1() {
     dio = Dio(
-      BaseOptions(
-        baseUrl: 'https://soldout.pavilionapp.tech/api',
-        receiveTimeout: 3000000,
-        connectTimeout: 3000000,
+      BaseOptions(//https://soldout.pavilionapp.tech/api
+        baseUrl: 'https://soldout.sa/api',
+        receiveTimeout: Duration(seconds: 60),
+        connectTimeout: Duration(seconds: 60),
         receiveDataWhenStatusError: true,
         validateStatus: (status) => true,
         followRedirects: true,

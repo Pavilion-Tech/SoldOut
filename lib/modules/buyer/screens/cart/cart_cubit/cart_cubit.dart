@@ -93,6 +93,7 @@ class CartCubit extends Cubit<CartStates> {
       lang: myLocale,
       token: token!= null?'Bearer $token':null,
     ).then((value) {
+      print(value.data);
       if (value.statusCode == 200 && value.data['status']) {
         getCartModel = GetCartModel.fromJson(value.data);
         emit(GetCartSuccessState());
