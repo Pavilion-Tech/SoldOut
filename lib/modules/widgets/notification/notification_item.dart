@@ -11,13 +11,9 @@ class NotificationItem extends StatelessWidget {
 
   NotificationData notificationModel;
 
-  late String time ;
 
   @override
   Widget build(BuildContext context) {
-     time =DateFormat('',myLocale == 'ar'?'ar':'en')
-        .add_yMMMMEEEEd()
-        .format(DateTime.fromMillisecondsSinceEpoch(Duration(seconds: notificationModel.createdAt!).inMilliseconds));
     return Container(
       padding: const EdgeInsetsDirectional.only(
         top: 8,
@@ -46,7 +42,7 @@ class NotificationItem extends StatelessWidget {
             ),
           ),
           Text(
-            time,
+            notificationModel.createdAt??'',
             style:const TextStyle(color: Colors.grey, fontSize: 12),
           ),
         ],

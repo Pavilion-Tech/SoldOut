@@ -24,7 +24,7 @@ class NotificationData {
   String? body;
   int? redirectType;
   int? redirectId;
-  int? createdAt;
+  String? createdAt;
 
   NotificationData.fromJson(Map<String, dynamic> json) {
     id = json['id'];

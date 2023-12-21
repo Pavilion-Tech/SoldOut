@@ -391,9 +391,12 @@ class BuyerCubit extends Cubit<BuyerStates> {
         token: 'Bearer $token',
         lang: myLocale
     ).then((value) {
-      notificationModel = NotificationModel.fromJson(value.data);
+      if(value.data['data']!=null){
+        notificationModel = NotificationModel.fromJson(value.data);
+      }
       emit(GetNotificationSuccessState());
     }).catchError((e) {
+      print(e.toString());
       emit(GetNotificationErrorState());
     });
   }
