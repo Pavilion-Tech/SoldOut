@@ -112,8 +112,10 @@ class VAuthCubit extends Cubit<VAuthStates>
         formData: formData
     ).then((value) {
       if(value.statusCode == 200 &&value.data['status']){
-        showToast(msg: value.data['msg']);
-        navigateTo(context,VSignInScreen());
+        //showToast(msg: value.data['msg']);
+        vToken = value.data['data']['access_token'];
+        code = value.data['data']['code'];
+        navigateTo(context,VVerificationScreen(isStepTwo: false,));
         emit(RegisterSuccessState());
       }else if(value.data!= null && !value.data['status'])
       {
@@ -139,14 +141,14 @@ class VAuthCubit extends Cubit<VAuthStates>
         data: {
           'code':code,
           'device_type':deviceType,
-          'firebase_token':fcmToken??'fcm',
+          'firebase_token':fcmToken??'',
         }
     ).then((value) {
       if(value.statusCode == 200 &&value.data['status']){
         timer!.cancel();
         timerFinished = true;
-        CacheHelper.saveData(key: 'vToken', value: vToken);
-        navigateTo(context,VendorLayout());
+        showToast(msg: value.data['msg']);
+        navigateAndFinish(context,VSignInScreen());
         emit(ActiveAccountSuccessState());
       }else if(value.data!= null&& !value.data['status'])
       {
@@ -205,14 +207,21 @@ class VAuthCubit extends Cubit<VAuthStates>
           'phone':phone,
           'password':password,
           'device_type':deviceType,
-          'firebase_token':fcmToken??'fcm'
+          'firebase_token':fcmToken??''
         }
         ).then((value) {
+          print(value.data);
       if(value.statusCode == 200 &&value.data['status']){
+        bool? verified = value.data['data']['verified'];
         vToken = value.data['data']['access_token'];
-        CacheHelper.saveData(key: 'vToken', value: vToken);
+        if(verified!=null){
+          code = value.data['data']['code'];
+          navigateTo(context,VVerificationScreen(isStepTwo: false,));
+        }else{
+          CacheHelper.saveData(key: 'vToken', value: vToken);
+          navigateTo(context, VendorLayout());
+        }
         emit(LoginSuccessState());
-        navigateTo(context, VendorLayout());
       }else if(value.data!= null && !value.data['status'])
       {
         showToast(msg: value.data['errors'].toString(),toastState: true);

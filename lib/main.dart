@@ -44,7 +44,6 @@ void main() async {
     print(e);
   }
 
-
   await EasyLocalization.ensureInitialized();
 
   HttpOverrides.global = MyHttpOverrides();
@@ -60,8 +59,6 @@ void main() async {
 
   if (defaultTargetPlatform == TargetPlatform.android) deviceType = 0;
   if (defaultTargetPlatform == TargetPlatform.iOS) deviceType = 1;
-
-  print(fcmToken);
 
   onBoarding = CacheHelper.getData(key: 'onBoarding');
 

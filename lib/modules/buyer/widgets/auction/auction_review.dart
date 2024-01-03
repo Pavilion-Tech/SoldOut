@@ -28,6 +28,7 @@ class UserBids extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Text(
            tr('user_bids'),
@@ -37,13 +38,10 @@ class UserBids extends StatelessWidget {
                 fontWeight: FontWeight.bold
             ),
           ),
-          Padding(
-            padding: const EdgeInsetsDirectional.only(top: 10, bottom: 20),
-            child: Container(
-              height: 2,
-              width: double.infinity,
-              color: Colors.blue,
-            ),
+          Container(
+            height: 2,
+            width: double.infinity,
+            color: Colors.blue,
           ),
           if(bids.isNotEmpty)
             ListView.separated(
@@ -56,6 +54,7 @@ class UserBids extends StatelessWidget {
                 color: Colors.grey.shade400,
               ),
             ),
+            padding: const EdgeInsets.symmetric(vertical: 10),
             itemCount: bids.length,
             shrinkWrap: true,
             physics:const NeverScrollableScrollPhysics(),

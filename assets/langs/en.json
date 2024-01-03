@@ -226,6 +226,7 @@
   "image_size": "Image Size Should Lower than 5 MB",
   "code_invalid": "Code Invalid",
   "go_home": "Go To Home",
-  "ops_payment": "Oops! Your Payment is Failure"
+  "ops_payment": "Oops! Your Payment is Failure",
+  "soon": "Soon"
 
 }

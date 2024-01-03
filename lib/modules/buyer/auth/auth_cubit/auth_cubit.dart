@@ -45,7 +45,7 @@ class AuthCubit extends Cubit<AuthStates> {
       'phone': phoneController.text.trim(),
       'code': code,
       'device_type': deviceType,
-      'firebase_token': fcmToken??'fcm',
+      'firebase_token': fcmToken??'',
       'uuid': haveCart != null ? haveCart ? uuid.toString() : null : null,
     }).then((value) {
       if (value.data['status'] == true) {

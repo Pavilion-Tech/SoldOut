@@ -156,8 +156,8 @@ class AuctionCubit extends Cubit<AuctionStates>
 
   void initPusher() async {
     await pusher.init(
-        apiKey: '7b069888111ef365ebf2',
-        cluster: 'ap2',
+        apiKey: '473da60c01747f5e3770',
+        cluster: 'mt1',
         onConnectionStateChange: onConnectionStateChange
     );
     await pusher.connect();
