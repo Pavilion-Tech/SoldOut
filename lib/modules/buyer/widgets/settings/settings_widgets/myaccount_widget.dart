@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:soldout/layout/buyer_layout/cubit/buyer_cubit.dart';
@@ -85,7 +86,10 @@ class MyAccountWidget extends StatelessWidget {
             ),
             InkWell(
               onTap: (){
-                Uri sharableLink = Uri.parse(shareApp);
+                String link = defaultTargetPlatform == TargetPlatform.iOS
+                    ?'https://apps.apple.com/ae/app/soldout-ksa/id6449216198'
+                    :'https://play.google.com/store/apps/details?id=com.soldout';
+                Uri sharableLink = Uri.parse(link);
                 Share.share(sharableLink.toString());
               },
               child:Text(tr('share_app')),

@@ -22,7 +22,7 @@ class DynamicLinksClient {
 
   static Future<Uri> createUri(String uri) async {
     final DynamicLinkParameters parameters = DynamicLinkParameters(
-      uriPrefix: 'https://soldou.page.link',
+      uriPrefix: 'https://soldouta.page.link',
       link: Uri.parse(uri),
       androidParameters:const AndroidParameters(
         packageName: 'com.soldout',
