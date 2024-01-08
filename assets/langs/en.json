@@ -227,6 +227,7 @@
   "code_invalid": "Code Invalid",
   "go_home": "Go To Home",
   "ops_payment": "Oops! Your Payment is Failure",
-  "soon": "Soon"
+  "soon": "Soon",
+  "no_points": "No Points Yet"
 
 }

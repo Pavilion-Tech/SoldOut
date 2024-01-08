@@ -101,7 +101,7 @@ class _PointsScreenState extends State<PointsScreen>
                                   );
                                 }else
                                   {
-                                    return Center(child: Text(tr('no_item')),);
+                                    return Center(child: Text(tr('no_points')),);
                                   }
                               }
                             ),

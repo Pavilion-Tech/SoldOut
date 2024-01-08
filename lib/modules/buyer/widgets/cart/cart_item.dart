@@ -63,6 +63,7 @@ class CartItem extends StatelessWidget {
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     SizedBox(
                       height: size!.height * .15,
@@ -72,24 +73,28 @@ class CartItem extends StatelessWidget {
                     const SizedBox(
                       width: 5,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 7),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            model.name!,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          const Spacer(),
-                          Text(
-                            '${model.piecePrice} ${tr('sar')}',
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ],
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 7),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              model.name!,
+                              style: const TextStyle(fontWeight: FontWeight.bold),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            const Spacer(),
+                            Text(
+                              '${model.piecePrice} ${tr('sar')}',
+                              style: const TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                    const Spacer(),
+                    //const Spacer(),
                     if (model.stockChanged!)
                       Text(
                         tr('out_of_stock'),
@@ -99,6 +104,7 @@ class CartItem extends StatelessWidget {
                       ),
                     if (!model.stockChanged!)
                       Row(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           InkWell(
                             onTap: () {

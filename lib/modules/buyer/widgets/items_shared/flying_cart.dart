@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:soldout/modules/widgets/image_net.dart';
+import 'package:soldout/shared/components/constants.dart';
 
 
 class FlyingCart extends StatefulWidget {
@@ -52,7 +54,7 @@ class _FlyingCartState extends State<FlyingCart>
                     ), biggest),
                 end: RelativeRect.fromSize(
                     Rect.fromLTWH(
-                      widget.isGrid ? biggest.width * .844: biggest.width*.65,
+                      widget.isGrid ? biggest.width * .844: myLocale =='en'?biggest.width*.65:biggest.width*.25,
                       widget.isGrid ? biggest.height * .05:biggest.height*.93,
                       smallLogo,
                       smallLogo,
@@ -64,27 +66,7 @@ class _FlyingCartState extends State<FlyingCart>
               )),
               child: Padding(
                   padding: EdgeInsets.all(8),
-                  child: Image.network(
-                    widget.image,
-                    fit: BoxFit.cover,
-                    errorBuilder: (c, Object o, s) {
-                      return const Icon(Icons.info);
-                    },
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) {
-                        return child;
-                      }
-                      return Center(
-                        child: CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes !=
-                              null
-                              ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes!
-                              : null,
-                        ),
-                      );
-                    },
-                  )
+                  child: ImageNet(image: widget.image,)
               ),
             ),
           ],
