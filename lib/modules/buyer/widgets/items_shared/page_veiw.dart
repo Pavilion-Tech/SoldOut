@@ -18,7 +18,7 @@ class MPageView extends StatelessWidget
       height: size!.height * .385,
       width: double.infinity,
       child: PageView.builder(
-        itemBuilder: (context, index) => pageViewItem(images[index].image!,context),
+        itemBuilder: (context, index) => pageViewItem(images[index].image??'',context),
         itemCount: images.length,
         onPageChanged: (int index) {},
         controller: pageController,
@@ -29,7 +29,9 @@ class MPageView extends StatelessWidget
   Widget pageViewItem(String url,context) {
     return InkWell(
       onTap: ()=>navigateTo(context, ShowImage(images)),
-      child: ImageNet(image: url),
+      child: ImageNet(image: url,
+        height: size!.height * .385,
+        width: double.infinity,),
     );
   }
 
