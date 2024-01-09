@@ -10,7 +10,7 @@ bool? isConnect;
 bool? showAuctionHint;
 
 String? fcmToken;
-
+String? cacheFcm;
 String myLocale = 'en';
 
 String? token;

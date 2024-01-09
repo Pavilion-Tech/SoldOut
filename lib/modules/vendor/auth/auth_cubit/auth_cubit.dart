@@ -141,7 +141,7 @@ class VAuthCubit extends Cubit<VAuthStates>
         data: {
           'code':code,
           'device_type':deviceType,
-          'firebase_token':fcmToken??'',
+          'firebase_token': cacheFcm??fcmToken??'fcmToken',
         }
     ).then((value) {
       if(value.statusCode == 200 &&value.data['status']){
@@ -207,7 +207,7 @@ class VAuthCubit extends Cubit<VAuthStates>
           'phone':phone,
           'password':password,
           'device_type':deviceType,
-          'firebase_token':fcmToken??''
+          'firebase_token': cacheFcm??fcmToken??'fcmToken',
         }
         ).then((value) {
           print(value.data);

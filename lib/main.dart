@@ -54,6 +54,13 @@ void main() async {
   DioHelper.init1();
 
   String? loca = CacheHelper.getData(key: 'locale');
+  cacheFcm = CacheHelper.getData(key: 'cacheFcm');
+  if(fcmToken!=null){
+    if(cacheFcm != fcmToken){
+      cacheFcm = fcmToken;
+      CacheHelper.saveData(key: 'cacheFcm', value: cacheFcm);
+    }
+  }
   if(loca !=null) myLocale = loca;
 
 

@@ -85,7 +85,7 @@ class VSettingCubit extends Cubit<VSettingStates>
     FormData formData = FormData.fromMap({
       'name':nameC.text,
       'device_type':deviceType,
-      'firebase_token':fcmToken??'',
+      'firebase_token': cacheFcm??fcmToken??'fcmToken',
       'commercial_register':file != null
           ? await MultipartFile.fromFile(_file!.path, filename:_file.path.split('/').last)
       :await MultipartFile.fromFile(image!, filename:image!.split('/').last),

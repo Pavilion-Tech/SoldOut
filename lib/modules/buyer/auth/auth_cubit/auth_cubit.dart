@@ -45,7 +45,7 @@ class AuthCubit extends Cubit<AuthStates> {
       'phone': phoneController.text.trim(),
       'code': code,
       'device_type': deviceType,
-      'firebase_token': fcmToken??'',
+      'firebase_token': cacheFcm??fcmToken??'fcmToken',
       'uuid': haveCart != null ? haveCart ? uuid.toString() : null : null,
     }).then((value) {
       if (value.data['status'] == true) {
@@ -121,7 +121,7 @@ class AuthCubit extends Cubit<AuthStates> {
     await DioHelper.postData(url: editProfile, token: 'Bearer $token', data: {
       'name': name,
       'device_type': deviceType,
-      'firebase_token': fcmToken??'',
+      'firebase_token': cacheFcm??fcmToken??'fcmToken',
     }).then((value) {
       if (value.statusCode == 200&&value.data['status']) {
         CacheHelper.removeData('token');
