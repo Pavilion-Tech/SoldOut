@@ -228,6 +228,8 @@
   "go_home": "Go To Home",
   "ops_payment": "Oops! Your Payment is Failure",
   "soon": "Soon",
-  "no_points": "No Points Yet"
+  "no_points": "No Points Yet",
+  "cancel": "Cancel",
+  "accept": "Accept"
 
 }

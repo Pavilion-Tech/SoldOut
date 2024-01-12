@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_plus/share_plus.dart';
@@ -5,6 +6,8 @@ import 'package:soldout/layout/buyer_layout/cubit/buyer_cubit.dart';
 import 'package:soldout/layout/buyer_layout/cubit/buyer_states.dart';
 import 'package:soldout/modules/buyer/auth/sign_in/sign_in_screen.dart';
 import 'package:soldout/modules/buyer/screens/auction/auction_cubit/auction_cubit.dart';
+import 'package:soldout/modules/buyer/screens/settings/setting_screens/my_account/points.dart';
+import 'package:soldout/modules/buyer/screens/settings/settings_cubit/settings_cubit.dart';
 import 'package:soldout/shared/components/components.dart';
 import 'package:soldout/shared/firebase_helper/dynamic_links.dart';
 import '../../../../shared/components/constants.dart';
@@ -108,6 +111,34 @@ class RowInTop extends StatelessWidget {
                 ],
               ),
             ),
+          if (!isProduct)
+            InkWell(
+              onTap: (){
+                if(!isProduct){
+                  if(status == 'processing')
+                  {
+                    AuctionCubit.get(context).unsubscribePusher(id!);
+                  }
+                }
+                SettingsCubit.get(context).getAllPoints();
+                navigateTo(context, PointsScreen());
+              },
+              child: Container(
+                height: 40,
+                width: 70,
+                alignment: AlignmentDirectional.center,
+                padding: const EdgeInsetsDirectional.only(end: 5),
+                decoration: const BoxDecoration(
+                  color: defaultColorTwo,
+                  borderRadius: BorderRadiusDirectional.only(
+                      topStart: Radius.circular(20),
+                      bottomStart: Radius.circular(20)),
+                ),
+                child: Text(
+                  'points'.tr()
+                ),
+              ),
+            )
         ],
       ),
     );

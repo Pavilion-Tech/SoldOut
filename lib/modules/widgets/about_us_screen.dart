@@ -21,33 +21,39 @@ class AboutUsScreen extends StatelessWidget {
         listener: (context, state) {},
         builder: (context, state) {
           var cubit = SettingsCubit.get(context);
-          return SingleChildScrollView(
-            child: Stack(
-              children: [
-                myAppBar(
-                    context: context,
-                    title: tr('about_us'),
-                    isArrowBack: true,
-                    isLastIcon: haveCart,
-                    lastIcon: Icons.shopping_cart,
-                    lastButtonTap: () {
-                      BuyerCubit.get(context).changeIndex(2);
-                      navigateAndFinish(context, BuyerLayout());
-                    }),
-                MyContainer(
-                    ConditionalBuilder(
-                      condition: cubit.settingsModel != null,
-                      fallback:(context)=>const AboutAppLoading(),
-                      builder:(context)=> Text(
-                        SettingsCubit.get(context).settingsModel!.data!.aboutUs!,
-                        style:const TextStyle(height: 2, fontSize: 16),
+          return Stack(
+            children: [
+              myAppBar(
+                  context: context,
+                  title: tr('about_us'),
+                  isArrowBack: true,
+                  isLastIcon: haveCart,
+                  lastIcon: Icons.shopping_cart,
+                  lastButtonTap: () {
+                    BuyerCubit.get(context).changeIndex(2);
+                    navigateAndFinish(context, BuyerLayout());
+                  }),
+              MyContainer(
+                end: 0,
+                noSize: true,
+                vendorHome: true,
+                  ConditionalBuilder(
+                    condition: cubit.settingsModel != null,
+                    fallback:(context)=>const AboutAppLoading(),
+                    builder:(context)=> SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 40.0),
+                        child: Text(
+                          SettingsCubit.get(context).settingsModel!.data!.aboutUs!,
+                          style:const TextStyle(height: 2, fontSize: 16),
+                        ),
                       ),
                     ),
+                  ),
 
 
-                ),
-              ],
-            ),
+              ),
+            ],
           );
         },
       ),

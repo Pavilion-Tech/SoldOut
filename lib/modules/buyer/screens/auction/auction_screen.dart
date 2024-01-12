@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:soldout/modules/buyer/screens/auction/auction_cubit/auction_cubit.dart';
 import 'package:soldout/modules/buyer/screens/auction/auction_cubit/auction_states.dart';
+import 'package:soldout/modules/buyer/widgets/auction/terms_auction_dialog.dart';
+import 'package:soldout/shared/network/local/cache_helper.dart';
 import '../../../../shared/components/constants.dart';
 import '../../../widgets/loadings/show_product_loading/show_product_loading.dart';
 import '../../widgets/auction/add_coins.dart';
@@ -14,11 +16,31 @@ import '../../widgets/items_shared/indicator.dart';
 import '../../widgets/items_shared/page_veiw.dart';
 import '../../widgets/prodect/row_in_top.dart';
 
-class AuctionScreen extends StatelessWidget {
+class AuctionScreen extends StatefulWidget {
+  @override
+  State<AuctionScreen> createState() => _AuctionScreenState();
+}
+
+class _AuctionScreenState extends State<AuctionScreen> {
   PageController pageController = PageController();
 
   int x =0;
 
+  @override
+  void initState() {
+    int? id = AuctionCubit.get(context).auctionModel?.id;
+    bool? cacheId = CacheHelper.getData(key: id.toString());
+    if(cacheId==null){
+      Future.delayed(Duration.zero,(){
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context)=>TermsAuctionDialog(id: id),
+        );
+      });
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

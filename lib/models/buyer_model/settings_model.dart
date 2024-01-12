@@ -14,6 +14,7 @@ class SettingsModel {
 
 class SettingsData {
   String? aboutUs;
+  String? auctionTerms;
   String? terms;
   String? email;
   String? instagram;
@@ -29,6 +30,7 @@ class SettingsData {
   SettingsData.fromJson(Map<String, dynamic> json) {
     aboutUs = json['about_us'];
     terms = json['terms'];
+    auctionTerms = json['auction_terms'];
     maintenance = json['maintenance'];
     email = json['email'];
     instagram = json['instagram'];

@@ -61,8 +61,13 @@ void main() async {
       CacheHelper.saveData(key: 'cacheFcm', value: cacheFcm);
     }
   }
-  if(loca !=null) myLocale = loca;
-
+  if(loca !=null){
+    myLocale = loca;
+  }else{
+    Platform.localeName.contains('ar')
+        ?myLocale = 'ar'
+        :myLocale = 'en';
+  }
 
   if (defaultTargetPlatform == TargetPlatform.android) deviceType = 0;
   if (defaultTargetPlatform == TargetPlatform.iOS) deviceType = 1;

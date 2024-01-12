@@ -34,7 +34,6 @@ class SettingsCubit extends Cubit<SettingsStates>{
         url: settings,
         lang: myLocale
     ).then((value) {
-      print(value.data);
       settingsModel = SettingsModel.fromJson(value.data);
       emit(GetSettingsSuccess());
     }).catchError((e){
