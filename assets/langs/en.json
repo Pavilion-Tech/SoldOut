@@ -230,6 +230,8 @@
   "soon": "Soon",
   "no_points": "No Points Yet",
   "cancel": "Cancel",
-  "accept": "Accept"
+  "accept": "Accept",
+  "accept_auction_terms": "I accept the terms and conditions of participating in the auction",
+  "confirm_auction_terms": "Confirm Terms And Conditions for Auction First"
 
 }

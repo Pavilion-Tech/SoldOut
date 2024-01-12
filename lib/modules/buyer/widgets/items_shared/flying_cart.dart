@@ -66,7 +66,13 @@ class _FlyingCartState extends State<FlyingCart>
               )),
               child: Padding(
                   padding: EdgeInsets.all(8),
-                  child: ImageNet(image: widget.image,)
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadiusDirectional.circular(10),
+                    ),
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    child: ImageNet(image: widget.image,),
+                  )
               ),
             ),
           ],

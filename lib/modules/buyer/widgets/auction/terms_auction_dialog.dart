@@ -16,6 +16,8 @@ class TermsAuctionDialog extends StatefulWidget {
 }
 
 class _TermsAuctionDialogState extends State<TermsAuctionDialog> {
+
+  bool value = false;
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -37,7 +39,26 @@ class _TermsAuctionDialogState extends State<TermsAuctionDialog> {
                 ),
               ),
             ),
-            const SizedBox(height: 30,),
+            const SizedBox(height: 10,),
+            Row(
+              children: [
+                Checkbox(
+                    value: value,
+                    activeColor: defaultColor,
+                    onChanged: (val){
+                      setState(() {
+                        value = !value;
+                      });
+                    }
+                ),
+                Expanded(
+                  child: Text(
+                    'accept_auction_terms'.tr()
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(height: 20,),
             Row(
               children: [
                 Expanded(child: defaultButton(
@@ -52,8 +73,12 @@ class _TermsAuctionDialogState extends State<TermsAuctionDialog> {
                 const SizedBox(width:20),
                 Expanded(child: defaultButton(
                     onTap: (){
-                      CacheHelper.saveData(key: widget.id.toString(), value: true);
-                      Navigator.pop(context);
+                      if(!value){
+                        showToast(msg: 'confirm_auction_terms'.tr());
+                      }else{
+                        CacheHelper.saveData(key: widget.id.toString(), value: true);
+                        Navigator.pop(context);
+                      }
                     },
                     text: 'accept'.tr())),
               ],
