@@ -66,6 +66,7 @@ class ProductDetails extends StatelessWidget {
                         CartCubit.get(context).addToCart(
                           productId: product!.id!,
                           qty:1,
+                          context: context
                         );
                       }
                       else

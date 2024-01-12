@@ -6,6 +6,7 @@ import 'package:soldout/modules/buyer/widgets/home/list_arrivals.dart';
 import 'package:soldout/modules/buyer/widgets/home/list_auctions.dart';
 import 'package:soldout/modules/buyer/widgets/home/list_proucts.dart';
 import 'package:soldout/modules/buyer/widgets/shimmers/home_loading/home_loading.dart';
+import 'package:soldout/modules/widgets/login_dialog.dart';
 import 'package:soldout/shared/components/components.dart';
 import 'package:soldout/shared/images/images.dart';
 import '../../../../layout/buyer_layout/cubit/buyer_cubit.dart';

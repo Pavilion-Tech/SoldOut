@@ -4,7 +4,8 @@ import 'package:shimmer/shimmer.dart';
 import '../../../../../shared/components/constants.dart';
 
 class PointsLoading extends StatelessWidget {
-  const PointsLoading({Key? key}) : super(key: key);
+  PointsLoading({this.fromAuction = false});
+  bool fromAuction ;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,7 @@ class PointsLoading extends StatelessWidget {
                   highlightColor: Colors.white,
                   child: Container(
                     height: 20,
-                    width: size!.width*.5,
+                    width: fromAuction?size!.width*.35:size!.width*.5,
                     color: Colors.grey,
                   ),
                 ),

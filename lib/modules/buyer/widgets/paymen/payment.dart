@@ -80,7 +80,7 @@ class _PaymentState extends State<Payment> {
               isArrowBack: true,
               title: tr('payment'),
               arrowTap: () {
-                if(widget.isPoints)SettingsCubit.get(context).getAllPoints();
+                if(widget.isPoints)SettingsCubit.get(context).getAllPoints(context);
                 Navigator.pop(context);
               },
             ),

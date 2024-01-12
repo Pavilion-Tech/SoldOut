@@ -11,6 +11,7 @@ import '../../../../../shared/components/components.dart';
 import '../../../../../shared/components/constants.dart';
 import '../../../../../shared/network/remote/dio.dart';
 import '../../../../../shared/network/remote/end_point.dart';
+import '../../../../widgets/login_dialog.dart';
 import '../../../widgets/check_out/dialog.dart';
 import '../../../widgets/paymen/payment.dart';
 
@@ -39,6 +40,7 @@ class CartCubit extends Cubit<CartStates> {
   void addToCart({
     int? productId,
     int? qty,
+    required BuildContext context,
   }) async {
     await DioHelper.postData(
         url: carts,
@@ -52,7 +54,9 @@ class CartCubit extends Cubit<CartStates> {
       if (value.statusCode == 200 && value.data['status']) {
         showToast(msg: tr('item_added'));
         getCart();
-      } else {
+      }else if(value.statusCode == 401){
+        showDialog(context: context,barrierDismissible: false, builder: (context)=>LoginDialog());
+      }  else {
         showToast(msg: tr('wrong'), toastState: false);
         emit(AddToCartWrongState());
       }
@@ -106,7 +110,7 @@ class CartCubit extends Cubit<CartStates> {
     });
   }
 
-  void getCheckOut() async {
+  void getCheckOut(BuildContext context) async {
     emit(GetCheckOutLoadingState());
     await DioHelper.getData(
       url: fetchCheckOut,
@@ -116,6 +120,8 @@ class CartCubit extends Cubit<CartStates> {
       if (value.statusCode == 200 && value.data['status']) {
         getCheckOutModel = GetCheckOutModel.fromJson(value.data);
         emit(GetCheckOutSuccessState());
+      } else if(value.statusCode == 401){
+        showDialog(context: context,barrierDismissible: false, builder: (context)=>LoginDialog());
       } else {
         showToast(msg: tr('wrong'),toastState: false);
         emit(GetCheckOutWrongState());

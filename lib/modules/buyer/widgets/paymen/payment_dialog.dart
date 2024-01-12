@@ -10,8 +10,9 @@ import '../../../../shared/components/constants.dart';
 
 class PaymentCheckOutDialog extends StatefulWidget {
 
-  PaymentCheckOutDialog(this.isSuccess);
+  PaymentCheckOutDialog(this.isSuccess,{this.fromAuction = false});
   bool isSuccess;
+  bool fromAuction;
 
   @override
   State<PaymentCheckOutDialog> createState() => _PaymentCheckOutDialogState();
@@ -80,10 +81,19 @@ class _PaymentCheckOutDialogState extends State<PaymentCheckOutDialog> with Sing
             ),
             const  Spacer(),
             defaultButton(onTap: (){
-              BuyerCubit.get(context).currentIndex = 0;
-              CartCubit.get(context).getCart();
+              if(!widget.fromAuction){
+                BuyerCubit.get(context).currentIndex = 0;
+                CartCubit.get(context).getCart();
+              }else{
+                if(widget.isSuccess){
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                }else{
+                  Navigator.pop(context);
+                }
+              }
               navigateAndFinish(context, BuyerLayout());
-            }, text: tr('go_home'),
+            }, text:widget.fromAuction?tr('back'): tr('go_home'),
                 width: size!.height>670? null :size!.width
             ),
           ],

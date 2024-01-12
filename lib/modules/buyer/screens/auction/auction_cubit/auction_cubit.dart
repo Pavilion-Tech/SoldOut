@@ -13,6 +13,7 @@ import '../../../../../models/buyer_model/my_auction_model.dart';
 import '../../../../../shared/components/constants.dart';
 import '../../../../../shared/network/local/cache_helper.dart';
 import '../../../../../shared/network/remote/end_point.dart';
+import '../../../widgets/auction/buy_points_dialog.dart';
 import '../../../widgets/paymen/payment.dart';
 import 'auction_states.dart';
 
@@ -112,10 +113,12 @@ class AuctionCubit extends Cubit<AuctionStates>
         emit(AuctionSuccess());
       }else if (value.data!=null&&!value.data['status'])
         {
-          showToast(msg: value.data['errors'].toString(),toastState: true);
           if(value.data['have_points']!=null)
           {
-              navigateTo(context,const PointsScreen());
+            showDialog(
+                context: context,
+                builder: (context)=>BuyPointsDialog(text: value.data['errors'].toString(),)
+            );
           }
           emit(AuctionWrong());
         }
@@ -138,10 +141,12 @@ class AuctionCubit extends Cubit<AuctionStates>
       print(value.data);
       if (value.data!=null&&!value.data['status'])
         {
-          showToast(msg: value.data['errors'].toString(),toastState: true);
           if(value.data['have_points']!=null)
           {
-            navigateTo(context,const PointsScreen());
+            showDialog(
+                context: context,
+                builder: (context)=>BuyPointsDialog(text: value.data['errors'].toString(),)
+            );
           }
           emit(AuctionWrong());
         }

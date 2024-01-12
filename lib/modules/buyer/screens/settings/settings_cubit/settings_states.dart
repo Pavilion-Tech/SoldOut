@@ -2,6 +2,8 @@ abstract class SettingsStates{}
 
 class InitState extends SettingsStates{}
 
+class EmitState extends SettingsStates{}
+
 class CheckNetState extends SettingsStates{}
 
 class SearchState extends SettingsStates{}

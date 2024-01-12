@@ -1,16 +1,20 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:soldout/modules/buyer/screens/settings/settings_cubit/settings_states.dart';
 import 'package:soldout/shared/components/components.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import '../../../../../models/buyer_model/get_points.dart';
 import '../../../../../models/buyer_model/order_model.dart';
 import '../../../../../models/buyer_model/settings_model.dart';
 import '../../../../../shared/components/constants.dart';
 import '../../../../../shared/network/remote/dio.dart';
 import '../../../../../shared/network/remote/end_point.dart';
+import '../../../../widgets/login_dialog.dart';
 import '../../../widgets/paymen/payment.dart';
+import '../../../widgets/paymen/payment_dialog.dart';
 
 class SettingsCubit extends Cubit<SettingsStates>{
   SettingsCubit(): super(InitState());
@@ -26,6 +30,8 @@ class SettingsCubit extends Cubit<SettingsStates>{
   GetPointsModel? getPointsModel;
 
   TextEditingController searchController = TextEditingController();
+
+  void emitState()=>emit(EmitState());
 
 
   void getSettingsData()async
@@ -54,7 +60,7 @@ class SettingsCubit extends Cubit<SettingsStates>{
     );
   }
 
-  void getOrder()async
+  void getOrder(BuildContext context)async
   {
     emit(GetOrderLoadingState());
     await DioHelper.getData(
@@ -65,6 +71,8 @@ class SettingsCubit extends Cubit<SettingsStates>{
       if(value.statusCode == 200 && value.data['status']){
         orderModel = OrderModel.fromJson(value.data);
         emit(GetOrderSuccessState());
+      }else if(value.statusCode == 401){
+        showDialog(context: context, builder: (context)=>LoginDialog());
       }else{
         showToast(msg: tr('wrong'),toastState: true);
         emit(GetOrderWrongState());
@@ -120,6 +128,8 @@ class SettingsCubit extends Cubit<SettingsStates>{
       }else if(value.data!=null&&!value.data['status']){
         showToast(msg: value.data['errors'].toString(),toastState: true);
         emit(RateWrongState());
+      }else if(value.statusCode == 401){
+        showDialog(context: context, builder: (context)=>LoginDialog());
       }else{
         showToast(msg: tr('wrong'),toastState: true);
         emit(RateWrongState());
@@ -170,7 +180,7 @@ class SettingsCubit extends Cubit<SettingsStates>{
   }
 
 
-  void getAllPoints()async
+  void getAllPoints(BuildContext context)async
   {
     emit(GetPointsLoadingState());
     await DioHelper.getData(
@@ -181,6 +191,8 @@ class SettingsCubit extends Cubit<SettingsStates>{
       if(value.statusCode == 200 && value.data['status']){
         getPointsModel = GetPointsModel.fromJson(value.data);
         emit(GetPointsSuccessState());
+      }else if(value.statusCode == 401){
+        showDialog(context: context, builder: (context)=>LoginDialog());
       }else{
         showToast(msg: tr('wrong'),toastState: true);
         emit(GetPointsWrongState());
@@ -191,11 +203,15 @@ class SettingsCubit extends Cubit<SettingsStates>{
     });
   }
 
+  String? linkToAuction;
+
   void buyPoints({
     required int id,
     required BuildContext context,
+    required bool fromAuction,
 })async
   {
+    linkToAuction = null;
     emit(GetPointsLoadingState());
     await DioHelper.postData(
       url: points,
@@ -207,16 +223,70 @@ class SettingsCubit extends Cubit<SettingsStates>{
     ).then((value) {
      if(value.statusCode == 200){
       String link = value.data['data']['payment_link'];
-      navigateTo(context, Payment(url: link,isPoints: true,));
+      if(fromAuction){
+        linkToAuction = link;
+        initWebView(context);
+        emit(GetPointsSuccessState());
+      }else{
+        navigateTo(context, Payment(url: link,isPoints: true,));
       }
+      }else if(value.statusCode == 401){
+       showDialog(context: context, builder: (context)=>LoginDialog());
+     }
       else{
        showToast(msg: tr('wrong'),toastState: true);
        emit(GetPointsWrongState());
      }
     }).catchError((e){
       emit(GetPointsErrorState());
+      print(e.toString());
       showToast(msg: tr('wrong'),toastState: false);
     });
+  }
+
+  late WebViewController webViewController;
+  bool webLoading = true;
+
+  void initWebView(BuildContext context) {
+    webViewController = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(const Color(0x00000000))
+      ..setNavigationDelegate(
+        NavigationDelegate(
+            onProgress: (int progress) {
+              // Update loading bar.
+            },
+            onPageStarted: (String url) {
+              print('onPageStarted $url');
+            },
+            onPageFinished: (String url) {
+              print('onPageFinished $url');
+              webLoading = false;
+              emitState();
+            },
+            onWebResourceError: (WebResourceError error) {
+              Navigator.pop(context);
+              error.toString();
+            },
+            onUrlChange: (UrlChange url){
+              Uri uri = Uri.parse(url.url??'');
+              if(uri.queryParameters['Result'] !=null)
+                if(uri.queryParameters['Result']=='Successful'){
+                  showDialog(
+                      context: context,
+                      builder: (context)=>PaymentCheckOutDialog(true,fromAuction: true,)
+                  );
+                }else{
+                  showDialog(
+                      context: context,
+                      builder: (context)=>PaymentCheckOutDialog(false,fromAuction: true,)
+                  );
+                }
+              print('onUrlChange ${uri}');
+            }
+        ),
+      )
+      ..loadRequest(Uri.parse(SettingsCubit.get(context).linkToAuction!));
   }
 
 

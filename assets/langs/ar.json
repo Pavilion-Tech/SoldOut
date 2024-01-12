@@ -232,5 +232,7 @@
   "cancel": "إلغاء",
   "accept": "موافق",
   "accept_auction_terms": "اقبل شروط واحكام المشاركة بالمزاد",
-  "confirm_auction_terms": "قم بتأكيد شروط وأحكام المزاد أولاً"
+  "confirm_auction_terms": "قم بتأكيد شروط وأحكام المزاد أولاً",
+  "buy_points": "شراء النقاط",
+  "must_log_in_again": "يجب تسجيل الدخول من جديد"
 }

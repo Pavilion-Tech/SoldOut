@@ -35,7 +35,7 @@ class _PointsScreenState extends State<PointsScreen>
 
   @override
   Widget build(BuildContext context) {
-    SettingsCubit.get(context).getAllPoints();
+    SettingsCubit.get(context).getAllPoints(context);
     return Scaffold(
       body: SingleChildScrollView(
         physics: const NeverScrollableScrollPhysics(),
@@ -82,8 +82,7 @@ class _PointsScreenState extends State<PointsScreen>
                             ConditionalBuilder(
                               condition:cubit.getPointsModel!= null,
                               fallback: (context)=>ListView.separated(
-                                itemBuilder: (context, index)=>
-                                const PointsLoading(),
+                                itemBuilder: (context, index)=> PointsLoading(),
                                 separatorBuilder: (context, index) =>
                                 const SizedBox(height: 15,),
                                 itemCount: 5,

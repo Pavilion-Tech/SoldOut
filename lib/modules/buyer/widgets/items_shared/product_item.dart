@@ -61,7 +61,7 @@ class ProductItem extends StatelessWidget {
                         child: IconButton(
                             onPressed: () {
                               if (token != null) {
-                                cubit.updateFav(product!.id!);
+                                cubit.updateFav(product!.id!,context);
                               } else {
                                 navigateTo(context, SignInScreen());
                               }
@@ -149,6 +149,7 @@ class ProductItem extends StatelessWidget {
                                 CartCubit.get(context).addToCart(
                                   productId: product!.id!,
                                   qty: 1,
+                                  context: context
                                 );
                                 cubit.flyingCart = FlyingCart(
                                   y,x,

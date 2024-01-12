@@ -72,7 +72,7 @@ class CartScreen extends StatelessWidget {
                           defaultButton(onTap: () {
                             if(token != null)
                             {
-                              CartCubit.get(context).getCheckOut();
+                              CartCubit.get(context).getCheckOut(context);
                               AddressCubit.get(context).getAddress();
                               navigateTo(context, CheckOutScreen());
                             }else{

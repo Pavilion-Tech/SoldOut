@@ -8,6 +8,7 @@ import 'package:soldout/modules/buyer/auth/sign_in/sign_in_screen.dart';
 import 'package:soldout/modules/buyer/screens/auction/auction_cubit/auction_cubit.dart';
 import 'package:soldout/modules/buyer/screens/settings/setting_screens/my_account/points.dart';
 import 'package:soldout/modules/buyer/screens/settings/settings_cubit/settings_cubit.dart';
+import 'package:soldout/modules/buyer/widgets/auction/points_dialog.dart';
 import 'package:soldout/shared/components/components.dart';
 import 'package:soldout/shared/firebase_helper/dynamic_links.dart';
 import '../../../../shared/components/constants.dart';
@@ -87,7 +88,7 @@ class RowInTop extends StatelessWidget {
                       return InkWell(
                         onTap: () {
                           if (token != null) {
-                            cubit.updateFav(id!);
+                            cubit.updateFav(id!,context);
                           } else {
                             navigateTo(context, SignInScreen());
                           }
@@ -114,14 +115,11 @@ class RowInTop extends StatelessWidget {
           if (!isProduct)
             InkWell(
               onTap: (){
-                if(!isProduct){
-                  if(status == 'processing')
-                  {
-                    AuctionCubit.get(context).unsubscribePusher(id!);
-                  }
-                }
-                SettingsCubit.get(context).getAllPoints();
-                navigateTo(context, PointsScreen());
+                SettingsCubit.get(context).getAllPoints(context);
+                showDialog(
+                  context: context,
+                  builder: (context)=>PointsDialog(),
+                );
               },
               child: Container(
                 height: 40,

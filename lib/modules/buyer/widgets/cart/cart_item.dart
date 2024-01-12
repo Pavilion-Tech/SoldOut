@@ -118,6 +118,7 @@ class CartItem extends StatelessWidget {
                                 cubit.addToCart(
                                   productId: model.productId!,
                                   qty: currentQnt,
+                                  context: context
                                 );
                               }
 
@@ -147,6 +148,7 @@ class CartItem extends StatelessWidget {
                                 cubit.addToCart(
                                   productId: model.productId!,
                                   qty:currentQnt,
+                                  context: context
                                 );
                               }
                               else

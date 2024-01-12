@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:soldout/modules/buyer/screens/settings/settings_cubit/settings_cubit.dart';
 import 'package:soldout/shared/components/components.dart';
@@ -22,7 +23,7 @@ class _TermsAuctionDialogState extends State<TermsAuctionDialog> {
   Widget build(BuildContext context) {
     return Dialog(
       child: Container(
-        height: size!.height*.9,
+        height: size!.height*.6,
         width: size!.width*.9,
         decoration: BoxDecoration(
           borderRadius: BorderRadiusDirectional.circular(20),
@@ -33,9 +34,16 @@ class _TermsAuctionDialogState extends State<TermsAuctionDialog> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Expanded(
-              child: SingleChildScrollView(
-                child: Text(
-                  SettingsCubit.get(context).settingsModel?.data?.auctionTerms??''
+              child: Scrollbar(
+                thumbVisibility: true,
+                child: Padding(
+                  padding: const EdgeInsets.all(6.0),
+                  child: SingleChildScrollView(
+                    child: Text(
+                      SettingsCubit.get(context).settingsModel?.data?.auctionTerms??'',
+                      style: TextStyle(height: 2),
+                    ),
+                  ),
                 ),
               ),
             ),

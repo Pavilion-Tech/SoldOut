@@ -8,16 +8,17 @@ import '../../../../../../shared/components/constants.dart';
 
 class FirstTap extends StatelessWidget {
 
-  FirstTap({required this.model});
+  FirstTap({required this.model,this.fromAuction = false});
 
   Packages model;
+  bool fromAuction;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: ()
       {
-        SettingsCubit.get(context).buyPoints(id: model.id!, context: context);
+        SettingsCubit.get(context).buyPoints(id: model.id!, context: context,fromAuction: fromAuction);
         //navigateTo(context, PointsCheckOutScreen())
       },
       child: Container(

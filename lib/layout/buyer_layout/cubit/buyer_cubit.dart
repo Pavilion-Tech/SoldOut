@@ -18,6 +18,7 @@ import '../../../models/buyer_model/product_model/product_model.dart';
 import '../../../models/notification_model.dart';
 import '../../../modules/buyer/screens/home/home_screen.dart';
 import '../../../modules/buyer/widgets/items_shared/flying_cart.dart';
+import '../../../modules/widgets/login_dialog.dart';
 import '../../../modules/widgets/wrong_screens/update_screen.dart';
 import '../../../shared/components/constants.dart';
 import '../../../shared/firebase_helper/dynamic_links.dart';
@@ -127,6 +128,8 @@ class BuyerCubit extends Cubit<BuyerStates> {
           takeFav(category.products!);
         }
         emit(GetHomeDataSuccessState());
+      }else if(value.statusCode == 401){
+        showDialog(context: context,barrierDismissible: false, builder: (context)=>LoginDialog());
       } else {
         showToast(msg: tr('wrong'), toastState: true);
         emit(GetHomeDataWrongState());
@@ -138,7 +141,7 @@ class BuyerCubit extends Cubit<BuyerStates> {
     });
   }
 
-  void updateFav(int id) async {
+  void updateFav(int id,BuildContext context) async {
     favorites[id] = !favorites[id]!;
     emit(ChangeFavLoadingState());
     await DioHelper.postData(
@@ -150,6 +153,8 @@ class BuyerCubit extends Cubit<BuyerStates> {
         }).then((value) {
       if (value.statusCode == 200 && value.data['status']) {
         emit(ChangeFavSuccessState());
+      }else if(value.statusCode == 401){
+        showDialog(context: context,barrierDismissible: false, builder: (context)=>LoginDialog());
       } else {
         favorites[id] = !favorites[id]!;
         showToast(msg: tr('wrong'));
@@ -162,7 +167,7 @@ class BuyerCubit extends Cubit<BuyerStates> {
     });
   }
 
-  void getFav() async {
+  void getFav(BuildContext context) async {
     emit(GetFavLoadingState());
     await DioHelper.getData(
       url: fav,
@@ -173,6 +178,8 @@ class BuyerCubit extends Cubit<BuyerStates> {
         getFavModel = GetFavModel.fromJson(value.data);
         takeFav(getFavModel!.data!.products!);
         emit(GetFavSuccessState());
+      }else if(value.statusCode == 401){
+        showDialog(context: context,barrierDismissible: false, builder: (context)=>LoginDialog());
       } else {
         showToast(msg: tr('wrong'));
         emit(GetFavWrongState());

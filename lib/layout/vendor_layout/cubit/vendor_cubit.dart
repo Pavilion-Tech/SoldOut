@@ -22,6 +22,7 @@ import '../../../models/vendor_model/vendor_order_model.dart';
 import '../../../modules/vendor/screens/home/home_screen.dart';
 import '../../../modules/vendor/screens/order/vendor_order_screen.dart';
 import '../../../modules/vendor/screens/settings/vendor_settings_screen.dart';
+import '../../../modules/widgets/login_dialog.dart';
 import '../../../modules/widgets/wrong_screens/update_screen.dart';
 import '../../../shared/firebase_helper/dynamic_links.dart';
 import '../../../shared/network/remote/dio.dart';
@@ -176,7 +177,9 @@ class VendorCubit extends Cubit<VendorStates>{
       {
         getStatistics = GetStatistics.fromJson(value.data);
         emit(GetStatisticSuccessState());
-      }else if(value.data!=null&&!value.data['status']){
+      }else if(value.statusCode == 401){
+        if(context!=null) showDialog(context: context,barrierDismissible: false, builder: (context)=>LoginDialog(isUser: false,));
+      } else if(value.data!=null&&!value.data['status']){
         showToast(msg: value.data['errors'].toString());
         emit(GetStatisticWrongState());
       }

@@ -50,11 +50,11 @@ class MyAccountWidget extends StatelessWidget {
               navigateTo(context,const ManageAddress());
             }),
             accountItem(tr('my_fav'),(){
-              BuyerCubit.get(context).getFav();
+              BuyerCubit.get(context).getFav(context);
               navigateTo(context, Favorites());
             }),
             accountItem(tr('my_order_history'),(){
-              SettingsCubit.get(context).getOrder();
+              SettingsCubit.get(context).getOrder(context);
               navigateTo(context,const OrderHistory());
             }),
             if(BuyerCubit.get(context).homeModel!=null)
