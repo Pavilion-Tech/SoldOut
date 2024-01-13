@@ -40,11 +40,9 @@ class Favorites extends StatelessWidget {
                   builder: (context) =>
                       MyContainer(
                         cubit.getFavModel!.data!.products!.isNotEmpty
-                            ? Expanded(
-                              child: GridViewWidget(
-                                products: cubit.getFavModel!.data!.products,
-                                isScroll: true,
-                              ),
+                            ? GridViewWidget(
+                              products: cubit.getFavModel!.data!.products,
+                              isScroll: true,
                             ) : Column(
                           children: [
                             SizedBox(height: size!.height * .4),
