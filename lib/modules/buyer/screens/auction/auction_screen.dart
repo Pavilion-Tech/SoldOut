@@ -81,7 +81,7 @@ class _AuctionScreenState extends State<AuctionScreen> {
                         pageController: pageController,
                         lengthPageView: cubit.auctionModel!.images!.length),
                     AuctionDetails(cubit.auctionModel!, cubit.duration),
-                    if (showAuctionHint == null && cubit.isUserJoined)
+                    if (showAuctionHint == null && cubit.isUserJoined&&cubit.auctionModel!.status == 'processing')
                       const HintWidget(),
                     if (!cubit.isUserJoined &&
                         cubit.auctionModel!.status == 'processing')
