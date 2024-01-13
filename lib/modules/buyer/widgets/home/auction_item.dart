@@ -27,6 +27,8 @@ class AuctionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(model.dateTo!.substring(11,13));
+    print(convertTo12HourFormat(model.dateTo!.substring(11,13)));
     countDown = CountDown(fontSize: 12,duration: Duration(milliseconds: model.remainingTime!),);
     return InkWell(
       onTap: (){
@@ -79,13 +81,13 @@ class AuctionItem extends StatelessWidget {
                       Column(
                         children: [
                           Text(
-                            convertTo12HourFormat(model.dateFrom??''),
+                            "${model.dateFrom?.substring(0,11)??''} ${convertTo12HourFormat(model.dateFrom!.substring(11,13))}",
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 12),
                           ),
                           Text(
-                            convertTo12HourFormat(model.dateTo??''),
+                           "${model.dateTo?.substring(0,11)??''} ${convertTo12HourFormat(model.dateTo!.substring(11,13))}",
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 12),

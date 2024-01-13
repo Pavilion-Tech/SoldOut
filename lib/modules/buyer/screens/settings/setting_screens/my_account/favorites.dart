@@ -42,7 +42,7 @@ class Favorites extends StatelessWidget {
                         cubit.getFavModel!.data!.products!.isNotEmpty
                             ? Expanded(
                               child: GridViewWidget(
-                          products: cubit.getFavModel!.data!.products,
+                                products: cubit.getFavModel!.data!.products,
                                 isScroll: true,
                               ),
                             ) : Column(

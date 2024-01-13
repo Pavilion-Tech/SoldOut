@@ -33,7 +33,7 @@ class ProductItem extends StatelessWidget {
             navigateTo(
                 context,
                 ProductScreen(
-                  product: product!,
+                  product: product,
                 ));
           },
           child: Container(
@@ -52,7 +52,7 @@ class ProductItem extends StatelessWidget {
                     SizedBox(
                         height: isGrid ? size!.height * .11 : size!.height * .1,
                         width: isGrid ? size!.width * .5 : size!.width * .36,
-                        child: ImageNet(image: product!.images![0].image!,)
+                        child: ImageNet(image: product?.images?[0].image??'',)
                     ),
                     Positioned(
                         top: -size!.height * .010,
@@ -61,16 +61,16 @@ class ProductItem extends StatelessWidget {
                         child: IconButton(
                             onPressed: () {
                               if (token != null) {
-                                cubit.updateFav(product!.id!,context);
+                                cubit.updateFav(product?.id??0,context);
                               } else {
                                 navigateTo(context, SignInScreen());
                               }
                             },
                             icon: Icon(
-                              cubit.favorites[product!.id]!
+                              cubit.favorites[product?.id]??false
                                   ? Icons.favorite
                                   : Icons.favorite_border_sharp,
-                              color: cubit.favorites[product!.id]!
+                              color: cubit.favorites[product?.id]??false
                                   ? Colors.red
                                   : defaultColor,
                               size: 18,
@@ -85,7 +85,7 @@ class ProductItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        product!.name!,
+                        product?.name??'',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
@@ -100,7 +100,7 @@ class ProductItem extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 RatingBar.builder(
-                                  initialRating: product!.rate!.toDouble(),
+                                  initialRating: product?.rate?.toDouble(),
                                   itemSize: 15,
                                   direction: Axis.horizontal,
                                   ignoreGestures: true,
@@ -110,7 +110,7 @@ class ProductItem extends StatelessWidget {
                                   itemPadding: const EdgeInsets.symmetric(
                                       horizontal:1.0),
                                   itemBuilder:(context, index) {
-                                    if (product!.rate! > index) {
+                                    if (product?.rate > index) {
                                       return Image.asset(BuyerImages.fullStar);
                                     } else {
                                       return const Icon(Icons.star_border,size:16,);
@@ -121,7 +121,7 @@ class ProductItem extends StatelessWidget {
                                 Row(
                                   children: [
                                     Text(
-                                      '${product!.salePrice ?? product!.regularPrice}',
+                                      '${product?.salePrice ?? product?.regularPrice}',
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: const TextStyle(
@@ -143,24 +143,24 @@ class ProductItem extends StatelessWidget {
                           const Spacer(),
                           InkWell(
                             onTapDown: (TapDownDetails details) {
-                              var x = details.globalPosition.dx;
-                              var y = details.globalPosition.dy;
-                              if (product!.stock != 0) {
+                              // var x = details.globalPosition.dx;
+                              // var y = details.globalPosition.dy;
+                              if (product?.stock != 0) {
                                 CartCubit.get(context).addToCart(
-                                  productId: product!.id!,
+                                  productId: product?.id??0,
                                   qty: 1,
                                   context: context
                                 );
-                                cubit.flyingCart = FlyingCart(
-                                  y,x,
-                                  product!.images![0].image!,
-                                  isGrid: isGrid,
-                                );
-                                cubit.emitState();
-                                Future.delayed(Duration(seconds: 4), () {
-                                  cubit.flyingCart = null;
-                                  cubit.emitState();
-                                });
+                                // cubit.flyingCart = FlyingCart(
+                                //   y,x,
+                                //   product!.images![0].image!,
+                                //   isGrid: isGrid,
+                                // );
+                                // cubit.emitState();
+                                // Future.delayed(Duration(seconds: 4), () {
+                                //   cubit.flyingCart = null;
+                                //   cubit.emitState();
+                                // });
                               } else {
                                 showToast(msg: tr('out_of_stock'));
                               }
