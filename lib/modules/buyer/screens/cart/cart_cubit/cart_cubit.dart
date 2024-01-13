@@ -61,7 +61,7 @@ class CartCubit extends Cubit<CartStates> {
         emit(AddToCartWrongState());
       }
     }).catchError((e) {
-      showToast(msg: e.message, toastState: false);
+      showToast(msg: tr('wrong'), toastState: false);
       emit(AddToCartErrorState());
     });
   }
@@ -84,7 +84,7 @@ class CartCubit extends Cubit<CartStates> {
         emit(RemoveToCartWrongState());
       }
     }).catchError((e) {
-      showToast(msg: e.message, toastState: false);
+      showToast(msg: tr('wrong'), toastState: false);
       emit(RemoveToCartErrorState());
     });
   }
@@ -97,7 +97,7 @@ class CartCubit extends Cubit<CartStates> {
       lang: myLocale,
       token: token!= null?'Bearer $token':null,
     ).then((value) {
-      if (value.statusCode == 200 && value.data['status']) {
+      if (value.data['data']!=null){
         getCartModel = GetCartModel.fromJson(value.data);
         emit(GetCartSuccessState());
       } else {
@@ -105,7 +105,7 @@ class CartCubit extends Cubit<CartStates> {
         emit(GetCartWrongState());
       }
     }).catchError((e) {
-      showToast(msg: e.message, toastState: false);
+      showToast(msg: tr('wrong'), toastState: false);
       emit(GetCartErrorState());
     });
   }
@@ -127,7 +127,7 @@ class CartCubit extends Cubit<CartStates> {
         emit(GetCheckOutWrongState());
       }
     }).catchError((e) {
-      showToast(msg: e.message,toastState: false);
+      showToast(msg: tr('wrong'), toastState: false);
       emit(GetCheckOutErrorState());
     });
   }

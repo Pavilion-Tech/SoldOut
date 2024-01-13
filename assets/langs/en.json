@@ -234,6 +234,8 @@
   "accept_auction_terms": "I accept the terms and conditions of participating in the auction",
   "confirm_auction_terms": "Confirm Terms And Conditions for Auction First",
   "buy_points": "Buy Points",
-  "must_log_in_again": "You Must Sign In Again"
+  "must_log_in_again": "You Must Sign In Again",
+  "am": "AM",
+  "pm": "PM"
 
 }

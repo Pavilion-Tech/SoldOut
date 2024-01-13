@@ -120,8 +120,7 @@ class BuyerCubit extends Cubit<BuyerStates> {
         lang: myLocale,
         token: 'Bearer $token'
     ).then((value) {
-      print(value.data['data']['new_products']);
-      if (value.statusCode == 200 && value.data['status']) {
+      if (value.statusCode == 200 && value.data['data']!=null) {
         homeModel = HomeModel.fromJson(value.data);
         takeFav(homeModel!.data!.newProducts!);
         for (var category in homeModel!.data!.categories!) {
@@ -135,7 +134,6 @@ class BuyerCubit extends Cubit<BuyerStates> {
         emit(GetHomeDataWrongState());
       }
     }).catchError((e) {
-      print(e.toString());
       showToast(msg: tr('wrong'), toastState: false);
       emit(GetHomeDataErrorState());
     });

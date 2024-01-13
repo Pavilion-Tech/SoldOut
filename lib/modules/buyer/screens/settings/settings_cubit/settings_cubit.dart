@@ -40,8 +40,10 @@ class SettingsCubit extends Cubit<SettingsStates>{
         url: settings,
         lang: myLocale
     ).then((value) {
-      settingsModel = SettingsModel.fromJson(value.data);
-      emit(GetSettingsSuccess());
+      if(value.data['data']!=null){
+        settingsModel = SettingsModel.fromJson(value.data);
+        emit(GetSettingsSuccess());
+      }
     }).catchError((e){
       showToast(msg: tr('wrong'),toastState: false);
       emit(GetSettingsError());

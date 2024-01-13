@@ -54,11 +54,11 @@ class Favorites extends StatelessWidget {
                         noSize: true,)
 
               ),
-              Container(
-                width: size!.width,
-                height: size!.height,
-                child: cubit.flyingCart == null ? Container() : cubit.flyingCart,
-              )
+              // Container(
+              //   width: size!.width,
+              //   height: size!.height,
+              //   child: cubit.flyingCart == null ? Container() : cubit.flyingCart,
+              // )
             ],
           );
         },

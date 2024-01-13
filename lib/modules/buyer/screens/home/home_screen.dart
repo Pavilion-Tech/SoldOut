@@ -91,11 +91,11 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
           ),
-          Container(
-            width: size!.width,
-            height: size!.height,
-            child: cubit.flyingCart == null ? Container() : cubit.flyingCart,
-          ),
+          // Container(
+          //   width: size!.width,
+          //   height: size!.height,
+          //   child: cubit.flyingCart == null ? Container() : cubit.flyingCart,
+          // ),
         ],
       );
   },

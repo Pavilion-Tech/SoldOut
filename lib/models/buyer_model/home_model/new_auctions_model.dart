@@ -5,6 +5,8 @@ class AuctionModel {
   String? auctionName;
   String? productName;
   String? productDesc;
+  String? dateFrom;
+  String? dateTo;
   int? auctionOpeningPrice;
   bool? isUserJoined;
   bool? isUserWinner;
@@ -17,6 +19,8 @@ class AuctionModel {
 
   AuctionModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    dateFrom = json['date_from'];
+    dateTo = json['date_to'];
     auctionName = json['auction_name'];
     productName = json['product_name'];
     productDesc = json['product_desc'];

@@ -46,7 +46,7 @@ class AuctionItem extends StatelessWidget {
 
       },
       child: Container(
-        height: size!.height*.20,
+        height: size!.height*.23,
         width: isHome ? size!.width*.9: size!.width*.45,
         clipBehavior: Clip.antiAliasWithSaveLayer,
         decoration: BoxDecoration(
@@ -65,17 +65,41 @@ class AuctionItem extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    model.auctionName!,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          model.auctionName??'',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      const SizedBox(width: 5,),
+                      Column(
+                        children: [
+                          Text(
+                            convertTo12HourFormat(model.dateFrom??''),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 12),
+                          ),
+                          Text(
+                            convertTo12HourFormat(model.dateTo??''),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 12),
+                          )
+                        ],
+                      )
+                    ],
                   ),
+                  const SizedBox(height: 5,),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        '${tr('${model.status!}')}',
+                        '${tr('${model.status??''}')}',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(fontWeight: FontWeight.bold),
@@ -94,5 +118,14 @@ class AuctionItem extends StatelessWidget {
         ),
       ),
     );
+  }
+  String convertTo12HourFormat(String time) {
+    int hour = int.parse(time);
+    String period = (hour >= 12) ? tr('pm') : tr('am');
+    hour = hour % 12;
+    if (hour == 0) {
+      hour = 12;
+    }
+    return '$hour $period';
   }
 }
