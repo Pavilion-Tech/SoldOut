@@ -30,32 +30,32 @@ class AuctionsList extends StatelessWidget {
           condition: cubit.categoryAuctions != null,
           fallback: (context) => GridViewLoading(),
           builder: (context) => MyContainer(
-            noSize: true,
+            //noSize: true,
             Column(
               children: [
                 CategoryListViewAutions(newAuctions: newAuctions),
-                ConditionalBuilder(
-                  condition: cubit.categoryAuctions!.isNotEmpty,
-                  fallback: (context) => Center(
-                      child: Column(
-                    children: [
-                      SizedBox(
-                        height: size!.height * .4,
-                      ),
-                      Text(tr('no_auctions')),
-                    ],
-                  )),
-                  builder: (context) => GridView.count(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    childAspectRatio: size!.width / (size!.height / currentAspectRatio),
-                    mainAxisSpacing: 16,
-                    crossAxisSpacing: 5,
-                    crossAxisCount: 2,
-                    children: List.generate(
-                      cubit.categoryAuctions!.length,
-                      (index) => AuctionItem(
-                        model: cubit.categoryAuctions![index],
+                Expanded(
+                  child: ConditionalBuilder(
+                    condition: cubit.categoryAuctions!.isNotEmpty,
+                    fallback: (context) => Center(
+                        child: Column(
+                      children: [
+                        SizedBox(
+                          height: size!.height * .4,
+                        ),
+                        Text(tr('no_auctions')),
+                      ],
+                    )),
+                    builder: (context) => GridView.count(
+                      childAspectRatio: size!.width / (size!.height / currentAspectRatio),
+                      mainAxisSpacing: 16,
+                      crossAxisSpacing: 5,
+                      crossAxisCount: 2,
+                      children: List.generate(
+                        cubit.categoryAuctions!.length,
+                        (index) => AuctionItem(
+                          model: cubit.categoryAuctions![index],
+                        ),
                       ),
                     ),
                   ),

@@ -45,7 +45,6 @@ class AuctionItem extends StatelessWidget {
           {
             navigateTo(context, SignInScreen());
           }
-
       },
       child: Container(
         height: size!.height*.23,
@@ -60,7 +59,7 @@ class AuctionItem extends StatelessWidget {
             SizedBox(
                 height: size!.height*.12,
                 width:isHome ? size!.width*.9: size!.width*.45,
-                child: ImageNet(image:model.images!.isNotEmpty? model.images![0].image!:'',)
+                child: ImageNet(image:model.images!=null?model.images!.isNotEmpty? model.images![0].image??'':'':'',)
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 5),

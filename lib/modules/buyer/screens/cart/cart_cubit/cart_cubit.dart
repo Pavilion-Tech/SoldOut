@@ -97,6 +97,7 @@ class CartCubit extends Cubit<CartStates> {
       lang: myLocale,
       token: token!= null?'Bearer $token':null,
     ).then((value) {
+      print(value.data);
       if (value.data['data']!=null){
         getCartModel = GetCartModel.fromJson(value.data);
         emit(GetCartSuccessState());
@@ -105,6 +106,7 @@ class CartCubit extends Cubit<CartStates> {
         emit(GetCartWrongState());
       }
     }).catchError((e) {
+      print(e.toString());
       showToast(msg: tr('wrong'), toastState: false);
       emit(GetCartErrorState());
     });

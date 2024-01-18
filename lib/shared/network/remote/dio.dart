@@ -31,7 +31,8 @@ class DioHelper {
     {
       'lang' : lang??myLocale,
       'Authorization':token ,
-      'Content-Type': 'application/json'
+      //'Accept-Language':lang??myLocale,
+      'Content-Type': 'application/json',
     };
       return response = await dio.get(url, queryParameters: query);
 
