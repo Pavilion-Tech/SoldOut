@@ -28,9 +28,12 @@ class _AuctionScreenState extends State<AuctionScreen> {
 
   @override
   void initState() {
+    AuctionCubit.get(context).isUserJoined =
+        AuctionCubit.get(context).auctionModel?.isUserJoined??false;
+    setState(() {});
     int? id = AuctionCubit.get(context).auctionModel?.id;
     bool? cacheId = CacheHelper.getData(key: id.toString());
-    if(cacheId==null){
+    if(cacheId==null&&AuctionCubit.get(context).auctionModel?.status != 'finished'){
       Future.delayed(Duration.zero,(){
         showDialog(
           context: context,
@@ -44,8 +47,6 @@ class _AuctionScreenState extends State<AuctionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    AuctionCubit.get(context).isUserJoined =
-        AuctionCubit.get(context).auctionModel!.isUserJoined??false;
     return Scaffold(
       body: BlocConsumer<AuctionCubit, AuctionStates>(
         listener: (context, state) {},

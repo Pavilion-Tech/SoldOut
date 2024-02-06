@@ -120,6 +120,7 @@ class BuyerCubit extends Cubit<BuyerStates> {
         lang: myLocale,
         token: 'Bearer $token'
     ).then((value) {
+      print(value.data);
       if (value.statusCode == 200 && value.data['data']!=null) {
         homeModel = HomeModel.fromJson(value.data);
         takeFav(homeModel!.data!.newProducts!);

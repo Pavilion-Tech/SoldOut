@@ -29,7 +29,7 @@ class DioHelper {
 
     dio.options.headers =
     {
-      'lang' : lang??myLocale,
+      'lang' : myLocale,
       'Authorization':token ,
       //'Accept-Language':lang??myLocale,
       'Content-Type': 'application/json',

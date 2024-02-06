@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
+import 'package:soldout/layout/buyer_layout/cubit/buyer_cubit.dart';
 import 'package:soldout/modules/buyer/screens/settings/setting_screens/my_account/points.dart';
 import 'package:soldout/shared/components/components.dart';
 import 'package:soldout/shared/network/remote/dio.dart';
@@ -106,8 +107,10 @@ class AuctionCubit extends Cubit<AuctionStates>
           'auction_id':id
         }
     ).then((value) {
+      print(value.data);
       if(value.statusCode == 200&&value.data['status'])
       {
+        BuyerCubit.get(context).getHomeData(context);
         isUserJoined = true;
         showToast(msg: tr('joined'));
         emit(AuctionSuccess());
@@ -122,6 +125,9 @@ class AuctionCubit extends Cubit<AuctionStates>
           }
           emit(AuctionWrong());
         }
+      if(value.data['errors']!=null){
+        showToast(msg: value.data['errors'].toString(),toastState: true);
+      }
     }).catchError((e){
       showToast(msg: tr('wrong'),toastState: true);
       emit(AuctionError());
@@ -193,7 +199,7 @@ class AuctionCubit extends Cubit<AuctionStates>
       if(valueMap.isNotEmpty){
         auctionModel = AuctionModel.fromJson(valueMap);
         duration = Duration(milliseconds: auctionModel!.remainingTime!);
-        isUserJoined = auctionModel!.isUserJoined!;
+        //isUserJoined = auctionModel!.isUserJoined!;
         emit(AuctionUpdated());
       }
     }catch(e){

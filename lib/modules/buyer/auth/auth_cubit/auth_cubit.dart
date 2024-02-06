@@ -77,6 +77,7 @@ class AuthCubit extends Cubit<AuthStates> {
         'name': name,
       },
     ).then((value) {
+      print(value.data);
       if (value.statusCode == 200 && value.data['status']) {
         token = value.data['data']['access_token'];
         code = value.data['data']['code'];
@@ -95,7 +96,6 @@ class AuthCubit extends Cubit<AuthStates> {
     await DioHelper.getData(url: getPassCode, token: 'Bearer $token')
         .then((value) {
       code = value.data['data']['code'];
-      showToast(msg: '${tr('code_is')} $code');
       emit(GetCodeSuccessState());
     }).catchError((e) {
       showToast(msg: tr('wrong'), toastState: false);

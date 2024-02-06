@@ -97,7 +97,6 @@ class _State extends State<VerificationScreen> {
 
   @override
   void initState() {
-    showToast(msg: '${tr('code_is')} $code');
     startTimer();
     super.initState();
   }
@@ -159,7 +158,6 @@ class _State extends State<VerificationScreen> {
                             _start = 60;
                             timerFinished = false;
                             startTimer();
-                            showToast(msg: '${tr('code_is')} $code');
                             },
                           child: Text(
                             tr('reset'),

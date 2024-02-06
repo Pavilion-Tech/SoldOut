@@ -60,6 +60,7 @@ class SettingsCubit extends Cubit<SettingsStates>{
           'current_lang':currentLang
         }
     );
+    getSettingsData();
   }
 
   void getOrder(BuildContext context)async
