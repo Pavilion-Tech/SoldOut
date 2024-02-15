@@ -1,4 +1,5 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:soldout/modules/buyer/screens/auction/auction_cubit/auction_cubit.dart';
@@ -96,9 +97,21 @@ class _AuctionScreenState extends State<AuctionScreen> {
                       ),
                     if (cubit.isUserJoined &&
                         cubit.auctionModel!.status == 'processing')
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 40.0),
-                        child: AddCoins(cubit.auctionModel!.id!),
+                      Align(
+                        alignment: AlignmentDirectional.bottomEnd,
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 40.0),
+                          child: ConditionalBuilder(
+                              condition: state is! BidAuctionLoading,
+                              fallback: (context)=>Padding(
+                                padding: EdgeInsetsDirectional.only(
+                                  end: 60,
+                                  bottom: 40
+                                ),
+                                child: CupertinoActivityIndicator(),
+                              ),
+                              builder: (context)=> AddCoins(cubit.auctionModel!.id!)),
+                        ),
                       ),
                   ],
                 );

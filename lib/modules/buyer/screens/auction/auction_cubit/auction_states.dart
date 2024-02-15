@@ -8,6 +8,7 @@ class ChangeCategoryLoading extends AuctionStates{}
 
 class ChangeCategorySuccess extends AuctionStates{}
 
+class BidAuctionLoading extends AuctionStates{}
 class AuctionLoading extends AuctionStates{}
 
 class AuctionSuccess extends AuctionStates{}

@@ -136,6 +136,7 @@ class AuctionCubit extends Cubit<AuctionStates>
 
   void bid(int id,context)async
   {
+    emit(BidAuctionLoading());
     await DioHelper.postData(
         url: makeBid,
         token: 'Bearer $token',
@@ -149,13 +150,16 @@ class AuctionCubit extends Cubit<AuctionStates>
         {
           if(value.data['have_points']!=null)
           {
+            emit(AuctionWrong());
             showDialog(
                 context: context,
                 builder: (context)=>BuyPointsDialog(text: value.data['errors'].toString(),)
             );
           }
           emit(AuctionWrong());
-        }
+        }else{
+        emit(AuctionSuccess());
+      }
     }).catchError((e){
       showToast(msg: tr('wrong'),toastState: true);
       emit(AuctionError());
